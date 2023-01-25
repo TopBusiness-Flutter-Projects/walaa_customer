@@ -1,0 +1,14 @@
+{
+  "app_name": "Walaa",
+  "verification_title_text": "Please enter your verification code",
+  "verification_desc_text": "you have sent a verification code to your registered phone number",
+  "verification_validator_message": "Please fill up all the cells properly",
+  "done_btn": "Done",
+  "back_btn": "Back",
+  "sign_in_btn": "Sign In",
+  "phone_number_text": "Phone Number",
+  "phone_validator_message": "Please Enter Phone Number !!!"
+
+
+
+}

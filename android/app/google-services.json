@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1044862267047",
+    "project_id": "walaa-29e31",
+    "storage_bucket": "walaa-29e31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044862267047:android:38af2b7612dc68f33b7582",
+        "android_client_info": {
+          "package_name": "com.walaaCustomer.walaa_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044862267047-lfnqe7k2pgra4pk9rh3av93oo68knk52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAugRQj4O4XkMtu3v8ENpDj2s_wQ3--_lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044862267047-lfnqe7k2pgra4pk9rh3av93oo68knk52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

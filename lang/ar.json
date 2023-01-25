@@ -1,0 +1,15 @@
+{
+  "app_name": "ولاء",
+  "verification_title_text": "الرجاء إدخال رمز التحقق الخاص بك",
+  "verification_desc_text": "لقد أرسلنا رمز التحقق إلى رقم هاتفك المسجل",
+  "verification_validator_message": "يرجى ملء جميع الخلايا بشكل صحيح",
+  "done_btn": "تـم",
+  "back_btn": "رجوع",
+  "sign_in_btn": "دخول",
+  "phone_number_text": "رقم الهاتف",
+  "phone_validator_message": "من فضلك ادخل رقم الهاتف"
+
+
+
+
+}
