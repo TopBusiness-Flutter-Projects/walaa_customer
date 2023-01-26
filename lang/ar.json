@@ -7,7 +7,16 @@
   "back_btn": "رجوع",
   "sign_in_btn": "دخول",
   "phone_number_text": "رقم الهاتف",
-  "phone_validator_message": "من فضلك ادخل رقم الهاتف"
+  "phone_validator_message": "من فضلك ادخل رقم الهاتف",
+  "name_hint": "أدخل اسمك",
+  "phone_hint": "أدخل رقم هاتفك",
+  "name_validator_message": "من فضلك ادخل اسمك !!!",
+  "subject_hint": "أدخل العنوان",
+  "subject_validator_message": "من فضلك ادخل العنوان !!!",
+  "message_hint": "أدخل الرساله",
+  "message_validator_message": "من فضلك ادخل الرساله !!!",
+  "send_btn": "ارسال",
+  "contact_us_text": "تواصل معانا"
 
 
 

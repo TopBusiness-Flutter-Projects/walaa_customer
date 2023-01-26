@@ -11,6 +11,7 @@ import 'core/utils/app_colors.dart';
 import 'core/utils/app_strings.dart';
 import 'package:walaa_customer/injector.dart' as injector;
 
+import 'feature/contact us/presentation/cubit/contact_us_cubit.dart';
 import 'feature/language/presentation/cubit/locale_cubit.dart';
 
 
@@ -24,12 +25,18 @@ class WalaaCustomer extends StatefulWidget {
 class _WalaaCustomerState extends State<WalaaCustomer> {
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -39,6 +46,10 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
         BlocProvider(
           create: (_) =>
               injector.serviceLocator<LoginCubit>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<ContactUsCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

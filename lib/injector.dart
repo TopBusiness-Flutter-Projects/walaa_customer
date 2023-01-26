@@ -7,6 +7,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
+import 'feature/contact us/presentation/cubit/contact_us_cubit.dart';
 import 'feature/language/data/data_sources/language_locale_data_source.dart';
 import 'feature/language/data/repositories/language_repository.dart';
 import 'feature/language/domain/repositories/base_language_repository.dart';
@@ -30,6 +31,11 @@ Future<void> setup() async {
   serviceLocator.registerFactory(
     () => LoginCubit(
       serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => ContactUsCubit(
+      // serviceLocator(),
     ),
   );
 

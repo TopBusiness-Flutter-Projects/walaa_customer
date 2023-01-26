@@ -7,7 +7,16 @@
   "back_btn": "Back",
   "sign_in_btn": "Sign In",
   "phone_number_text": "Phone Number",
-  "phone_validator_message": "Please Enter Phone Number !!!"
+  "phone_validator_message": "Please Enter Phone Number !!!",
+  "name_hint": "Enter Your Name",
+  "phone_hint": "Enter Your Phone",
+  "name_validator_message": "Please Enter Your Name !!!",
+  "subject_hint": "Enter Your Subject",
+  "subject_validator_message": "Please Enter Enter Your Subject !!!",
+  "message_hint": "Enter Your Message",
+  "message_validator_message": "Please Enter Enter Your Message !!!",
+  "send_btn": "Send",
+  "contact_us_text": "Contact Us"
 
 
 
