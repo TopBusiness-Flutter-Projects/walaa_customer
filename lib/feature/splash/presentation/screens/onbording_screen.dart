@@ -72,6 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                       ImageAssets.boarding1Image,
                       fit: BoxFit.fill,
                       height: double.infinity,
+                      width: MediaQuery.of(context).size.width,
                     ),
                     Positioned(
                       top: MediaQuery.of(context).size.height / 6,
@@ -91,6 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                       ImageAssets.boarding2Image,
                       fit: BoxFit.fill,
                       height: double.infinity,
+                      width: MediaQuery.of(context).size.width,
                     ),
                     Positioned(
                       bottom: MediaQuery.of(context).size.height / 10,

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 
+import '../../../../core/models/login_model.dart';
 import '../../../../core/remote/service.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/toast_message_method.dart';
@@ -16,6 +19,8 @@ class LoginCubit extends Cubit<LoginState> {
   final ServiceApi serviceApi;
 
   TextEditingController phoneController = TextEditingController();
+
+  LoginModel? loginModel;
 
   loginPhone(String phone, context) async {
     emit(LoginLoading());
@@ -31,19 +36,45 @@ class LoginCubit extends Cubit<LoginState> {
           );
           emit(LoginLoaded());
         } else if (loginModel.code == 200) {
-          print('All is Done');
-          print(loginModel);
-          Future.delayed(Duration(milliseconds: 500),(){
-            toastMessage(
-              'Ok ===> :) ',
-              context,
-              color: AppColors.success,
-            );
-          });
-          emit(LoginLoaded());
+          this.loginModel = loginModel;
+          sendSmsCode();
+          toastMessage(
+            'Ok ===> :) ',
+            context,
+            color: AppColors.success,
+          );
+          // emit(LoginLoaded());
         }
       },
     );
+  }
+
+  storeUser(LoginModel loginModel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', jsonEncode(loginModel));
+    // String softwareType = '';
+    // String? token = await FirebaseMessaging.instance.getToken();
+    // if (Platform.isAndroid) {
+    //   softwareType = 'android';
+    //   sendDeviceTokenUseCase(
+    //     DeviceTokenModel(
+    //       deviceToken: token,
+    //       softwareType: softwareType,
+    //       userToken: loginModel.data!.accessToken,
+    //     ),
+    //   );
+    //   print('----------------- no user ---------------------');
+    // } else if (Platform.isIOS) {
+    //   softwareType = 'ios';
+    //   sendDeviceTokenUseCase(
+    //     DeviceTokenModel(
+    //       deviceToken: token,
+    //       softwareType: softwareType,
+    //       userToken: loginModel.data!.accessToken,
+    //     ),
+    //   );
+    //   print('----------------- no user ---------------------');
+    // }
   }
 
   //////////////////send OTP///////////////////
@@ -94,6 +125,7 @@ class LoginCubit extends Cubit<LoginState> {
     );
     await _mAuth.signInWithCredential(credential).then((value) {
       print('LoginSuccess');
+      storeUser(loginModel!);
       emit(CheckCodeSuccessfully());
     }).catchError((error) {
       print('phone auth =>${error.toString()}');

@@ -27,7 +27,7 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: AppColors.scaffoldBackground,
+        statusBarColor: AppColors.transparent,
       ),
     );
     return MultiBlocProvider(

@@ -9,6 +9,7 @@ class ImageAssets {
   static const String verificationImage = '$imagePath/verification.png';
   static const String boarding1Image = '$imagePath/onboarding1.png';
   static const String boarding2Image = '$imagePath/onboarding2.png';
+  static const String contactUsImage = '$imagePath/contact_us.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';

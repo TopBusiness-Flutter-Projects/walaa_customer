@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:walaa_customer/config/routes/app_routes.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
@@ -28,24 +29,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
   bool hasError = false;
 
   StreamController<ErrorAnimationType>? errorController;
-
   String currentText = "";
-
-  @override
-  void initState() {
-    super.initState();
-    // if(context.read<RegisterCubit>().phone.isNotEmpty){
-    // context.read<RegisterCubit>().startTimer();
-    // }
-  }
-
   @override
   void dispose() {
     errorController!.close();
-    // textEditingController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     errorController = StreamController<ErrorAnimationType>();
@@ -62,10 +51,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   context,
                   color: AppColors.success,
                 );
-                // Navigator.pushReplacementNamed(
-                //   context,
-                //   Routes.newPasswordRoute,
-                // );
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.homePageScreenRoute,
+                  (route) => false,
+                );
               });
               // return const ShowLoadingIndicator();
             }

@@ -16,10 +16,11 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.validatorMessage = '',
     this.controller,
-    this.imageColor = Colors.grey,
+    this.imageColor = Colors.grey, required this.backgroundColor,
   }) : super(key: key);
   final String image;
   final Color imageColor;
+  final Color backgroundColor;
   final String title;
   final String validatorMessage;
   final int minLine;
@@ -57,15 +58,11 @@ class CustomTextField extends StatelessWidget {
           prefixIconConstraints:
               const BoxConstraints(minHeight: 32, minWidth: 32),
           hintText: title,
-          border: image != "null"
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
-                )
-              : OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-          fillColor: AppColors.scaffoldBackground,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide.none,
+          ),
+          fillColor: backgroundColor,
           filled: true,
         ),
         maxLines: isPassword ? 1 : 20,
