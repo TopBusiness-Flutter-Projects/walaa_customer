@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,12 +5,46 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 
+import '../../../../core/remote/service.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/toast_message_method.dart';
+
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
+  LoginCubit(this.serviceApi) : super(LoginInitial());
+  final ServiceApi serviceApi;
 
-TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  loginPhone(String phone, context) async {
+    emit(LoginLoading());
+    final response = await serviceApi.postLogin(phone);
+    response.fold(
+      (failure) => emit(LoginFailure()),
+      (loginModel) {
+        if (loginModel.code == 411) {
+          toastMessage(
+            'There is no email with this phone ',
+            context,
+            color: AppColors.error,
+          );
+          emit(LoginLoaded());
+        } else if (loginModel.code == 200) {
+          print('All is Done');
+          print(loginModel);
+          Future.delayed(Duration(milliseconds: 500),(){
+            toastMessage(
+              'Ok ===> :) ',
+              context,
+              color: AppColors.success,
+            );
+          });
+          emit(LoginLoaded());
+        }
+      },
+    );
+  }
 
   //////////////////send OTP///////////////////
 
@@ -26,7 +59,7 @@ TextEditingController phoneController = TextEditingController();
     _mAuth.setSettings(forceRecaptchaFlow: true);
     _mAuth.verifyPhoneNumber(
       forceResendingToken: resendToken,
-      phoneNumber: AppStrings.phoneCode+phoneController.text,
+      phoneNumber: AppStrings.phoneCode + phoneController.text,
       // timeout: Duration(seconds: 1),
       verificationCompleted: (PhoneAuthCredential credential) {
         smsCode = credential.smsCode!;
@@ -66,5 +99,4 @@ TextEditingController phoneController = TextEditingController();
       print('phone auth =>${error.toString()}');
     });
   }
-
 }

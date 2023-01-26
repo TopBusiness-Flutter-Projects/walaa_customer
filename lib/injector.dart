@@ -3,6 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
 
+import 'core/api/app_interceptors.dart';
+import 'core/api/base_api_consumer.dart';
+import 'core/api/dio_consumer.dart';
+import 'core/remote/service.dart';
 import 'feature/language/data/data_sources/language_locale_data_source.dart';
 import 'feature/language/data/repositories/language_repository.dart';
 import 'feature/language/domain/repositories/base_language_repository.dart';
@@ -25,11 +29,11 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => LoginCubit(
-        // changeLanguageUseCase: serviceLocator(),
-        ),
+      serviceLocator(),
+    ),
   );
 
-  // serviceLocator.registerLazySingleton(() => ServiceApi(serviceLocator()));
+  ///////////////////////////////////////////////////////////////////////////////
 
   /////////////////////// UseCase ///////////////////////////
   serviceLocator.registerLazySingleton(
@@ -65,11 +69,12 @@ Future<void> setup() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   serviceLocator.registerLazySingleton(() => sharedPreferences);
 
-  // serviceLocator.registerLazySingleton(
-  //   () => Translating(
-  //     context: serviceLocator(),
-  //   ),
-  // );
+  serviceLocator.registerLazySingleton(() => ServiceApi(serviceLocator()));
+
+  serviceLocator.registerLazySingleton<BaseApiConsumer>(
+          () => DioConsumer(client: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => AppInterceptors());
+
 
   // Dio
   serviceLocator.registerLazySingleton(

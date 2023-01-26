@@ -13,3 +13,8 @@ class OnSmsCodeSent extends LoginState {
 }
 class CheckCodeInvalidCode extends LoginState {}
 class CheckCodeSuccessfully extends LoginState {}
+
+class LoginLoading extends LoginState {}
+class LoginLoaded extends LoginState {}
+class LoginFailure extends LoginState {}
+

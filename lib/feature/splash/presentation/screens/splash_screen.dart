@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../login/presentation/screens/login.dart';
+import 'onbording_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,15 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   // LoginDataModel loginDataModel = const LoginDataModel();
 
   _goNext() {
-    Navigator.pushReplacement(
-      context,
-      PageTransition(
-        type: PageTransitionType.fade,
-        alignment: Alignment.center,
-        duration: const Duration(milliseconds: 1300),
-        child:  LoginScreen(),
-      ),
-    );
+    _getStoreUser();
   }
 
   _startDelay() async {
@@ -34,14 +29,32 @@ class _SplashScreenState extends State<SplashScreen> {
     _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
   }
 
-  // Future<void> _getStoreUser() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getString('user') != null) {
-  //     Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);
-  //     LoginDataModel loginDataModel = LoginDataModel.fromJson(userMap);
-  //     this.loginDataModel = loginDataModel;
-  //   }
-  // }
+  Future<void> _getStoreUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('onBoarding') != null) {
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 1300),
+          child:  LoginScreen(),
+        ),
+      );
+
+    }else{
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 1300),
+          child:  OnBoardingScreen(),
+        ),
+      );
+
+    }
+  }
 
   @override
   void initState() {

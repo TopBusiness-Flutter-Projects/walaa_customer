@@ -1,52 +1,8 @@
 class EndPoints {
-  static const String baseUrl = 'https://watan.motaweron.com/api/';
-  static const String sliderUrl = '${baseUrl}home/sliders';
-  static const String categoriesUrl = '${baseUrl}home/categories';
-  static const String newPopularUrl = '${baseUrl}home/posts';
-  static const String showMorePostsUrl = '${baseUrl}home/show-more-posts';
-  static const String loginUrl = '${baseUrl}auth/login';
-  static const String registerUrl = '${baseUrl}auth/register';
-  static const String blogsUrl = '${baseUrl}blogs/list';
-  static const String settingsUrl = '${baseUrl}general/settings';
-  static const String citiesUrl = '${baseUrl}general/cities';
-  static const String citiesLocationUrl = '${baseUrl}general/locations';
-  static const String amenitiesUrl = '${baseUrl}general/amenities';
-  static const String filterAgentListUrl = '${baseUrl}general/agents';
-  static const String viewsUrl = '${baseUrl}home/view_ad';
-  static const String contactUsUrl = '${baseUrl}store-contact-us';
-  static const String myAdsUrl = '${baseUrl}ads/myads';
-  static const String mySolidUrl = '${baseUrl}ads/list';
-  static const String deleteAdsUrl = '${baseUrl}ads/delete-ad/';
-  static const String deleteProjectUrl = '${baseUrl}ads/delete-project/';
-  static const String changeStatusAdsUrl = '${baseUrl}ads/update_ad_status/';
-  static const String filterUrl = '${baseUrl}general/filter';
-  static const String agentProfileListUrl = '${baseUrl}company/agent';
-  static const String makeReportUrl = '${baseUrl}ads/make-report';
-  static const String morePostsUrl = '${baseUrl}home/post_by_id';
-  static const String moreProjectPostsUrl = '${baseUrl}home/project_by_id';
-  static const String adsByUserUrl = '${baseUrl}ads/ads-by-user';
-  static const String projectByUserUrl = '${baseUrl}projects/projects-by-user';
-  static const String packagesUrl = '${baseUrl}general/packages';
-  static const String addPackageUrl = '${baseUrl}packages/add_package';
-  static const String deleteAccountUrl = '${baseUrl}auth/delete-account';
-  static const String myRoomsUrl = '${baseUrl}chat/my_rooms';
-  static const String oneRoomUrl = '${baseUrl}chat/get_room';
-  static const String openRoomUrl = '${baseUrl}chat/open_room';
-  static const String sendMessageUrl = '${baseUrl}chat/store_chat';
-  static const String updateProfileUrl = '${baseUrl}auth/update-profile';
-  static const String updateStoreProfileUrl = '${baseUrl}auth/me';
-  static const String sendCodeToEmailUrl = '${baseUrl}auth/password/email';
-  static const String checkCodeUrl = '${baseUrl}auth/password/phone/check';
-  static const String resetPasswordUrl = '${baseUrl}auth/password/reset';
-  static const String addAdsUrl = '${baseUrl}ads/add_ads';
-  static const String updateAdsUrl = '${baseUrl}ads/update_ad/';
-  static const String addProjectUrl = '${baseUrl}ads/add-project';
-  static const String updateProjectUrl = '${baseUrl}ads/update_project/';
-  static const String favouritesUrl = '${baseUrl}ads/favourites-lists';
-  static const String changePostFavouriteStatusUrl = '${baseUrl}ads/add-or-remove-post-to-favourite';
-  static const String changeProjectFavouriteStatusUrl = '${baseUrl}company/add-or-remove-project-to-favourite';
-  static const String getAllLocationsUrl = '${baseUrl}home/get-all-locations';
-  static const String notificationsUrl = '${baseUrl}notifications';
-  static const String insertDeviceTokenUrl = '${baseUrl}auth/insert-token';
-  static const String logoutUrl = '${baseUrl}auth/logout';
+  static const String baseUrl = 'https://loyalty.topbusiness.io/api/';
+  static const String loginUrl = '${baseUrl}client/auth/login';
+
+
+
+
 }

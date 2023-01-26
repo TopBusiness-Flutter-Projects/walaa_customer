@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           LoginCubit cubit = context.read<LoginCubit>();
 
-          if (state is SendCodeLoading) {
+          if (state is SendCodeLoading||state is LoginLoading) {
             return ShowLoadingIndicator();
           } else if (state is OnSmsCodeSent) {
             Future.delayed(Duration(milliseconds: 500), () {
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                       onClick: () {
                         if (formKey.currentState!.validate()) {
                           // cubit.phoneNumber=AppStrings.phoneCode;
-                          cubit.sendSmsCode();
+                          cubit.loginPhone(cubit.phoneController.text, context);
                         }
                       },
                       paddingHorizontal: 80,
