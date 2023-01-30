@@ -127,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                               child: ClipOval(
                                 child: ManageNetworkImage(
                                   imageUrl: profileCubit
-                                      .loginDataModel!.data!.user.image,
+                                      .loginDataModel!.data!.user.image!,
                                   width: 140,
                                   height: 140,
                                   borderRadius: 140,

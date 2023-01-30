@@ -9,11 +9,11 @@ part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial()){
-    _getStoreUser();
+    getStoreUser();
   }
 
   LoginModel? loginDataModel;
-  Future<void> _getStoreUser() async {
+  Future<void> getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
       Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);

@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
+import 'package:walaa_customer/core/utils/toast_message_method.dart';
+import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
 
+import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/translate_text_method.dart';
@@ -29,9 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    widget.isUpdate == true
-        ? loginModel = context.read<ProfileCubit>().loginDataModel
-        : null;
+    context.read<RegisterCubit>().checkPageInitial(widget.isUpdate);
   }
 
   @override
@@ -68,9 +69,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
           RegisterCubit cubit = context.read<RegisterCubit>();
-          widget.isUpdate == true?cubit.nameController.text = loginModel!.data!.user.name:null;
-          widget.isUpdate == true?cubit.phoneController.text = loginModel!.data!.user.phone:null;
-          return Form(
+          if (state is RegisterUpdateLoading) {
+            return ShowLoadingIndicator();
+          }
+          if (state is RegisterUpdateLoaded) {
+            Preferences.instance.setUser(state.loginModel).whenComplete(
+                  () => Future.delayed(
+                    Duration(milliseconds: 300),
+                    () {
+                      Future.delayed(
+                        Duration(milliseconds: 300),
+                        () {
+                          cubit.changeStateCubit();
+                          Navigator.pop(context);
+                        },
+                      );
+                      context.read<ProfileCubit>().getStoreUser();
+                      toastMessage(
+                        'Updated SuccessFully',
+                        context,
+                        color: AppColors.success,
+                      );
+                    },
+                  ),
+                );
+            return ShowLoadingIndicator();
+          }
+          return cubit.loginModel!=null?Form(
             key: formKey,
             child: SingleChildScrollView(
               child: Column(
@@ -86,8 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: ClipOval(
                             child: cubit.imagePath.isEmpty
                                 ? ManageNetworkImage(
-                                    imageUrl:
-                                        'https://trello-members.s3.amazonaws.com/63a15f06296441033282a707/d2aac722ecb1981b153c2547aba9dbd6/original.png',
+                                    imageUrl: cubit.imageUrl,
                                     width: 140,
                                     height: 140,
                                     borderRadius: 140,
@@ -237,7 +261,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: AppColors.buttonBackground,
                     onClick: () {
                       if (formKey.currentState!.validate()) {
-                        // cubit.contactUsApi();
+                        cubit.updateUserData();
                       }
                     },
                     borderRadius: 35,
@@ -247,7 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
             ),
-          );
+          ):ShowLoadingIndicator();
         },
       ),
     );

@@ -14,6 +14,7 @@ import 'feature/language/domain/repositories/base_language_repository.dart';
 import 'feature/language/domain/use_cases/change_language_use_case.dart';
 import 'feature/language/domain/use_cases/get_saved_language_use_case.dart';
 import 'feature/language/presentation/cubit/locale_cubit.dart';
+import 'feature/privacy_terms/presentation/cubit/settings_cubit.dart';
 import 'feature/profile/presentation/cubit/profile_cubit.dart';
 import 'feature/register/presentation/cubit/register_cubit.dart';
 
@@ -47,7 +48,12 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => RegisterCubit(
-      // serviceLocator(),
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => SettingsCubit(
+      serviceLocator(),
     ),
   );
 

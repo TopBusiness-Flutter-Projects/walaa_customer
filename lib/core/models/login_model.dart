@@ -4,15 +4,17 @@
 
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+
 LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
   LoginModel({
-    required this.data,
-    required this.message,
-    required this.code,
+    this.data,
+    this.message,
+    this.code,
   });
 
  final Data? data;
@@ -39,12 +41,12 @@ class Data {
     required this.tokenType,
   });
 
-  User user;
+  UserData user;
   String accessToken;
   String tokenType;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    user: User.fromJson(json["user"]),
+    user: UserData.fromJson(json["user"]),
     accessToken: json["access_token"],
     tokenType: json["token_type"],
   );
@@ -56,28 +58,31 @@ class Data {
   };
 }
 
-class User {
-  User({
-    required this.id,
-    required this.name,
-    required this.phoneCode,
-    required this.phone,
-    required this.status,
-    required this.image,
-    required this.userType,
-    required this.balance,
+class UserData {
+  UserData({
+     this.id,
+     this.name,
+     this.phoneCode,
+     this.phone,
+     this.status,
+     this.image,
+     this.userType,
+     this.balance,
+    this.token,
   });
 
-  int id;
-  String name;
-  String phoneCode;
-  String phone;
-  int status;
-  String image;
-  int userType;
-  int balance;
+  final int? id;
+  final String? name;
+  final String? phoneCode;
+  final String? phone;
+  final int? status;
+  final String? image;
+  final int? userType;
+  final int? balance;
+  late bool isLoggedIn = false;
+  final String? token;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
     id: json["id"],
     name: json["name"],
     phoneCode: json["phone_code"],
@@ -98,4 +103,18 @@ class User {
     "user_type": userType,
     "balance": balance,
   };
+
+  Future<Map<String, dynamic>> updateToJson() async => {
+    if(name!=null)...{
+      "name": name,
+    },
+    if(phone!=null)...{
+      "phone": phone,
+    },
+    if(image!=null)...{
+      "image": await MultipartFile.fromFile(image!),
+    }
+  };
+
+
 }

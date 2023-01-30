@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../home page/presentation/screens/home_page.dart';
@@ -26,14 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _startDelay() async {
-
     _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
   }
 
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('onBoarding') != null) {
-
       if (prefs.getString('user') != null) {
         Navigator.pushReplacement(
           context,
@@ -73,6 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // Preferences.instance.clearUserData();
      _startDelay();
   }
 

@@ -96,7 +96,6 @@ flutter:
     - lang/en.json
     - assets/images/
     - assets/icons/
-    - assets/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

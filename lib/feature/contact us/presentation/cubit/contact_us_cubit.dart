@@ -29,8 +29,8 @@ class ContactUsCubit extends Cubit<ContactUsState> {
       Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);
       LoginModel loginModel = LoginModel.fromJson(userMap);
       this.loginModel = loginModel;
-      nameController.text = this.loginModel!.data!.user.name;
-      phoneController.text = this.loginModel!.data!.user.phone;
+      nameController.text = this.loginModel!.data!.user.name!;
+      phoneController.text = this.loginModel!.data!.user.phone!;
       emit(ContactUsGetUserModel());
     }
   }
