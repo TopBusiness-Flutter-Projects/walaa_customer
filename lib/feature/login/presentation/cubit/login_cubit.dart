@@ -52,29 +52,6 @@ class LoginCubit extends Cubit<LoginState> {
   storeUser(LoginModel loginModel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user', jsonEncode(loginModel));
-    // String softwareType = '';
-    // String? token = await FirebaseMessaging.instance.getToken();
-    // if (Platform.isAndroid) {
-    //   softwareType = 'android';
-    //   sendDeviceTokenUseCase(
-    //     DeviceTokenModel(
-    //       deviceToken: token,
-    //       softwareType: softwareType,
-    //       userToken: loginModel.data!.accessToken,
-    //     ),
-    //   );
-    //   print('----------------- no user ---------------------');
-    // } else if (Platform.isIOS) {
-    //   softwareType = 'ios';
-    //   sendDeviceTokenUseCase(
-    //     DeviceTokenModel(
-    //       deviceToken: token,
-    //       softwareType: softwareType,
-    //       userToken: loginModel.data!.accessToken,
-    //     ),
-    //   );
-    //   print('----------------- no user ---------------------');
-    // }
   }
 
   //////////////////send OTP///////////////////

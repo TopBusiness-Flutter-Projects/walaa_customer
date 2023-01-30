@@ -34,6 +34,14 @@ class AppStrings {
   static const String messageValidatorMessage = 'message_validator_message';
   static const String sendBtn = 'send_btn';
   static const String contactUsText = 'contact_us_text';
+  static const String profileText = 'profile_text';
+  static const String termsText = 'terms_text';
+  static const String privacyText = 'privacy_text';
+  static const String deleteAccountText = 'delete_account_text';
+  static const String logoutText = 'logout_text';
+  static const String welcomeText = 'welcome_text';
+  static const String confirmBtn = 'confirm_btn';
+  static const String editProfileText = 'edit_profile_text';
 
 
 

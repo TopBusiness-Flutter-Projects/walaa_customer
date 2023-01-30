@@ -9,6 +9,7 @@ class AppColors {
   static Color buttonBackground = HexColor('#594339');
   static Color textBackground = HexColor('#92603F');
   static Color onBoardingColor = HexColor('#DC8068');
+  static Color containerBackgroundColor = HexColor('#F7DFB1');
 
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black12;

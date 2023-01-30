@@ -16,7 +16,18 @@
   "message_hint": "Enter Your Message",
   "message_validator_message": "Please Enter Enter Your Message !!!",
   "send_btn": "Send",
-  "contact_us_text": "Contact Us"
+  "profile_text": "Profile",
+  "welcome_text": "Welcome back",
+  "logout_text": "Logout",
+  "contact_us_text": "Contact Us",
+  "terms_text": "Terms And Conditions",
+  "privacy_text": "Privacy",
+  "delete_account_text": "Delete Profile",
+  "edit_profile_text": "Edit Profile",
+  "confirm_btn": "Confirm"
+
+
+
 
 
 

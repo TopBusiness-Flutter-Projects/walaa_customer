@@ -16,7 +16,9 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.validatorMessage = '',
     this.controller,
-    this.imageColor = Colors.grey, required this.backgroundColor,
+    this.imageColor = Colors.grey,
+    required this.backgroundColor,
+     this.isEnable = true,
   }) : super(key: key);
   final String image;
   final Color imageColor;
@@ -25,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   final String validatorMessage;
   final int minLine;
   final bool isPassword;
+  final bool? isEnable;
   final TextInputType textInputType;
   final TextEditingController? controller;
 
@@ -36,6 +39,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         keyboardType: textInputType,
         obscureText: isPassword,
+        enabled: isEnable,
         decoration: InputDecoration(
           hintStyle: TextStyle(
             color: AppColors.textBackground,

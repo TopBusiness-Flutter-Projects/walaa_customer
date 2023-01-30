@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:walaa_customer/core/api/base_api_consumer.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 
+import '../../feature/contact us/models/contact_us_model.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
@@ -28,19 +28,16 @@ class ServiceApi {
     }
   }
 
-// Future<ContactUsModel> contactUsApi(
-//     SendContactUsModel sendContactUsModel) async {
-//   try {
-//     print(EndPoints.contactUsUrl);
-//     Response response = await dio.post(EndPoints.contactUsUrl,
-//         data: sendContactUsModel.toJson());
-//     print('Url : ${EndPoints.contactUsUrl}');
-//     print('Response : \n ${response.data}');
-//     return ContactUsModel.fromJson(response.data);
-//   } on DioError catch (e) {
-//     print(" Error : ${e}");
-//     final errorMessage = DioExceptions.fromDioError(e).toString();
-//     throw errorMessage;
-//   }
-// }
+  Future<Either<Failure, ContactUsModel>> contactUsApi(
+      ContactUsData contactUsData) async {
+    try {
+      final response = await dio.post(
+        EndPoints.contactUsUrl,
+        body: contactUsData.toJson(),
+      );
+      return Right(ContactUsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

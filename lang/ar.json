@@ -16,7 +16,15 @@
   "message_hint": "أدخل الرساله",
   "message_validator_message": "من فضلك ادخل الرساله !!!",
   "send_btn": "ارسال",
-  "contact_us_text": "تواصل معانا"
+  "profile_text": "الصفحه الشخصيه",
+  "welcome_text": "أهلا بعودتك",
+  "logout_text": "خروج",
+  "contact_us_text": "تواصل معانا",
+  "terms_text": "الأحكام والشروط",
+  "privacy_text": "خصوصية",
+  "delete_account_text": "حذف الحساب",
+  "edit_profile_text": "تعديل الحســاب",
+  "confirm_btn": "تـأكيـد"
 
 
 

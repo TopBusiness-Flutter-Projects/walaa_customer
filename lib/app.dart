@@ -13,6 +13,8 @@ import 'package:walaa_customer/injector.dart' as injector;
 
 import 'feature/contact us/presentation/cubit/contact_us_cubit.dart';
 import 'feature/language/presentation/cubit/locale_cubit.dart';
+import 'feature/profile/presentation/cubit/profile_cubit.dart';
+import 'feature/register/presentation/cubit/register_cubit.dart';
 
 
 class WalaaCustomer extends StatefulWidget {
@@ -50,6 +52,14 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
         BlocProvider(
           create: (_) =>
               injector.serviceLocator<ContactUsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<ProfileCubit>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<RegisterCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

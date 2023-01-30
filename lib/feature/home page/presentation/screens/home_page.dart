@@ -3,6 +3,7 @@ import 'package:walaa_customer/core/utils/app_colors.dart';
 import 'package:walaa_customer/core/widgets/custom_button.dart';
 
 import '../../../contact us/presentation/screens/contact_us.dart';
+import '../../../profile/presentation/screens/profile.dart';
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class HomePageScreen extends StatelessWidget {
         child: CustomButton(
           text: 'Go',
           onClick: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ContactUsScreen())),
+              MaterialPageRoute(builder: (context) => ProfileScreen())),
           color: AppColors.buttonBackground,
           paddingHorizontal: 120,
         ),

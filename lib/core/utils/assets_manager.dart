@@ -13,6 +13,10 @@ class ImageAssets {
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
+  static const String contact_usIcon = '$iconsPath/contact_us.svg';
+  static const String termsIcon = '$iconsPath/terms.svg';
+  static const String privacyIcon = '$iconsPath/privacy.svg';
+  static const String deleteIcon = '$iconsPath/delete.svg';
 
  //Lottie
  //  static const String noLogin = '$lottiePath/login.json';
