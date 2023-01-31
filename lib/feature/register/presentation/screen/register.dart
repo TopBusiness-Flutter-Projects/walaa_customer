@@ -164,7 +164,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               height: 140.0,
                                               fit: BoxFit.cover,
                                             )
-                                      : Image.asset(ImageAssets.noUserImage),
+                                      : cubit.imagePath.isEmpty
+                                          ? Image.asset(ImageAssets.noUserImage)
+                                          : Image.file(
+                                              File(
+                                                cubit.imagePath,
+                                              ),
+                                              width: 140.0,
+                                              height: 140.0,
+                                              fit: BoxFit.cover,
+                                            ),
                                 ),
                               ),
                             ),
