@@ -21,6 +21,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   LoginModel? loginModel;
   UserData? userData;
+  bool isCodeSend = false;
 
   changeStateCubit() {
     Future.delayed(
@@ -33,9 +34,11 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   getUserModel({bool isUpdate = false}) async {
     loginModel = await Preferences.instance.getUserModel();
-    userData = loginModel!.data!.user;
-    if (isUpdate) {
-      checkPageInitial(isUpdate);
+    if (loginModel!.message != null) {
+      userData = loginModel!.data!.user;
+      if (isUpdate) {
+        checkPageInitial(isUpdate);
+      }
     }
   }
 
@@ -78,7 +81,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         emit(RegisterUserData());
       } else {
         nameController.clear();
-        phoneController.clear();
+        // phoneController.clear();
         imageUrl = '';
         emit(RegisterUserData());
       }
@@ -93,6 +96,21 @@ class RegisterCubit extends Cubit<RegisterState> {
         image: imagePath.isEmpty ? null : imagePath,
         phone: phoneController.text,
         token: loginModel!.data!.accessToken,
+      ),
+    );
+    response.fold(
+      (l) => emit(RegisterUpdateError()),
+      (r) => emit(RegisterUpdateLoaded(r)),
+    );
+  }
+
+  registerUserData() async {
+    emit(RegisterUpdateLoading());
+    final response = await api.registerUser(
+      UserData(
+        name: nameController.text,
+        image: imagePath.isEmpty ? null : imagePath,
+        phone: phoneController.text,
       ),
     );
     response.fold(

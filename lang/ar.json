@@ -24,9 +24,11 @@
   "privacy_text": "خصوصية",
   "delete_account_text": "حذف الحساب",
   "edit_profile_text": "تعديل الحســاب",
-  "confirm_btn": "تـأكيـد"
-
-
-
+  "confirm_btn": "تـأكيـد",
+  "error_occurred_text": "لقد حدث خطأ يرجى المحاوله فى وقت لاحق",
+  "delete_successfully_text": "تم الحذف بنجاح",
+  "waring_delete_account_message": "هل انت متاكد من حذف حسابك ؟؟",
+  "cancel_btn": "إلغاء",
+  "register_text": "انشاء حساب"
 
 }

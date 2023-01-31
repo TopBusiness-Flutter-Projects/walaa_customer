@@ -5,10 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
+import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/brown_line_widget.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -37,6 +40,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (context.read<RegisterCubit>().isCodeSend) {
+      context.read<RegisterCubit>().registerUserData();
+    }
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -56,7 +62,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: Text(
-            translateText(AppStrings.editProfileText, context),
+            translateText(
+                widget.isUpdate
+                    ? AppStrings.editProfileText
+                    : AppStrings.registerText,
+                context),
             style: TextStyle(
               color: AppColors.textBackground,
               fontWeight: FontWeight.bold,
@@ -73,205 +83,253 @@ class _RegisterScreenState extends State<RegisterScreen> {
             return ShowLoadingIndicator();
           }
           if (state is RegisterUpdateLoaded) {
-            Preferences.instance.setUser(state.loginModel).whenComplete(
-                  () => Future.delayed(
-                    Duration(milliseconds: 300),
-                    () {
-                      Future.delayed(
-                        Duration(milliseconds: 300),
-                        () {
-                          cubit.changeStateCubit();
-                          Navigator.pop(context);
-                        },
-                      );
-                      context.read<ProfileCubit>().getStoreUser();
-                      toastMessage(
-                        'Updated SuccessFully',
-                        context,
-                        color: AppColors.success,
-                      );
-                    },
-                  ),
-                );
-            return ShowLoadingIndicator();
-          }
-          return cubit.loginModel!=null?Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 40),
-                  Stack(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 140,
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.white,
-                          child: ClipOval(
-                            child: cubit.imagePath.isEmpty
-                                ? ManageNetworkImage(
-                                    imageUrl: cubit.imageUrl,
-                                    width: 140,
-                                    height: 140,
-                                    borderRadius: 140,
-                                  )
-                                : Image.file(
-                                    File(
-                                      cubit.imagePath,
-                                    ),
-                                    width: 140.0,
-                                    height: 140.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 100,
-                        right: MediaQuery.of(context).size.width / 2 - 70,
-                        child: GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: Text('Choose'),
-                                ),
-                                contentPadding: EdgeInsets.zero,
-                                content: SizedBox(
-                                  width: MediaQuery.of(context).size.width - 60,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<RegisterCubit>()
-                                              .pickImage(
-                                                type: 'camera',
-                                              );
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: SizedBox(
-                                          height: 80,
-                                          width: 80,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.camera_alt,
-                                                  size: 45,
-                                                  color: AppColors.gray),
-                                              Text('camera')
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<RegisterCubit>()
-                                              .pickImage(
-                                                type: 'photo',
-                                              );
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: SizedBox(
-                                          height: 80,
-                                          width: 80,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.photo,
-                                                  size: 45,
-                                                  color: AppColors.gray),
-                                              Text('Gallery')
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                    ],
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Cancel'))
-                                ],
-                              ),
+            if (cubit.isCodeSend) {
+              Preferences.instance.setUser(state.loginModel).whenComplete(
+                    () => Future.delayed(
+                      Duration(milliseconds: 300),
+                      () {
+                        Future.delayed(
+                          Duration(milliseconds: 300),
+                          () {
+                            cubit.changeStateCubit();
+                            Navigator.pop(context);
+                          },
+                        );
+                        context.read<ProfileCubit>().getStoreUser();
+                        toastMessage(
+                          'Updated SuccessFully',
+                          context,
+                          color: AppColors.success,
+                        );
+                      },
+                    ),
+                  );
+            } else {
+              Preferences.instance.setUser(state.loginModel).whenComplete(
+                    () => Future.delayed(
+                      Duration(milliseconds: 300),
+                      () {
+                        Future.delayed(
+                          Duration(milliseconds: 300),
+                          () {
+                            cubit.changeStateCubit();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.homePageScreenRoute,
+                              (route) => false,
                             );
                           },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppColors.containerBackgroundColor,
-                              borderRadius: BorderRadius.circular(22),
-                            ),
-                            child: Icon(
-                              Icons.linked_camera_rounded,
-                              color: AppColors.textBackground,
-                              size: 25,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  CustomTextField(
-                    controller: cubit.nameController,
-                    image: 'null',
-                    backgroundColor: AppColors.transparent,
-                    imageColor: AppColors.textBackground,
-                    title: translateText(AppStrings.nameHint, context),
-                    validatorMessage: translateText(
-                      AppStrings.nameValidatorMessage,
-                      context,
+                        );
+                        context.read<ProfileCubit>().getStoreUser();
+                        toastMessage(
+                          'Updated SuccessFully',
+                          context,
+                          color: AppColors.success,
+                        );
+                      },
                     ),
-                    textInputType: TextInputType.text,
+                  );
+            }
+
+            return ShowLoadingIndicator();
+          }
+          return cubit.loginModel != null || !widget.isUpdate
+              ? Form(
+                  key: formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 40),
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 140,
+                              child: CircleAvatar(
+                                backgroundColor: AppColors.white,
+                                child: ClipOval(
+                                  child: widget.isUpdate
+                                      ? cubit.imagePath.isEmpty
+                                          ? ManageNetworkImage(
+                                              imageUrl: cubit.imageUrl,
+                                              width: 140,
+                                              height: 140,
+                                              borderRadius: 140,
+                                            )
+                                          : Image.file(
+                                              File(
+                                                cubit.imagePath,
+                                              ),
+                                              width: 140.0,
+                                              height: 140.0,
+                                              fit: BoxFit.cover,
+                                            )
+                                      : Image.asset(ImageAssets.noUserImage),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 100,
+                              right: MediaQuery.of(context).size.width / 2 - 70,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      title: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        child: Text('Choose'),
+                                      ),
+                                      contentPadding: EdgeInsets.zero,
+                                      content: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                60,
+                                        child: Row(
+                                          children: [
+                                            const Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                context
+                                                    .read<RegisterCubit>()
+                                                    .pickImage(
+                                                      type: 'camera',
+                                                    );
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: SizedBox(
+                                                height: 80,
+                                                width: 80,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.camera_alt,
+                                                        size: 45,
+                                                        color: AppColors.gray),
+                                                    Text('camera')
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                context
+                                                    .read<RegisterCubit>()
+                                                    .pickImage(
+                                                      type: 'photo',
+                                                    );
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: SizedBox(
+                                                height: 80,
+                                                width: 80,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.photo,
+                                                        size: 45,
+                                                        color: AppColors.gray),
+                                                    Text('Gallery')
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Cancel'))
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.containerBackgroundColor,
+                                    borderRadius: BorderRadius.circular(22),
+                                  ),
+                                  child: Icon(
+                                    Icons.linked_camera_rounded,
+                                    color: AppColors.textBackground,
+                                    size: 25,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        CustomTextField(
+                          controller: cubit.nameController,
+                          image: 'null',
+                          backgroundColor: AppColors.transparent,
+                          imageColor: AppColors.textBackground,
+                          title: translateText(AppStrings.nameHint, context),
+                          validatorMessage: translateText(
+                            AppStrings.nameValidatorMessage,
+                            context,
+                          ),
+                          textInputType: TextInputType.text,
+                        ),
+                        const BrownLineWidget(),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                          controller: cubit.phoneController,
+                          image: 'null',
+                          isEnable: false,
+                          imageColor: AppColors.textBackground,
+                          backgroundColor: AppColors.transparent,
+                          title: translateText(AppStrings.phoneHint, context),
+                          validatorMessage: translateText(
+                              AppStrings.phoneValidatorMessage, context),
+                          textInputType: TextInputType.phone,
+                        ),
+                        const BrownLineWidget(),
+                        const SizedBox(height: 12),
+                        SizedBox(height: MediaQuery.of(context).size.width / 2),
+                        SizedBox(height: MediaQuery.of(context).size.width / 4),
+                        CustomButton(
+                          text: translateText(AppStrings.confirmBtn, context),
+                          color: AppColors.buttonBackground,
+                          onClick: () {
+                            if (formKey.currentState!.validate()) {
+                              if (widget.isUpdate) {
+                                cubit.updateUserData();
+                              } else {
+                                Future.delayed(
+                                  Duration(milliseconds: 300),
+                                  () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.verificationScreenRoute,
+                                    );
+                                  },
+                                );
+                                context.read<LoginCubit>().isRegister = true;
+                                context.read<LoginCubit>().sendSmsCode();
+                              }
+                            }
+                          },
+                          borderRadius: 35,
+                          paddingHorizontal: 60,
+                        ),
+                        const SizedBox(height: 50),
+                      ],
+                    ),
                   ),
-                  const BrownLineWidget(),
-                  const SizedBox(height: 12),
-                  CustomTextField(
-                    controller: cubit.phoneController,
-                    image: 'null',
-                    isEnable: false,
-                    imageColor: AppColors.textBackground,
-                    backgroundColor: AppColors.transparent,
-                    title: translateText(AppStrings.phoneHint, context),
-                    validatorMessage: translateText(
-                        AppStrings.phoneValidatorMessage, context),
-                    textInputType: TextInputType.phone,
-                  ),
-                  const BrownLineWidget(),
-                  const SizedBox(height: 12),
-                  SizedBox(height: MediaQuery.of(context).size.width / 2),
-                  SizedBox(height: MediaQuery.of(context).size.width / 4),
-                  CustomButton(
-                    text: translateText(AppStrings.confirmBtn, context),
-                    color: AppColors.buttonBackground,
-                    onClick: () {
-                      if (formKey.currentState!.validate()) {
-                        cubit.updateUserData();
-                      }
-                    },
-                    borderRadius: 35,
-                    paddingHorizontal: 60,
-                  ),
-                  const SizedBox(height: 50),
-                ],
-              ),
-            ),
-          ):ShowLoadingIndicator();
+                )
+              : ShowLoadingIndicator();
         },
       ),
     );

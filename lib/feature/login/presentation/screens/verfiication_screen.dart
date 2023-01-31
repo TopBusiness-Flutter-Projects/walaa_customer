@@ -7,13 +7,13 @@ import 'package:walaa_customer/config/routes/app_routes.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
+import 'package:walaa_customer/feature/register/presentation/cubit/register_cubit.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/show_loading_indicator.dart';
 import '../widgets/header_title.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -30,11 +30,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   StreamController<ErrorAnimationType>? errorController;
   String currentText = "";
+
   @override
   void dispose() {
     errorController!.close();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     errorController = StreamController<ErrorAnimationType>();
@@ -44,6 +46,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       body: SafeArea(
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
+            LoginCubit cubit = context.read<LoginCubit>();
             if (state is CheckCodeSuccessfully) {
               Future.delayed(const Duration(milliseconds: 500), () {
                 toastMessage(
@@ -51,11 +54,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   context,
                   color: AppColors.success,
                 );
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Routes.homePageScreenRoute,
-                  (route) => false,
-                );
+                context.read<RegisterCubit>().isCodeSend = true;
+                cubit.isRegister
+                    ? Navigator.pop(context)
+                    : Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.homePageScreenRoute,
+                        (route) => false,
+                      );
               });
               // return const ShowLoadingIndicator();
             }
@@ -155,7 +161,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             setState(
                               () {
                                 hasError = false;
-                                context.read<LoginCubit>().verifySmsCode(currentText);
+                                context
+                                    .read<LoginCubit>()
+                                    .verifySmsCode(currentText);
                               },
                             );
                           }

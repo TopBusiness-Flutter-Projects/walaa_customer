@@ -37,15 +37,15 @@ class Preferences {
       userModel.data!.user.isLoggedIn = true;
     } else {
       userModel = LoginModel();
-      UserData user = UserData();
-      userModel.data?.user = user;
-      userModel.data!.user.isLoggedIn = false;
+      // UserData user = UserData();
+      // userModel.data?.user = user;
+      // userModel.data!.user.isLoggedIn = false;
     }
     return userModel;
   }
 
-  clearUserData() async {
+  Future<bool> clearUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove('user');
+   return preferences.remove('user');
   }
 }

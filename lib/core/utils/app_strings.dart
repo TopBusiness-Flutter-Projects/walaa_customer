@@ -42,6 +42,11 @@ class AppStrings {
   static const String welcomeText = 'welcome_text';
   static const String confirmBtn = 'confirm_btn';
   static const String editProfileText = 'edit_profile_text';
+  static const String registerText = 'register_text';
+  static const String errorOccurredText = 'error_occurred_text';
+  static const String deleteSuccessFullyText = 'delete_successfully_text';
+  static const String waringDeleteAccountMessage = 'waring_delete_account_message';
+  static const String cancelBtn = 'cancel_btn';
 
 
 

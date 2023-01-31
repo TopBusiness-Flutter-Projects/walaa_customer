@@ -9,6 +9,7 @@ import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/login_model.dart';
+import '../models/response_message.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
@@ -61,7 +62,6 @@ class ServiceApi {
     }
   }
 
-
   Future<Either<Failure, SettingModel>> getSetting() async {
     try {
       final response = await dio.get(
@@ -73,4 +73,32 @@ class ServiceApi {
     }
   }
 
+  Future<Either<Failure, StatusResponse>> deleteAccount(String token) async {
+    try {
+      final response = await dio.post(
+        EndPoints.deleteAccountUrl,
+        options: Options(
+          headers: {
+            'Authorization': token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, LoginModel>> registerUser(UserData userData) async {
+    try {
+      final response = await dio.newPost(
+        EndPoints.registerUrl,
+        formDataIsEnabled: true,
+        body: await userData.updateToJson(),
+      );
+      return Right(LoginModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

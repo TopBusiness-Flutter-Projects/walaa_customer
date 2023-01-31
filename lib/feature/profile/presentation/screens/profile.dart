@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../../../config/routes/app_routes.dart';
+import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../contact us/presentation/screens/contact_us.dart';
-import '../../../language/presentation/cubit/locale_cubit.dart';
 import '../../../privacy_terms/presentation/screen/privacy&terms.dart';
 import '../../../register/presentation/screen/register.dart';
 import '../../../splash/presentation/screens/splash_screen.dart';
 import '../cubit/profile_cubit.dart';
-import '../widgets/profile_lsit_tail_widget.dart';
+import '../widgets/profile_list_tail_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -67,6 +67,10 @@ class ProfileScreen extends StatelessWidget {
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           ProfileCubit profileCubit = context.read<ProfileCubit>();
+          if (state is ProfileDeleteAccountLoading ||
+              state is ProfileDeleteAccountLoaded) {
+            return ShowLoadingIndicator();
+          }
           return profileCubit.loginDataModel == null
               ? ShowLoadingIndicator()
               : Column(
@@ -94,7 +98,8 @@ class ProfileScreen extends StatelessWidget {
                                   onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RegisterScreen(isUpdate: true),
+                                      builder: (context) =>
+                                          RegisterScreen(isUpdate: true),
                                     ),
                                   ),
                                   child: Container(
@@ -153,9 +158,8 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(height: 4),
                               TextButton(
                                 onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  bool result = await prefs.remove('user');
+                                  bool result = await Preferences.instance
+                                      .clearUserData();
                                   result
                                       ? Navigator.pushAndRemoveUntil(
                                           context,
@@ -167,7 +171,8 @@ class ProfileScreen extends StatelessWidget {
                                             child: SplashScreen(),
                                           ),
                                           ModalRoute.withName(
-                                              Routes.loginRoute))
+                                              Routes.loginRoute),
+                                        )
                                       : null;
                                 },
                                 child: Text(
@@ -214,7 +219,8 @@ class ProfileScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => PrivacyAndTermsScreen(
-                              title: AppStrings.privacyText),
+                            title: AppStrings.privacyText,
+                          ),
                         ),
                       ),
                     ),
@@ -223,7 +229,35 @@ class ProfileScreen extends StatelessWidget {
                           translateText(AppStrings.deleteAccountText, context),
                       image: ImageAssets.deleteIcon,
                       imageColor: AppColors.buttonBackground,
-                      onclick: () {},
+                      onclick: () {
+                        Alert(
+                          context: context,
+                          type: AlertType.warning,
+                          title:
+                          "\n${translateText(AppStrings.deleteAccountText, context)}",
+                          desc:
+                          "\n\n${translateText(AppStrings.waringDeleteAccountMessage, context)}\n\n",
+                          buttons: [
+                            DialogButton(
+                              onPressed: () => Navigator.pop(context),
+                              color: AppColors.containerBackgroundColor,
+                              child: Text(
+                                translateText(AppStrings.cancelBtn, context),
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                            DialogButton(
+                              onPressed: () =>profileCubit.deleteAccount(context),
+                              color: AppColors.error,
+                              child: Text(
+                                translateText(AppStrings.confirmBtn, context),
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                            )
+                          ],
+                        ).show();
+                        // profileCubit.deleteAccount(context);
+                      },
                     ),
                   ],
                 );

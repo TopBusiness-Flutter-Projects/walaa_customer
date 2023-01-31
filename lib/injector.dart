@@ -43,7 +43,7 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => ProfileCubit(
-      // serviceLocator(),
+      serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(

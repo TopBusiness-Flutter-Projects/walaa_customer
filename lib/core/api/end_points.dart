@@ -3,7 +3,9 @@ class EndPoints {
   static const String loginUrl = '${baseUrl}client/auth/login';
   static const String contactUsUrl = '${baseUrl}client/auth/contact-us';
   static const String updateProfileUrl = '${baseUrl}client/auth/update-profile';
+  static const String deleteAccountUrl = '${baseUrl}client/auth/delete-account';
   static const String settingUrl = '${baseUrl}setting';
+  static const String registerUrl = '${baseUrl}client/auth/register';
 
 
 

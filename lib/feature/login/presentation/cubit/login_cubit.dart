@@ -22,6 +22,8 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginModel? loginModel;
 
+  bool isRegister = false;
+
   loginPhone(String phone, context) async {
     emit(LoginLoading());
     final response = await serviceApi.postLogin(phone);
@@ -33,6 +35,12 @@ class LoginCubit extends Cubit<LoginState> {
             'There is no email with this phone ',
             context,
             color: AppColors.error,
+          );
+          Future.delayed(
+            Duration(milliseconds: 900),
+            () {
+              emit(LoginInitial());
+            },
           );
           emit(LoginLoaded());
         } else if (loginModel.code == 200) {

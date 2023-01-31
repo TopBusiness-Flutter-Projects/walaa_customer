@@ -7,6 +7,8 @@ import 'package:walaa_customer/core/utils/translate_text_method.dart';
 import 'package:walaa_customer/core/widgets/custom_button.dart';
 import 'package:walaa_customer/core/widgets/custom_textfield.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
+import 'package:walaa_customer/feature/register/presentation/cubit/register_cubit.dart';
+import 'package:walaa_customer/feature/register/presentation/screen/register.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/widgets/brown_line_widget.dart';
@@ -34,6 +36,23 @@ class LoginScreen extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     Routes.verificationScreenRoute,
+                  );
+                },
+              );
+              return ShowLoadingIndicator();
+            }
+            if (state is LoginLoaded) {
+              context.read<RegisterCubit>().phoneController.text = cubit.phoneController.text;
+              Future.delayed(
+                Duration(milliseconds: 500),
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegisterScreen(
+                        isUpdate: false,
+                      ),
+                    ),
                   );
                 },
               );
