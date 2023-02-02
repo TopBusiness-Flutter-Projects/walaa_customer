@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -73,194 +74,211 @@ class ProfileScreen extends StatelessWidget {
           }
           return profileCubit.loginDataModel == null
               ? ShowLoadingIndicator()
-              : Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height / 3 - 60,
-                          width: MediaQuery.of(context).size.width,
-                          color: AppColors.transparent,
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          left: 0,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 36,
-                              vertical: 25,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegisterScreen(isUpdate: true),
+              : SingleChildScrollView(
+
+                child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height / 3 - 60,
+                            width: MediaQuery.of(context).size.width,
+                            color: AppColors.transparent,
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            left: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 36,
+                                vertical: 25,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterScreen(isUpdate: true),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.containerBackgroundColor,
+                                        borderRadius: BorderRadius.circular(22),
+                                      ),
+                                      child: Icon(
+                                        Icons.edit_calendar_outlined,
+                                        color: AppColors.textBackground,
+                                        size: 25,
+                                      ),
                                     ),
                                   ),
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.containerBackgroundColor,
-                                      borderRadius: BorderRadius.circular(22),
-                                    ),
-                                    child: Icon(
-                                      Icons.edit_calendar_outlined,
-                                      color: AppColors.textBackground,
-                                      size: 25,
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: MediaQuery.of(context).size.height / 10,
+                            left: 0,
+                            right: 0,
+                            child: SizedBox(
+                              width: 90,
+                              height: 120,
+                              child: CircleAvatar(
+                                backgroundColor: AppColors.white,
+                                child: ClipOval(
+                                  child: ManageNetworkImage(
+                                    imageUrl: profileCubit
+                                        .loginDataModel!.data!.user.image!,
+                                    width: 140,
+                                    height: 140,
+                                    borderRadius: 140,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            child: Column(
+                              children: [
+                                Text(
+                                  '${translateText(AppStrings.welcomeText, context)}, ${profileCubit.loginDataModel!.data!.user.name}',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textBackground,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                TextButton(
+                                  onPressed: () async {
+                                    bool result = await Preferences.instance
+                                        .clearUserData();
+                                    result
+                                        ? Navigator.pushAndRemoveUntil(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 1300),
+                                              child: SplashScreen(),
+                                            ),
+                                            ModalRoute.withName(
+                                                Routes.loginRoute),
+                                          )
+                                        : null;
+                                  },
+                                  child: Text(
+                                    translateText(AppStrings.logoutText, context),
+                                    style: TextStyle(
+                                      color: AppColors.black,
+                                      fontSize: 18,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                      ProfileListTailWidget(
+                        title: translateText(AppStrings.contactUsText, context),
+                        image: ImageAssets.contact_usIcon,
+                        imageColor: AppColors.buttonBackground,
+                        onclick: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ContactUsScreen(),
+                          ),
                         ),
-                        Positioned(
-                          bottom: MediaQuery.of(context).size.height / 10,
-                          left: 0,
-                          right: 0,
-                          child: SizedBox(
-                            width: 90,
-                            height: 120,
-                            child: CircleAvatar(
-                              backgroundColor: AppColors.white,
-                              child: ClipOval(
-                                child: ManageNetworkImage(
-                                  imageUrl: profileCubit
-                                      .loginDataModel!.data!.user.image!,
-                                  width: 140,
-                                  height: 140,
-                                  borderRadius: 140,
-                                ),
-                              ),
+                      ),
+                      ProfileListTailWidget(
+                        title: translateText(AppStrings.termsText, context),
+                        image: ImageAssets.termsIcon,
+                        imageColor: AppColors.buttonBackground,
+                        onclick: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PrivacyAndTermsScreen(
+                                title: AppStrings.termsText),
+                          ),
+                        ),
+                      ),
+                      ProfileListTailWidget(
+                        title: translateText(AppStrings.privacyText, context),
+                        image: ImageAssets.privacyIcon,
+                        imageColor: AppColors.buttonBackground,
+                        onclick: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PrivacyAndTermsScreen(
+                              title: AppStrings.privacyText,
                             ),
                           ),
                         ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          left: 0,
-                          child: Column(
-                            children: [
-                              Text(
-                                '${translateText(AppStrings.welcomeText, context)}, ${profileCubit.loginDataModel!.data!.user.name}',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textBackground,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              TextButton(
-                                onPressed: () async {
-                                  bool result = await Preferences.instance
-                                      .clearUserData();
-                                  result
-                                      ? Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 1300),
-                                            child: SplashScreen(),
-                                          ),
-                                          ModalRoute.withName(
-                                              Routes.loginRoute),
-                                        )
-                                      : null;
-                                },
+                      ),
+                      ProfileListTailWidget(
+                        title:
+                            translateText(AppStrings.deleteAccountText, context),
+                        image: ImageAssets.deleteIcon,
+                        imageColor: AppColors.buttonBackground,
+                        onclick: () {
+                          Alert(
+                            context: context,
+                            type: AlertType.warning,
+                            title:
+                                "\n${translateText(AppStrings.deleteAccountText, context)}",
+                            desc:
+                                "\n\n${translateText(AppStrings.waringDeleteAccountMessage, context)}\n\n",
+                            buttons: [
+                              DialogButton(
+                                onPressed: () => Navigator.pop(context),
+                                color: AppColors.containerBackgroundColor,
                                 child: Text(
-                                  translateText(AppStrings.logoutText, context),
+                                  translateText(AppStrings.cancelBtn, context),
                                   style: TextStyle(
-                                    color: AppColors.black,
-                                    fontSize: 18,
-                                  ),
+                                      color: Colors.white, fontSize: 20),
                                 ),
                               ),
+                              DialogButton(
+                                onPressed: () =>
+                                    profileCubit.deleteAccount(context),
+                                color: AppColors.error,
+                                child: Text(
+                                  translateText(AppStrings.confirmBtn, context),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              )
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    ProfileListTailWidget(
-                      title: translateText(AppStrings.contactUsText, context),
-                      image: ImageAssets.contact_usIcon,
-                      imageColor: AppColors.buttonBackground,
-                      onclick: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ContactUsScreen(),
+                          ).show();
+                          // profileCubit.deleteAccount(context);
+                        },
+                      ),
+                      Center(
+                        child: PrettyQr(
+                          typeNumber: 3,
+                          size: 200,
+                          data: profileCubit.loginDataModel!.data!.user.id
+                              .toString(),
+                          errorCorrectLevel: QrErrorCorrectLevel.M,
+                          elementColor: AppColors.textBackground,
+                          roundEdges: true,
                         ),
                       ),
-                    ),
-                    ProfileListTailWidget(
-                      title: translateText(AppStrings.termsText, context),
-                      image: ImageAssets.termsIcon,
-                      imageColor: AppColors.buttonBackground,
-                      onclick: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PrivacyAndTermsScreen(
-                              title: AppStrings.termsText),
-                        ),
-                      ),
-                    ),
-                    ProfileListTailWidget(
-                      title: translateText(AppStrings.privacyText, context),
-                      image: ImageAssets.privacyIcon,
-                      imageColor: AppColors.buttonBackground,
-                      onclick: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PrivacyAndTermsScreen(
-                            title: AppStrings.privacyText,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ProfileListTailWidget(
-                      title:
-                          translateText(AppStrings.deleteAccountText, context),
-                      image: ImageAssets.deleteIcon,
-                      imageColor: AppColors.buttonBackground,
-                      onclick: () {
-                        Alert(
-                          context: context,
-                          type: AlertType.warning,
-                          title:
-                          "\n${translateText(AppStrings.deleteAccountText, context)}",
-                          desc:
-                          "\n\n${translateText(AppStrings.waringDeleteAccountMessage, context)}\n\n",
-                          buttons: [
-                            DialogButton(
-                              onPressed: () => Navigator.pop(context),
-                              color: AppColors.containerBackgroundColor,
-                              child: Text(
-                                translateText(AppStrings.cancelBtn, context),
-                                style: TextStyle(color: Colors.white, fontSize: 20),
-                              ),
-                            ),
-                            DialogButton(
-                              onPressed: () =>profileCubit.deleteAccount(context),
-                              color: AppColors.error,
-                              child: Text(
-                                translateText(AppStrings.confirmBtn, context),
-                                style: TextStyle(color: Colors.white, fontSize: 20),
-                              ),
-                            )
-                          ],
-                        ).show();
-                        // profileCubit.deleteAccount(context);
-                      },
-                    ),
-                  ],
-                );
+                    ],
+                  ),
+              );
         },
       ),
     );
