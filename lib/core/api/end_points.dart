@@ -6,7 +6,8 @@ class EndPoints {
   static const String deleteAccountUrl = '${baseUrl}client/auth/delete-account';
   static const String settingUrl = '${baseUrl}setting';
   static const String registerUrl = '${baseUrl}client/auth/register';
-
+  static const String chargeWalletUrl = '${baseUrl}paytap/store';
+  static const String profileUrl = '${baseUrl}client/auth/my-profile';
 
 
 
