@@ -19,8 +19,16 @@ import '../../../splash/presentation/screens/splash_screen.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_list_tail_widget.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +73,18 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: AppColors.white,
       ),
-      body: BlocBuilder<ProfileCubit, ProfileState>(
+      body:
+    BlocListener<ProfileCubit, ProfileState>(
+    listener: (context, state) {
+    if (state is OnUrlPayLoaded) {
+    //  state.model.token=cubit.userModel!.data.token;
+    Navigator.pushNamed(context, Routes.paymentRoute,
+    arguments: state.data.data!.payment_url)
+        .then((value) =>
+    {context.read<ProfileCubit>().onGetProfileData()});
+    }
+    },
+    child:   BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           ProfileCubit profileCubit = context.read<ProfileCubit>();
           if (state is ProfileDeleteAccountLoading ||
@@ -192,6 +211,32 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       ProfileListTailWidget(
+                        title: 'balance' +
+                            " , " +
+                            profileCubit.loginDataModel!.data!.user.balance
+                                .toString() +
+                            "sr",
+                        image: ImageAssets.walletIcon,
+                        imageColor: AppColors.buttonBackground,
+                        onclick: () async {
+                          var resultLabel =
+                          await _showTextInputDialog(context);
+                          if (resultLabel != null) {
+                            print("D;dldlldl${resultLabel}");
+                            profileCubit.onRechargeWallet(
+                                double.parse(resultLabel), context);
+                          }
+                        },
+
+                        //     Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => PrivacyAndTermsScreen(
+                        //         title: AppStrings.privacyText),
+                        //   ),
+                        // ),
+                      ),
+                      ProfileListTailWidget(
                         title: translateText(AppStrings.contactUsText, context),
                         image: ImageAssets.contact_usIcon,
                         imageColor: AppColors.buttonBackground,
@@ -283,6 +328,28 @@ class ProfileScreen extends StatelessWidget {
               );
         },
       ),
-    );
+    ));
+  }
+
+  Future<String?> _showTextInputDialog(BuildContext context1) async {
+    return showDialog(
+        context: context1,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('addBalance'),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: 'Balance'),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('addBalance'),
+                onPressed: () =>
+                    Navigator.pop(context, _textFieldController.text),
+              ),
+            ],
+          );
+        });
   }
 }

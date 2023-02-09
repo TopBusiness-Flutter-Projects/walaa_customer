@@ -20,8 +20,10 @@ class ImageAssets {
   static const String termsIcon = '$iconsPath/terms.svg';
   static const String privacyIcon = '$iconsPath/privacy.svg';
   static const String deleteIcon = '$iconsPath/delete.svg';
+  static const String walletIcon = '$iconsPath/wallet.svg';
 
- //Lottie
+
+//Lottie
  //  static const String noLogin = '$lottiePath/login.json';
 
 }

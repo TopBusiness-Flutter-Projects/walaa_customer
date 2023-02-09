@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:walaa_customer/core/api/base_api_consumer.dart';
 import 'package:walaa_customer/core/preferences/preferences.dart';
+import 'package:walaa_customer/core/models/recharge_wallet_model.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 
 import '../../feature/contact us/models/contact_us_model.dart';
@@ -92,6 +93,22 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, RechargeWalletModel>> chargeWallet(String token, double amount) async {
+    try {
+      final response = await dio.get(
+        EndPoints.chargeWalletUrl,
+        options: Options(
+          headers: {
+            'Authorization': token,
+          },
+        ),
+        queryParameters: {'amount':amount}
+      );
+      return Right(RechargeWalletModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, LoginModel>> registerUser(UserData userData) async {
     try {
@@ -99,6 +116,23 @@ class ServiceApi {
         EndPoints.registerUrl,
         formDataIsEnabled: true,
         body: await userData.updateToJson(),
+      );
+      return Right(LoginModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, LoginModel>> getprofile(String token) async {
+    try {
+
+      final response = await dio.get(
+        EndPoints.profileUrl,
+        options: Options(
+          headers: {
+            'Authorization': token,
+          },
+        ),
+
       );
       return Right(LoginModel.fromJson(response));
     } on ServerException {
