@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:walaa_customer/config/routes/app_routes.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
@@ -14,6 +15,7 @@ import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../../navigation_bottom/screens/navigation_bottom.dart';
 import '../widgets/header_title.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -57,9 +59,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 context.read<RegisterCubit>().isCodeSend = true;
                 cubit.isRegister
                     ? Navigator.pop(context)
-                    : Navigator.pushNamedAndRemoveUntil(
+                    : Navigator.pushAndRemoveUntil(
                         context,
-                        Routes.homePageScreenRoute,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          alignment: Alignment.center,
+                          duration: const Duration(milliseconds: 1300),
+                          child: NavigationBottom(),
+                        ),
                         (route) => false,
                       );
               });

@@ -265,6 +265,7 @@ class ProfileScreen extends StatelessWidget {
                           // profileCubit.deleteAccount(context);
                         },
                       ),
+                      SizedBox(height: 22),
                       Center(
                         child: PrettyQr(
                           typeNumber: 3,
@@ -276,6 +277,7 @@ class ProfileScreen extends StatelessWidget {
                           roundEdges: true,
                         ),
                       ),
+                      SizedBox(height: 22),
                     ],
                   ),
               );

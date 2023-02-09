@@ -47,6 +47,8 @@ class AppStrings {
   static const String deleteSuccessFullyText = 'delete_successfully_text';
   static const String waringDeleteAccountMessage = 'waring_delete_account_message';
   static const String cancelBtn = 'cancel_btn';
+  static const String homeText = 'home';
+  static const String menuText = 'menu';
 
 
 

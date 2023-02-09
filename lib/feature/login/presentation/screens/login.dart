@@ -41,23 +41,22 @@ class LoginScreen extends StatelessWidget {
               );
               return ShowLoadingIndicator();
             }
-            if (state is LoginLoaded) {
-              context.read<RegisterCubit>().phoneController.text = cubit.phoneController.text;
-              Future.delayed(
-                Duration(milliseconds: 500),
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegisterScreen(
-                        isUpdate: false,
-                      ),
-                    ),
-                  );
-                },
-              );
-              return ShowLoadingIndicator();
-            }
+            // if (state is LoginLoaded) {
+            //   context.read<RegisterCubit>().phoneController.text = cubit.phoneController.text;
+            //   Future.delayed(
+            //     Duration(milliseconds: 500),
+            //     () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => RegisterScreen(
+            //             isUpdate: false,
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   );
+            //   return ShowLoading
 
             return Form(
               key: formKey,

@@ -7,8 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets_manager.dart';
-import '../../../home page/presentation/screens/home_page.dart';
+import '../../../home page/screens/home_page.dart';
 import '../../../login/presentation/screens/login.dart';
+import '../../../navigation_bottom/screens/navigation_bottom.dart';
 import 'onbording_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             type: PageTransitionType.fade,
             alignment: Alignment.center,
             duration: const Duration(milliseconds: 1300),
-            child:  HomePageScreen(),
+            child:  NavigationBottom(),
           ),
         );
 

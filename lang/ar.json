@@ -29,6 +29,8 @@
   "delete_successfully_text": "تم الحذف بنجاح",
   "waring_delete_account_message": "هل انت متاكد من حذف حسابك ؟؟",
   "cancel_btn": "إلغاء",
-  "register_text": "انشاء حساب"
-
+  "register_text": "انشاء حساب",
+  "home": "الرئيسية",
+  "profile": "الملف الشخصى",
+  "menu": "القائمه"
 }

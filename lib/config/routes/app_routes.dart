@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:walaa_customer/feature/login/presentation/screens/login.dart';
 
 import '../../core/utils/app_strings.dart';
-import '../../feature/home page/presentation/screens/home_page.dart';
+import '../../feature/home page/screens/home_page.dart';
 import '../../feature/login/presentation/screens/verfiication_screen.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 

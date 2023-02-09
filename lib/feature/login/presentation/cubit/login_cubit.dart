@@ -36,13 +36,13 @@ class LoginCubit extends Cubit<LoginState> {
             context,
             color: AppColors.error,
           );
-          Future.delayed(
-            Duration(milliseconds: 900),
-            () {
-              emit(LoginInitial());
-            },
-          );
-          emit(LoginLoaded());
+          // Future.delayed(
+          //   Duration(milliseconds: 900),
+          //   () {
+          //     emit(LoginInitial());
+          //   },
+          // );
+          // emit(LoginLoaded());
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();

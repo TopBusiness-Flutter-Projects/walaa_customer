@@ -1,9 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:walaa_customer/core/api/base_api_consumer.dart';
+import 'package:walaa_customer/core/preferences/preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 
 import '../../feature/contact us/models/contact_us_model.dart';
+import '../../feature/home page/models/providers_model.dart';
+import '../../feature/menu/models/category_data_model.dart';
+import '../../feature/menu/models/product_data_model.dart';
 import '../../feature/privacy_terms/models/settings.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
@@ -101,4 +105,60 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, ProviderListModel>> getAllProviders() async {
+    try {
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      final response = await dio.get(
+        EndPoints.providersUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': 'ar',
+          },
+        ),
+      );
+      return Right(ProviderListModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  // Future<Either<Failure,CategoryDataModel>> getCategory() async {
+  //   try {
+  //     LoginModel loginModel = await Preferences.instance.getUserModel();
+  //     final response = await dio.get(
+  //       EndPoints.categoryUrl,
+  //       options: Options(
+  //         headers: {
+  //           'Authorization': loginModel.data!.accessToken,
+  //           'Accept-Language': 'ar',
+  //         },
+  //       ),
+  //     );
+  //     return Right(CategoryDataModel.fromJson(response));
+  //   } on ServerException {
+  //     return Left(ServerFailure());
+  //   }
+  // }
+
+  Future<Either<Failure,ProductDataModel>> getProduct(int category_id) async {
+
+    try {
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      final response = await dio.get(
+        EndPoints.productUrl + "/${category_id}",
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': 'ar',
+          },
+        ),
+      );
+      return Right(ProductDataModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
 }

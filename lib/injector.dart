@@ -8,12 +8,15 @@ import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
 import 'feature/contact us/presentation/cubit/contact_us_cubit.dart';
+import 'feature/home page/cubit/home_cubit.dart';
 import 'feature/language/data/data_sources/language_locale_data_source.dart';
 import 'feature/language/data/repositories/language_repository.dart';
 import 'feature/language/domain/repositories/base_language_repository.dart';
 import 'feature/language/domain/use_cases/change_language_use_case.dart';
 import 'feature/language/domain/use_cases/get_saved_language_use_case.dart';
 import 'feature/language/presentation/cubit/locale_cubit.dart';
+import 'feature/menu/cubit/menu_cubit.dart';
+import 'feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import 'feature/privacy_terms/presentation/cubit/settings_cubit.dart';
 import 'feature/profile/presentation/cubit/profile_cubit.dart';
 import 'feature/register/presentation/cubit/register_cubit.dart';
@@ -43,6 +46,21 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => ProfileCubit(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => NavigatorBottomCubit(
+      // serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => HomeCubit(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => MenuCubit(
       serviceLocator(),
     ),
   );

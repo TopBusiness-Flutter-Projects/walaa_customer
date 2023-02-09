@@ -11,6 +11,8 @@ class ImageAssets {
   static const String boarding2Image = '$imagePath/onboarding2.png';
   static const String contactUsImage = '$imagePath/contact_us.png';
   static const String noUserImage = '$imagePath/no_user.png';
+  static const String homeImage = '$imagePath/home.png';
+  static const String profileImage = '$imagePath/user.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
