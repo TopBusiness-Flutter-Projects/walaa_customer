@@ -42,8 +42,10 @@ class NavigatorBottomWidget extends StatelessWidget {
             ),
           ],
           onTap: (index) {
-            bottomCubit.changePage(index,
-                translateText(['home', 'profile'].elementAt(index), context));
+            bottomCubit.changePage(
+              index,
+              translateText(['home', 'profile'].elementAt(index), context),
+            );
           },
         );
       },

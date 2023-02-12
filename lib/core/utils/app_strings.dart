@@ -49,6 +49,13 @@ class AppStrings {
   static const String cancelBtn = 'cancel_btn';
   static const String homeText = 'home';
   static const String menuText = 'menu';
+  static const String noItem = 'no_item';
+  static const String chooseCoffeeText = 'choose_coffee';
+  static const String perfectDayText = 'perfect_day';
+  static const String addBalanceText = 'add_balance_text';
+  static const String balanceText = 'balance_text';
+  static const String SARText = 'SAR';
+  static const String noEmailError = 'There_is_no_email_with_this_phone';
 
 
 

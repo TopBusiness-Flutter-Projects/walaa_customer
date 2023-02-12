@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/login_model.dart';
+import '../utils/app_strings.dart';
 
 class Preferences {
   static final Preferences instance = Preferences._internal();
@@ -24,7 +25,8 @@ class Preferences {
 
   Future<void> setUser(LoginModel loginModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('user',jsonEncode(LoginModel.fromJson(loginModel.toJson())));
+    preferences.setString(
+        'user', jsonEncode(LoginModel.fromJson(loginModel.toJson())));
     print(await getUserModel());
   }
 
@@ -37,15 +39,17 @@ class Preferences {
       userModel.data!.user.isLoggedIn = true;
     } else {
       userModel = LoginModel();
-      // UserData user = UserData();
-      // userModel.data?.user = user;
-      // userModel.data!.user.isLoggedIn = false;
     }
     return userModel;
   }
 
   Future<bool> clearUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-   return preferences.remove('user');
+    return preferences.remove('user');
+  }
+
+  Future<String> getSavedLang() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(AppStrings.locale) ?? 'en';
   }
 }

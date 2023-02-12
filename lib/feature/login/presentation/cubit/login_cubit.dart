@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
+import 'package:walaa_customer/core/utils/translate_text_method.dart';
 
 import '../../../../core/models/login_model.dart';
 import '../../../../core/remote/service.dart';
@@ -32,17 +33,18 @@ class LoginCubit extends Cubit<LoginState> {
       (loginModel) {
         if (loginModel.code == 411) {
           toastMessage(
-            'There is no email with this phone ',
+            translateText(AppStrings.noEmailError, context),
             context,
             color: AppColors.error,
           );
-          // Future.delayed(
-          //   Duration(milliseconds: 900),
-          //   () {
-          //     emit(LoginInitial());
-          //   },
-          // );
-          // emit(LoginLoaded());
+          Future.delayed(
+            Duration(milliseconds: 900),
+            () {
+              print('============================================');
+              emit(LoginInitial());
+            },
+          );
+          emit(LoginLoaded());
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();
@@ -110,7 +112,7 @@ class LoginCubit extends Cubit<LoginState> {
     );
     await _mAuth.signInWithCredential(credential).then((value) {
       print('LoginSuccess');
-      storeUser(loginModel!);
+      isRegister?null: storeUser(loginModel!);
       emit(CheckCodeSuccessfully());
     }).catchError((error) {
       print('phone auth =>${error.toString()}');

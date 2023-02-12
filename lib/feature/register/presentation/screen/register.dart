@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
@@ -17,6 +18,7 @@ import '../../../../core/widgets/brown_line_widget.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield.dart';
 import '../../../../core/widgets/network_image.dart';
+import '../../../navigation_bottom/screens/navigation_bottom.dart';
 import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../cubit/register_cubit.dart';
 
@@ -76,61 +78,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
         elevation: 0,
         backgroundColor: AppColors.white,
       ),
-      body: BlocBuilder<RegisterCubit, RegisterState>(
+      body: BlocConsumer<RegisterCubit, RegisterState>(
+        listener: (context, state) {
+          if(state is RegisterLoaded){
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                alignment: Alignment.center,
+                duration: const Duration(milliseconds: 1300),
+                child: NavigationBottom(),
+              ),
+                  (route) => false,
+            );
+          }
+        },
         builder: (context, state) {
           RegisterCubit cubit = context.read<RegisterCubit>();
-          if (state is RegisterUpdateLoading) {
-            return ShowLoadingIndicator();
-          }
-          if (state is RegisterUpdateLoaded) {
-            if (cubit.isCodeSend) {
-              Preferences.instance.setUser(state.loginModel).whenComplete(
-                    () => Future.delayed(
-                      Duration(milliseconds: 300),
-                      () {
-                        Future.delayed(
-                          Duration(milliseconds: 300),
-                          () {
-                            cubit.changeStateCubit();
-                            Navigator.pop(context);
-                          },
-                        );
-                        context.read<ProfileCubit>().getStoreUser();
-                        toastMessage(
-                          'Updated SuccessFully',
-                          context,
-                          color: AppColors.success,
-                        );
-                      },
-                    ),
-                  );
-            } else {
-              Preferences.instance.setUser(state.loginModel).whenComplete(
-                    () => Future.delayed(
-                      Duration(milliseconds: 300),
-                      () {
-                        Future.delayed(
-                          Duration(milliseconds: 300),
-                          () {
-                            cubit.changeStateCubit();
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              Routes.homePageScreenRoute,
-                              (route) => false,
-                            );
-                          },
-                        );
-                        context.read<ProfileCubit>().getStoreUser();
-                        toastMessage(
-                          'Updated SuccessFully',
-                          context,
-                          color: AppColors.success,
-                        );
-                      },
-                    ),
-                  );
-            }
-
+          if (state is RegisterUpdateLoading||state is RegisterLoading) {
             return ShowLoadingIndicator();
           }
           return cubit.loginModel != null || !widget.isUpdate
@@ -316,15 +281,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (widget.isUpdate) {
                                 cubit.updateUserData();
                               } else {
-                                Future.delayed(
-                                  Duration(milliseconds: 300),
-                                  () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      Routes.verificationScreenRoute,
-                                    );
-                                  },
-                                );
                                 context.read<LoginCubit>().isRegister = true;
                                 context.read<LoginCubit>().sendSmsCode();
                               }

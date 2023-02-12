@@ -23,7 +23,7 @@ class ImageAssets {
   static const String walletIcon = '$iconsPath/wallet.svg';
 
 
-//Lottie
- //  static const String noLogin = '$lottiePath/login.json';
+  //Lottie
+  static const String noLogin = '$lottiePath/no_item.json';
 
 }

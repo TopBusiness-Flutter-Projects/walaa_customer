@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/translate_text_method.dart';
+import '../../../core/widgets/no_item_page.dart';
 import '../../home page/models/providers_model.dart';
 import '../widget/category_list.dart';
 import '../widget/product_list.dart';
@@ -13,8 +14,6 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('');
-    print(providerModel.toJson());
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,28 +40,28 @@ class MenuScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text('Perfect way to start your day'),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: ListView(
-                children: [
-                  CategoryList(providerModel: providerModel),
-                  Text(
-                    "choose_cofe",
-                    style: TextStyle(
-                        color: AppColors.iconBackgroundColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  ProductList()
-                ],
+          if (providerModel.categories!.length > 0) ...{
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(translateText(AppStrings.perfectDayText, context)),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ListView(
+                  children: [
+                    CategoryList(providerModel: providerModel),
+                    ProductList(
+                      providerModel: providerModel,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
+          } else ...{
+            Expanded(child: NoItemPage(),)
+
+          },
         ],
       ),
     );

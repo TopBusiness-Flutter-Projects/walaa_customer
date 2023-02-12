@@ -57,6 +57,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   color: AppColors.success,
                 );
                 context.read<RegisterCubit>().isCodeSend = true;
+                cubit.isRegister?context.read<RegisterCubit>().registerUserData():null;
                 cubit.isRegister
                     ? Navigator.pop(context)
                     : Navigator.pushAndRemoveUntil(

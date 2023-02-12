@@ -32,5 +32,18 @@
   "register_text": "انشاء حساب",
   "home": "الرئيسية",
   "profile": "الملف الشخصى",
-  "menu": "القائمه"
+  "menu": "القائمه",
+  "no_item": "لا يوجد عناصر للعرض",
+  "choose_coffee": "أختار قهوتك",
+  "perfect_day": "أفضل اختيار لبدأ يومك",
+  "add_balance_text": "اضافه رصيد",
+  "balance_text": "رصيد",
+  "SAR": "ريال",
+  "There_is_no_email_with_this_phone": "لا يوجد ايميل مرتبط بهذا الرقم "
+
+
+
+
+
+
 }

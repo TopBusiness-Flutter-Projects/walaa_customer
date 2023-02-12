@@ -105,7 +105,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   registerUserData() async {
-    emit(RegisterUpdateLoading());
+    emit(RegisterLoading());
     final response = await api.registerUser(
       UserData(
         name: nameController.text,
@@ -114,8 +114,13 @@ class RegisterCubit extends Cubit<RegisterState> {
       ),
     );
     response.fold(
-      (l) => emit(RegisterUpdateError()),
-      (r) => emit(RegisterUpdateLoaded(r)),
+      (l) => emit(RegisterError()),
+      (r) {
+        emit(RegisterLoaded(r));
+        Future.delayed(Duration(milliseconds: 500), () {
+          emit(RegisterInitial());
+        });
+      },
     );
   }
 }

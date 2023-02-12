@@ -7,7 +7,6 @@ import 'package:walaa_customer/core/utils/app_strings.dart';
 
 import '../../feature/contact us/models/contact_us_model.dart';
 import '../../feature/home page/models/providers_model.dart';
-import '../../feature/menu/models/category_data_model.dart';
 import '../../feature/menu/models/product_data_model.dart';
 import '../../feature/privacy_terms/models/settings.dart';
 import '../api/end_points.dart';
@@ -112,7 +111,7 @@ class ServiceApi {
 
   Future<Either<Failure, LoginModel>> registerUser(UserData userData) async {
     try {
-      final response = await dio.newPost(
+      final response = await dio.post(
         EndPoints.registerUrl,
         formDataIsEnabled: true,
         body: await userData.updateToJson(),
@@ -143,12 +142,13 @@ class ServiceApi {
   Future<Either<Failure, ProviderListModel>> getAllProviders() async {
     try {
       LoginModel loginModel = await Preferences.instance.getUserModel();
+      String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
         EndPoints.providersUrl,
         options: Options(
           headers: {
             'Authorization': loginModel.data!.accessToken,
-            'Accept-Language': 'ar',
+            'Accept-Language': lan,
           },
         ),
       );
@@ -157,34 +157,18 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-  // Future<Either<Failure,CategoryDataModel>> getCategory() async {
-  //   try {
-  //     LoginModel loginModel = await Preferences.instance.getUserModel();
-  //     final response = await dio.get(
-  //       EndPoints.categoryUrl,
-  //       options: Options(
-  //         headers: {
-  //           'Authorization': loginModel.data!.accessToken,
-  //           'Accept-Language': 'ar',
-  //         },
-  //       ),
-  //     );
-  //     return Right(CategoryDataModel.fromJson(response));
-  //   } on ServerException {
-  //     return Left(ServerFailure());
-  //   }
-  // }
 
   Future<Either<Failure,ProductDataModel>> getProduct(int category_id) async {
 
     try {
+      String lan = await Preferences.instance.getSavedLang();
       LoginModel loginModel = await Preferences.instance.getUserModel();
       final response = await dio.get(
         EndPoints.productUrl + "/${category_id}",
         options: Options(
           headers: {
             'Authorization': loginModel.data!.accessToken,
-            'Accept-Language': 'ar',
+            'Accept-Language': lan,
           },
         ),
       );

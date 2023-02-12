@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:walaa_customer/core/utils/app_colors.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
 import 'package:walaa_customer/core/widgets/brown_line_widget.dart';
-import 'package:walaa_customer/core/widgets/custom_button.dart';
-
 import '../../../core/widgets/network_image.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../../menu/screens/menu_screen.dart';
@@ -45,11 +42,15 @@ class HomePageScreen extends StatelessWidget {
           SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text('Perfect way to start your day'),
+            child: Text(
+              translateText(AppStrings.perfectDayText, context),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text('Choose your coffee'),
+            child: Text(
+              translateText(AppStrings.chooseCoffeeText, context),
+            ),
           ),
           Expanded(
             child: Padding(

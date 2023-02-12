@@ -32,6 +32,13 @@
   "register_text": "Register",
   "home": "Home",
   "profile": "Profile",
-  "menu": "Menu"
+  "menu": "Menu",
+  "no_item": "No Items To Show",
+  "choose_coffee": "Choose Your Coffee",
+  "perfect_day": "Perfect day to Start Your Day",
+  "add_balance_text": "Add Balance",
+  "balance_text": "Balance",
+  "SAR": "SAR",
+  "There_is_no_email_with_this_phone": "There is no email with this phone "
 
 }
