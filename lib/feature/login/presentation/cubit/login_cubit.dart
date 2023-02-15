@@ -40,7 +40,6 @@ class LoginCubit extends Cubit<LoginState> {
           Future.delayed(
             Duration(milliseconds: 900),
             () {
-              print('============================================');
               emit(LoginInitial());
             },
           );
@@ -48,12 +47,6 @@ class LoginCubit extends Cubit<LoginState> {
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();
-          toastMessage(
-            'Ok ===> :) ',
-            context,
-            color: AppColors.success,
-          );
-          // emit(LoginLoaded());
         }
       },
     );

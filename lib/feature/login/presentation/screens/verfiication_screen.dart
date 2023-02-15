@@ -51,11 +51,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             LoginCubit cubit = context.read<LoginCubit>();
             if (state is CheckCodeSuccessfully) {
               Future.delayed(const Duration(milliseconds: 500), () {
-                toastMessage(
-                  'Success',
-                  context,
-                  color: AppColors.success,
-                );
+
                 context.read<RegisterCubit>().isCodeSend = true;
                 cubit.isRegister?context.read<RegisterCubit>().registerUserData():null;
                 cubit.isRegister
