@@ -58,6 +58,7 @@ class AppStrings {
   static const String noEmailError = 'There_is_no_email_with_this_phone';
   static const String loginText = 'login_text';
   static const String shouldLoginText = 'should_login_text';
+  static const String searchCountryText = 'search_country';
 
 
 

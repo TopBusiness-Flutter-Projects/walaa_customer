@@ -61,6 +61,8 @@ class LoginCubit extends Cubit<LoginState> {
 
   // String phoneNumber = '';
   String smsCode = '';
+  String phoneCode = '';
+
   final FirebaseAuth _mAuth = FirebaseAuth.instance;
   String? verificationId;
   int? resendToken;
@@ -70,7 +72,7 @@ class LoginCubit extends Cubit<LoginState> {
     _mAuth.setSettings(forceRecaptchaFlow: true);
     _mAuth.verifyPhoneNumber(
       forceResendingToken: resendToken,
-      phoneNumber: AppStrings.phoneCode + phoneController.text,
+      phoneNumber: phoneCode + phoneController.text,
       // timeout: Duration(seconds: 1),
       verificationCompleted: (PhoneAuthCredential credential) {
         smsCode = credential.smsCode!;
@@ -90,21 +92,18 @@ class LoginCubit extends Cubit<LoginState> {
         emit(OnSmsCodeSent(''));
       },
       codeAutoRetrievalTimeout: (String verificationId) {
-        print('kokokokokokok');
         this.verificationId = verificationId;
       },
     );
   }
 
   verifySmsCode(String smsCode) async {
-    print(smsCode);
     print(verificationId);
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId!,
       smsCode: smsCode,
     );
     await _mAuth.signInWithCredential(credential).then((value) {
-      print('LoginSuccess');
       isRegister?null: storeUser(loginModel!);
       emit(CheckCodeSuccessfully());
     }).catchError((error) {

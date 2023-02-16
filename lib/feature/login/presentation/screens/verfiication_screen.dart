@@ -16,6 +16,7 @@ import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 import '../widgets/header_title.dart';
 
@@ -53,6 +54,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             if (state is CheckCodeSuccessfully) {
               Future.delayed(const Duration(milliseconds: 500), () {
                 context.read<RegisterCubit>().isCodeSend = true;
+                context.read<NavigatorBottomCubit>().page=0;
                 cubit.isRegister
                     ? context.read<RegisterCubit>().registerUserData()
                     : null;
