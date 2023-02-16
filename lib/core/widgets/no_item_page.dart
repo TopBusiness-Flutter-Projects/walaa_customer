@@ -16,7 +16,7 @@ class NoItemPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset(ImageAssets.noLogin),
+            Lottie.asset(ImageAssets.noItems),
             const SizedBox(height: 40),
             Text(
               "${translateText(AppStrings.noItem, context)} ....",

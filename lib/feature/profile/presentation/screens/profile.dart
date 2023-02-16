@@ -186,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     SizedBox(height: 4),
                                     TextButton(
                                       onPressed: () async {
+                                        context.read<NavigatorBottomCubit>().page=0;
                                         bool result = await Preferences.instance
                                             .clearUserData();
                                         result

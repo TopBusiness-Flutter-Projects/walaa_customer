@@ -24,6 +24,7 @@ class ImageAssets {
 
 
   //Lottie
-  static const String noLogin = '$lottiePath/no_item.json';
+  static const String noItems = '$lottiePath/no_item.json';
+  static const String noLogin = '$lottiePath/login.json';
 
 }

@@ -87,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 type: PageTransitionType.fade,
                 alignment: Alignment.center,
                 duration: const Duration(milliseconds: 1300),
-                child: NavigationBottom(),
+                child: NavigationBottom(loginModel: state.loginModel),
               ),
                   (route) => false,
             );

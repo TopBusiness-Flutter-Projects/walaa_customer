@@ -141,13 +141,13 @@ class ServiceApi {
 
   Future<Either<Failure, ProviderListModel>> getAllProviders() async {
     try {
-      LoginModel loginModel = await Preferences.instance.getUserModel();
+      // LoginModel loginModel = await Preferences.instance.getUserModel();
       String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
         EndPoints.providersUrl,
         options: Options(
           headers: {
-            'Authorization': loginModel.data!.accessToken,
+            // 'Authorization': loginModel.data!.accessToken,
             'Accept-Language': lan,
           },
         ),
@@ -162,12 +162,12 @@ class ServiceApi {
 
     try {
       String lan = await Preferences.instance.getSavedLang();
-      LoginModel loginModel = await Preferences.instance.getUserModel();
+      // LoginModel loginModel = await Preferences.instance.getUserModel();
       final response = await dio.get(
         EndPoints.productUrl + "/${category_id}",
         options: Options(
           headers: {
-            'Authorization': loginModel.data!.accessToken,
+            // 'Authorization': loginModel.data!.accessToken,
             'Accept-Language': lan,
           },
         ),

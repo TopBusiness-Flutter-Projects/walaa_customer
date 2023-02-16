@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:walaa_customer/config/routes/app_routes.dart';
+import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
@@ -51,9 +52,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
             LoginCubit cubit = context.read<LoginCubit>();
             if (state is CheckCodeSuccessfully) {
               Future.delayed(const Duration(milliseconds: 500), () {
-
                 context.read<RegisterCubit>().isCodeSend = true;
-                cubit.isRegister?context.read<RegisterCubit>().registerUserData():null;
+                cubit.isRegister
+                    ? context.read<RegisterCubit>().registerUserData()
+                    : null;
                 cubit.isRegister
                     ? Navigator.pop(context)
                     : Navigator.pushAndRemoveUntil(
@@ -62,7 +64,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           type: PageTransitionType.fade,
                           alignment: Alignment.center,
                           duration: const Duration(milliseconds: 1300),
-                          child: NavigationBottom(),
+                          child: NavigationBottom(
+                            loginModel: cubit.loginModel ?? LoginModel(),
+                          ),
                         ),
                         (route) => false,
                       );
