@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/remote/service.dart';
 
@@ -69,6 +66,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   checkPageInitial(bool isUpdate) {
+    isCodeSend = false;
     if (loginModel == null) {
       getUserModel(isUpdate: isUpdate);
     } else {
@@ -116,6 +114,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     response.fold(
       (l) => emit(RegisterError()),
       (r) {
+        Preferences.instance.setUser(r);
         emit(RegisterLoaded(r));
         Future.delayed(Duration(milliseconds: 500), () {
           emit(RegisterInitial());

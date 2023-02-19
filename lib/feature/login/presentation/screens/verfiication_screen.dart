@@ -71,7 +71,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           ),
                         ),
                         (route) => false,
-                      );
+                      ).then((value) => null);
               });
               // return const ShowLoadingIndicator();
             }

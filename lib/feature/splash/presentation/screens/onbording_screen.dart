@@ -4,9 +4,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/assets_manager.dart';
 
+import '../../../../core/models/login_model.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../../login/presentation/screens/login.dart';
+import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               type: PageTransitionType.fade,
               alignment: Alignment.center,
               duration: const Duration(milliseconds: 1300),
-              child: LoginScreen(),
+              child: NavigationBottom(loginModel: LoginModel(),),
             ),
           ),
         );
