@@ -30,6 +30,8 @@ class _CategoryListState extends State<CategoryList> {
                     menuCubit.getProduct(
                       widget.providerModel.categories![index].id!,
                     );
+                    menuCubit.categoryModel =
+                        widget.providerModel.categories![index];
                   },
                   child: Padding(
                     padding: EdgeInsets.all(10.0),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
@@ -25,6 +26,8 @@ class _ProductListState extends State<ProductList> {
     context.read<MenuCubit>().getProduct(
           widget.providerModel.categories!.first.id!,
         );
+    context.read<MenuCubit>().categoryModel =
+        widget.providerModel.categories!.first;
   }
 
   @override
@@ -59,7 +62,8 @@ class _ProductListState extends State<ProductList> {
                   mainAxisSpacing: 1,
                   crossAxisCount: 2,
                 ),
-                itemCount: list.length > 0 ? list.length : menuCubit.productLength,
+                itemCount:
+                    list.length > 0 ? list.length : menuCubit.productLength,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     child: state is AllProductLoading
@@ -76,13 +80,124 @@ class _ProductListState extends State<ProductList> {
                                 ),
                               )
                             : menuCubit.productList.isNotEmpty
-                                ? Padding(
-                                    padding: EdgeInsets.all(25.0),
-                                    child: ProductWidget(
-                                      model: context
-                                          .read<MenuCubit>()
-                                          .productList
-                                          .elementAt(index),
+                                ? InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          contentPadding: EdgeInsets.zero,
+                                          title: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 12,
+                                            ),
+                                            child: Center(
+                                                child: Text(menuCubit
+                                                    .categoryModel!
+                                                    .categoryName!)),
+                                          ),
+                                          content: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CachedNetworkImage(
+                                                  imageUrl: menuCubit
+                                                      .productList[index]
+                                                      .image!,
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return CircleAvatar(
+                                                        backgroundImage:
+                                                            imageProvider);
+                                                  },
+                                                  width: 100.0,
+                                                  height: 100.0,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .symmetric(
+                                                          vertical: 5,
+                                                        ),
+                                                        child: Text(
+                                                          menuCubit
+                                                              .productList[index]
+                                                              .name!,
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .symmetric(
+                                                          vertical: 5,
+                                                        ),
+                                                        child: Container(
+                                                          width: 40,
+                                                          height: 40,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(25),
+                                                            color: AppColors
+                                                                .onBoardingColor,
+                                                          ),
+                                                          child: Center(
+                                                            child: Text(
+                                                              menuCubit
+                                                                  .productList[
+                                                                      index]
+                                                                  .price
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                color: AppColors
+                                                                    .white,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>Navigator.pop(context),
+                                              child: Text(
+                                                translateText(
+                                                  AppStrings.cancelBtn,
+                                                  context,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.all(25.0),
+                                      child: ProductWidget(
+                                        model: context
+                                            .read<MenuCubit>()
+                                            .productList
+                                            .elementAt(index),
+                                      ),
                                     ),
                                   )
                                 : Center(

@@ -15,42 +15,7 @@ class MenuCubit extends Cubit<MenuState> {
   int productLength = 0;
   int itemCount = 1;
   int itemPrice = 1;
-
-  // changeItemCount(String type, int price) {
-  //   if (type == '+') {
-  //     itemCount++;
-  //     itemPrice = (itemPrice + price);
-  //     print(itemPrice);
-  //     emit(ChangeItemCount());
-  //   } else {
-  //     if (itemCount > 1) {
-  //       itemCount--;
-  //       itemPrice = (itemPrice - price);
-  //       print(itemPrice);
-  //       emit(ChangeItemCount());
-  //     }
-  //   }
-  // }
-
-  // getCategory() async {
-  //   categoryLength = 1;
-  //   emit(AllCategoryLoading());
-  //   final response = await serviceApi.getCategory();
-  //   response.fold((l) => emit(AllCategoryError()), (r) {
-  //     if (r.status.code == 200) {
-  //       print(r.data);
-  //       categoryLength = r.data.length;
-  //       categoryList = r.data;
-  //       emit(AllCategoryLoaded(categoryList));
-  //       if (categoryList.length > 0) {
-  //         getProduct(categoryList.elementAt(0).id!);
-  //       }
-  //     } else {
-  //       print(r.status.message);
-  //       emit(AllCategoryError());
-  //     }
-  //   });
-  // }
+  CategoryModel? categoryModel;
 
   getProduct(int category_id) async {
     productLength = 1;
