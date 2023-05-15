@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _startDelay() async {
-    _timer = Timer(const Duration(milliseconds: 4000), () => _goNext());
+    _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
   }
 
   Future<void> _getStoreUser() async {
