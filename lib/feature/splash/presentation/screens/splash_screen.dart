@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _startDelay() async {
-    _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
+    _timer = Timer(const Duration(milliseconds: 4000), () => _goNext());
   }
 
   Future<void> _getStoreUser() async {
@@ -86,16 +87,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Image.asset(
-              ImageAssets.walaaLogoImage,
-            ),
-          ),
-        ],
+     // backgroundColor: AppColors.scaffoldBackground,
+      body: Center(
+        child:   Lottie.asset(
+          ImageAssets.logoJson,
+
+        ),
       ),
     );
   }

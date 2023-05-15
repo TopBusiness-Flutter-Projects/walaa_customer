@@ -5,6 +5,7 @@ const String lottiePath = 'assets/lottie';
 class ImageAssets {
   //images
   static const String walaaLogoImage = '$imagePath/walaa_logo.png';
+  static const String logo = '$imagePath/logo.gif';
   static const String loginImage = '$imagePath/login_image.png';
   static const String verificationImage = '$imagePath/verification.png';
   static const String boarding1Image = '$imagePath/onboarding1.png';
@@ -26,5 +27,6 @@ class ImageAssets {
   //Lottie
   static const String noItems = '$lottiePath/no_item.json';
   static const String noLogin = '$lottiePath/login.json';
+  static const String logoJson = '$lottiePath/logo.json';
 
 }
