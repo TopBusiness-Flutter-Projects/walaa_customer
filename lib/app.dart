@@ -10,6 +10,7 @@ import 'config/themes/app_theme.dart';
 import 'core/utils/app_colors.dart';
 import 'core/utils/app_strings.dart';
 import 'package:walaa_customer/injector.dart' as injector;
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'feature/contact us/presentation/cubit/contact_us_cubit.dart';
 import 'feature/home page/cubit/home_cubit.dart';
@@ -18,7 +19,7 @@ import 'feature/menu/cubit/menu_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import 'feature/privacy_terms/presentation/cubit/settings_cubit.dart';
 import 'feature/profile/presentation/cubit/profile_cubit.dart';
-import 'feature/register/presentation/cubit/register_cubit.dart';
+import 'feature/register/cubit/register_cubit.dart';
 
 
 class WalaaCustomer extends StatefulWidget {
@@ -85,7 +86,7 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
       child: BlocBuilder<LocaleCubit, LocaleState>(
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
-          return MaterialApp(
+          return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: AppStrings.appName,
             locale: state.locale,

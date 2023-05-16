@@ -9,8 +9,10 @@ class EndPoints {
   static const String chargeWalletUrl = '${baseUrl}paytap/store';
   static const String profileUrl = '${baseUrl}client/auth/my-profile';
   static const String providersUrl = '${baseUrl}client/providers/list';
+  static const String homeUrl = '${baseUrl}client/home';
   static const String productUrl = '${baseUrl}client/products/list';
   static const String categoryUrl = '${baseUrl}provider/categories/list';
+  static const String searchProductUrl = '${baseUrl}client/search';
 
 
 

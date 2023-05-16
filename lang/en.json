@@ -6,6 +6,7 @@
   "done_btn": "Done",
   "back_btn": "Back",
   "sign_in_btn": "Sign In",
+  "sign_up_btn": "Sign Up",
   "phone_number_text": "Phone Number",
   "phone_validator_message": "Please Enter Phone Number !!!",
   "name_hint": "Enter Your Name",
@@ -42,7 +43,15 @@
   "There_is_no_email_with_this_phone": "There is no email with this phone ",
   "login_text": "Login",
   "should_login_text": " You Should Login First ....",
-  "search_country": "Search Country"
+  "search_country": "Search Country",
+  "best_provider": "The Best",
+  "add_rating": "Add Your Rate",
+  "add": "Add",
+  "rate_validation": "Please Enter Your Rate ...",
+  "categories": "Categories",
+  "drinks": "Drinks",
+  "confirm": "Confirm",
+  "lang": "Language"
 
 
 

@@ -10,18 +10,23 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
         Container(
-          width: 100,
-          height: 100,
-          child: ManageCircleNetworkImage(
+          width: 35,
+          height: 35,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.white,
+          ),
+          child: ManageNetworkImage(
             imageUrl: model.image!,
-            height: 120,
-            width: 120,
+            height: 25,
+            width: 25,
+            borderRadius: 25,
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(width: 8),
         Text(
           model.categoryName!,
           style: TextStyle(

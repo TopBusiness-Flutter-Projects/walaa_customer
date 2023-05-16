@@ -29,22 +29,33 @@ class ProviderListModel {
   };
 }
 
+
 class ProviderModel {
+  final int? id;
+  final String? name;
+  final String? phone;
+  final String? email;
+  final String? image;
+  final List<CategoryModel>? categories;
+  final String? description;
+  final int? rate;
+  final MyRate? myRate;
+
   ProviderModel({
-     this.id,
-     this.name,
-     this.phone,
+    this.id,
+    this.name,
+    this.phone,
     this.email,
-     this.image,
-     this.categories,
+    this.image,
+    this.categories,
+    this.description,
+    this.rate,
+    this.myRate,
   });
 
-  int? id;
-  String? name;
-  String? phone;
-  String? email;
-  String? image;
-  List<CategoryModel>? categories;
+  factory ProviderModel.fromRawJson(String str) => ProviderModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory ProviderModel.fromJson(Map<String, dynamic> json) => ProviderModel(
     id: json["id"],
@@ -52,7 +63,10 @@ class ProviderModel {
     phone: json["phone"],
     email: json["email"],
     image: json["image"],
-    categories: List<CategoryModel>.from(json["categories"].map((x) => CategoryModel.fromJson(x))),
+    categories: json["categories"] == null ? [] : List<CategoryModel>.from(json["categories"]!.map((x) => CategoryModel.fromJson(x))),
+    description: json["description"],
+    rate: json["rate"],
+    myRate: json["my_rate"] == null ? null : MyRate.fromJson(json["my_rate"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,7 +75,54 @@ class ProviderModel {
     "phone": phone,
     "email": email,
     "image": image,
-    "categories": List<dynamic>.from(categories!.map((x) => x.toJson())),
+    "categories": categories == null ? [] : List<dynamic>.from(categories!.map((x) => x.toJson())),
+    "description": description,
+    "rate": rate,
+    "my_rate": myRate?.toJson(),
+  };
+}
+
+class MyRate {
+  final int? id;
+  final String? value;
+  final String? comment;
+  final int? clientId;
+  final int? providerId;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  MyRate({
+    this.id,
+    this.value,
+    this.comment,
+    this.clientId,
+    this.providerId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory MyRate.fromRawJson(String str) => MyRate.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory MyRate.fromJson(Map<String, dynamic> json) => MyRate(
+    id: json["id"],
+    value: json["value"],
+    comment: json["comment"],
+    clientId: json["client_id"],
+    providerId: json["provider_id"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "value": value,
+    "comment": comment,
+    "client_id": clientId,
+    "provider_id": providerId,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 }
 

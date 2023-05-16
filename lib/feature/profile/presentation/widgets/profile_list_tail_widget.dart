@@ -46,7 +46,7 @@ class ProfileListTailWidget extends StatelessWidget {
                         Text(
                           title,
                           style: TextStyle(
-                            color: AppColors.textBackground,
+                            color: AppColors.black,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
@@ -63,7 +63,6 @@ class ProfileListTailWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16),
-          BrownLineWidget()
         ],
       ),
     );

@@ -15,10 +15,13 @@ class AllCategoryLoaded extends MenuState {
 class AllProductLoading extends MenuState {}
 class AllProductError extends MenuState {}
 class AllProductLoaded extends MenuState {
-  final List<ProductModel> productList;
-
+  final List<ProductItemModel> productList;
   AllProductLoaded(this.productList);
-
 }
 
 class ChangeItemCount extends MenuState {}
+
+
+class AllProductSearchLoading extends MenuState {}
+class AllProductSearchLoaded extends MenuState {}
+class AllProductSearchError extends MenuState {}

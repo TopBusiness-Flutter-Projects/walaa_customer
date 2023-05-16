@@ -11,6 +11,7 @@ import 'package:walaa_customer/core/utils/translate_text_method.dart';
 import '../../../../core/models/login_model.dart';
 import '../../../../core/remote/service.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/dialogs.dart';
 import '../../../../core/utils/toast_message_method.dart';
 
 part 'login_state.dart';
@@ -32,18 +33,23 @@ class LoginCubit extends Cubit<LoginState> {
       (failure) => emit(LoginFailure()),
       (loginModel) {
         if (loginModel.code == 411) {
-          toastMessage(
-            translateText(AppStrings.noEmailError, context),
-            context,
-            color: AppColors.error,
-          );
-          Future.delayed(
-            Duration(milliseconds: 900),
-            () {
-              emit(LoginInitial());
-            },
-          );
+
+          errorGetBar(translateText(AppStrings.noEmailError, context));
+
+          // toastMessage(
+          //   translateText(AppStrings.noEmailError, context),
+          //   context,
+          //   color: AppColors.error,
+          // );
+          // Future.delayed(
+          //   Duration(milliseconds: 900),
+          //   () {
+          //     emit(LoginInitial());
+          //   },
+          // );
+
           emit(LoginLoaded());
+
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();
