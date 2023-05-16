@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/widgets/no_login_page.dart';
+import 'package:walaa_customer/feature/cartPage/screens/cart_page.dart';
 import '../../../core/models/login_model.dart';
 import '../../home page/screens/home_page.dart';
 import '../../profile/presentation/screens/profile.dart';
@@ -39,7 +40,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
                     ? ProfileScreen()
                     : NotLoginPage();
               } else if (bottomCubit.page == 1) {
-                return NotLoginPage();
+                return CartPage();
               } else {
                 return HomePageScreen();
               }

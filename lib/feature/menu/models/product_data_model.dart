@@ -75,7 +75,6 @@
 //       };
 // }
 
-
 // To parse this JSON data, do
 //
 //     final productModel = productModelFromJson(jsonString);
@@ -93,21 +92,24 @@ class ProductModel {
     this.code,
   });
 
-  factory ProductModel.fromRawJson(String str) => ProductModel.fromJson(json.decode(str));
+  factory ProductModel.fromRawJson(String str) =>
+      ProductModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-    data: json["data"] == null ? null : ProductDataModel.fromJson(json["data"]),
-    message: json["message"],
-    code: json["code"],
-  );
+        data: json["data"] == null
+            ? null
+            : ProductDataModel.fromJson(json["data"]),
+        message: json["message"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "message": message,
-    "code": code,
-  };
+        "data": data?.toJson(),
+        "message": message,
+        "code": code,
+      };
 }
 
 class ProductDataModel {
@@ -119,19 +121,31 @@ class ProductDataModel {
     this.products,
   });
 
-  factory ProductDataModel.fromRawJson(String str) => ProductDataModel.fromJson(json.decode(str));
+  factory ProductDataModel.fromRawJson(String str) =>
+      ProductDataModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ProductDataModel.fromJson(Map<String, dynamic> json) => ProductDataModel(
-    theBest: json["the_best"] == null ? [] : List<ProductItemModel>.from(json["the_best"]!.map((x) => ProductItemModel.fromJson(x))),
-    products: json["products"] == null ? [] : List<ProductItemModel>.from(json["products"]!.map((x) => ProductItemModel.fromJson(x))),
-  );
+  factory ProductDataModel.fromJson(Map<String, dynamic> json) =>
+      ProductDataModel(
+        theBest: json["the_best"] == null
+            ? []
+            : List<ProductItemModel>.from(
+                json["the_best"]!.map((x) => ProductItemModel.fromJson(x))),
+        products: json["products"] == null
+            ? []
+            : List<ProductItemModel>.from(
+                json["products"]!.map((x) => ProductItemModel.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "the_best": theBest == null ? [] : List<dynamic>.from(theBest!.map((x) => x.toJson())),
-    "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toJson())),
-  };
+        "the_best": theBest == null
+            ? []
+            : List<dynamic>.from(theBest!.map((x) => x.toJson())),
+        "products": products == null
+            ? []
+            : List<dynamic>.from(products!.map((x) => x.toJson())),
+      };
 }
 
 class ProductItemModel {
@@ -140,32 +154,36 @@ class ProductItemModel {
   final int? price;
   final int? priceAfterDiscount;
   final String? image;
+  int quantity = 1;
 
-  ProductItemModel({
-    this.id,
-    this.name,
-    this.price,
-    this.priceAfterDiscount,
-    this.image,
-  });
+  ProductItemModel(
+      {this.id,
+      this.name,
+      this.price,
+      this.priceAfterDiscount,
+      this.image,
+      this.quantity = 1});
 
-  factory ProductItemModel.fromRawJson(String str) => ProductItemModel.fromJson(json.decode(str));
+  factory ProductItemModel.fromRawJson(String str) =>
+      ProductItemModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ProductItemModel.fromJson(Map<String, dynamic> json) => ProductItemModel(
-    id: json["id"],
-    name: json["name"],
-    price: json["price"],
-    priceAfterDiscount: json["price_after_discount"],
-    image: json["image"],
-  );
+  factory ProductItemModel.fromJson(Map<String, dynamic> json) =>
+      ProductItemModel(
+          id: json["id"],
+          name: json["name"],
+          price: json["price"]??0,
+          priceAfterDiscount: json["price_after_discount"]??0,
+          image: json["image"],
+          quantity: json['quantity'] ?? 1);
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "price": price,
-    "price_after_discount": priceAfterDiscount,
-    "image": image,
-  };
+        "id": id,
+        "name": name,
+        "price": price,
+        "price_after_discount": priceAfterDiscount,
+        "image": image,
+        "quantity": quantity
+      };
 }

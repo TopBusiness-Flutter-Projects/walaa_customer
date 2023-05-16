@@ -20,7 +20,21 @@ class MenuCubit extends Cubit<MenuState> {
   int itemPrice = 1;
   int selectItem = 0;
   CategoryModel? categoryModel;
-
+  changeItemCount(String type,int price) {
+    if (type == '+') {
+      itemCount++;
+      itemPrice = (itemPrice + price) ;
+      print(itemPrice);
+      emit(ChangeItemCount());
+    } else {
+      if (itemCount > 1) {
+        itemCount--;
+        itemPrice = (itemPrice  - price) ;
+        print(itemPrice);
+        emit(ChangeItemCount());
+      }
+    }
+  }
   getProduct(int category_id) async {
     productLength = 1;
     emit(AllProductLoading());

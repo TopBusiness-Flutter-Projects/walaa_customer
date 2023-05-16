@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:walaa_customer/feature/cartPage/cubit/cart_cubit.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
 
 import 'config/locale/app_localizations_setup.dart';
@@ -81,6 +82,10 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
         BlocProvider(
           create: (_) =>
               injector.serviceLocator<MenuCubit>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<CartCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

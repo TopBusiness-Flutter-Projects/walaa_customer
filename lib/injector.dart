@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:walaa_customer/feature/cartPage/cubit/cart_cubit.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -56,6 +57,11 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => HomeCubit(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => CartCubit(
       serviceLocator(),
     ),
   );

@@ -12,6 +12,7 @@ import '../../feature/privacy_terms/models/settings.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
+import '../models/cart_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
 import '../models/response_message.dart';
@@ -220,4 +221,19 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<StatusResponse> sendOrder(CartModel model, String token) async {
+    Response response = await dio.post(
+      EndPoints.sendOrderUrl,
+      options: Options(
+        headers: {
+          'Authorization': token,
+        },
+      ),
+      body: CartModel.toJson(model),
+    );
+    print('Url : ${EndPoints.sendOrderUrl}');
+    print('Response : \n ${response.data}');
+    return StatusResponse.fromJson(response.data);
+  }
+
 }
