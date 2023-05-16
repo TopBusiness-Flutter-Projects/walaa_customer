@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:walaa_customer/core/widgets/brown_line_widget.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/assets_manager.dart';
 
 class ProfileListTailWidget extends StatelessWidget {
   const ProfileListTailWidget({
@@ -46,8 +47,10 @@ class ProfileListTailWidget extends StatelessWidget {
                         Text(
                           title,
                           style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 22,
+                            color: image == ImageAssets.logoutIcon
+                                ? AppColors.textBackground
+                                : AppColors.black,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -58,7 +61,7 @@ class ProfileListTailWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: widget??SizedBox(),
+                child: widget ?? SizedBox(),
               ),
             ],
           ),

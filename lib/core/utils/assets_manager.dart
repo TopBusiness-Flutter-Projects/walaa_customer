@@ -35,6 +35,10 @@ class ImageAssets {
   static const String writeCommentIcon = '$iconsPath/write_comment.svg';
   static const String subjectIcon = '$iconsPath/books.svg';
   static const String languageIcon = '$iconsPath/language.svg';
+  static const String shareAppIcon = '$iconsPath/share.svg';
+  static const String ordersIcon = '$iconsPath/orders.svg';
+  static const String logoutIcon = '$iconsPath/logout.svg';
+  static const String updateProfileIcon = '$iconsPath/update_profile.svg';
 
 
   //Lottie

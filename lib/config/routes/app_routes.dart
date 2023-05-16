@@ -5,6 +5,7 @@ import 'package:walaa_customer/feature/payment_screen/payment_page.dart';
 import '../../core/utils/app_strings.dart';
 import '../../feature/home page/screens/home_page.dart';
 import '../../feature/login/presentation/screens/verfiication_screen.dart';
+import '../../feature/register/screen/edit_profile_screen.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 
 class Routes {
@@ -13,6 +14,7 @@ class Routes {
   static const String verificationScreenRoute = '/verificationScreen';
   static const String homePageScreenRoute = '/homePageScreen';
   static const String paymentRoute = '/paymentRoute';
+  static const String updateProfileRoute = '/updateProfile';
 
 }
 
@@ -36,6 +38,10 @@ class AppRoutes {
       case Routes.homePageScreenRoute:
         return MaterialPageRoute(
           builder: (context) =>  HomePageScreen(),
+        );
+      case Routes.updateProfileRoute:
+        return MaterialPageRoute(
+          builder: (context) =>  EditProfileScreen(),
         );
       case Routes.paymentRoute:
         String url = settings.arguments as String;
