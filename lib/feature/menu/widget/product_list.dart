@@ -9,6 +9,7 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/widgets/no_item_page.dart';
 import '../../home page/models/providers_model.dart';
 import '../cubit/menu_cubit.dart';
+import '../models/product_data_model.dart';
 import '../models/product_model.dart';
 
 class ProductList extends StatefulWidget {
@@ -35,7 +36,7 @@ class _ProductListState extends State<ProductList> {
     return BlocBuilder<MenuCubit, MenuState>(
       builder: (context, state) {
         MenuCubit menuCubit = context.read<MenuCubit>();
-        List<ProductModel> list = [];
+        List<ProductItemModel> list = [];
         if (menuCubit.productList.isNotEmpty) {
           list = menuCubit.productList;
         }
@@ -43,170 +44,168 @@ class _ProductListState extends State<ProductList> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  translateText(AppStrings.chooseCoffeeText, context),
-                  style: TextStyle(
-                    color: AppColors.iconBackgroundColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: .8,
-                  mainAxisSpacing: 1,
-                  crossAxisCount: 2,
-                ),
-                itemCount:
-                    list.length > 0 ? list.length : menuCubit.productLength,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    child: state is AllProductLoading
-                        ? Center(
+              ...List.generate(
+                list.length > 0 ? list.length : menuCubit.productLength,
+                (index) => Container(
+                  child: state is AllProductLoading
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          child: Center(
                             child: CircularProgressIndicator(
                               color: AppColors.primary,
                             ),
-                          )
-                        : state is AllProductError
-                            ? Center(
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.refresh),
-                                ),
-                              )
-                            : menuCubit.productList.isNotEmpty
-                                ? InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          contentPadding: EdgeInsets.zero,
-                                          title: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                            ),
-                                            child: Center(
-                                                child: Text(menuCubit
-                                                    .categoryModel!
-                                                    .categoryName!)),
+                          ),
+                        )
+                      : state is AllProductError
+                          ? Center(
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.refresh),
+                              ),
+                            )
+                          : menuCubit.productList.isNotEmpty
+                              ? InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        contentPadding: EdgeInsets.zero,
+                                        title: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 12,
                                           ),
-                                          content: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                CachedNetworkImage(
-                                                  imageUrl: menuCubit
-                                                      .productList[index]
-                                                      .image!,
-                                                  imageBuilder:
-                                                      (context, imageProvider) {
-                                                    return CircleAvatar(
-                                                        backgroundImage:
-                                                            imageProvider);
-                                                  },
-                                                  width: 100.0,
-                                                  height: 100.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets
-                                                            .symmetric(
-                                                          vertical: 5,
-                                                        ),
-                                                        child: Text(
-                                                          menuCubit
-                                                              .productList[index]
-                                                              .name!,
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                          ),
+                                          child: Center(
+                                              child: Text(menuCubit
+                                                  .categoryModel!
+                                                  .categoryName!)),
+                                        ),
+                                        content: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: menuCubit
+                                                    .productList[index].image!,
+                                                imageBuilder:
+                                                    (context, imageProvider) {
+                                                  return CircleAvatar(
+                                                      backgroundImage:
+                                                          imageProvider);
+                                                },
+                                                width: 100.0,
+                                                height: 100.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 25),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 5,
+                                                      ),
+                                                      child: Text(
+                                                        menuCubit
+                                                            .productList[index]
+                                                            .name!,
+                                                        style: TextStyle(
+                                                          fontSize: 18,
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding: const EdgeInsets
-                                                            .symmetric(
-                                                          vertical: 5,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 5,
+                                                      ),
+                                                      child: Container(
+                                                        width: 40,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(25),
+                                                          color: AppColors
+                                                              .onBoardingColor,
                                                         ),
-                                                        child: Container(
-                                                          width: 40,
-                                                          height: 40,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(25),
-                                                            color: AppColors
-                                                                .onBoardingColor,
-                                                          ),
-                                                          child: Center(
-                                                            child: Text(
-                                                              menuCubit
-                                                                  .productList[
-                                                                      index]
-                                                                  .price
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                color: AppColors
-                                                                    .white,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            menuCubit
+                                                                .productList[
+                                                                    index]
+                                                                .price
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .white,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
                                                             ),
                                                           ),
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () =>Navigator.pop(context),
-                                              child: Text(
-                                                translateText(
-                                                  AppStrings.cancelBtn,
-                                                  context,
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text(
+                                              translateText(
+                                                AppStrings.cancelBtn,
+                                                context,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.all(25.0),
-                                      child: ProductWidget(
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      ProductWidget(
                                         model: context
                                             .read<MenuCubit>()
                                             .productList
                                             .elementAt(index),
+                                        type: 'products',
                                       ),
-                                    ),
-                                  )
-                                : Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primary,
-                                    ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12.0),
+                                        child: Visibility(
+                                          visible: index !=
+                                              menuCubit.productList.length - 1,
+                                          child: Divider(
+                                            thickness: 2,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                  );
-                },
+                                )
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                ),
               ),
             ],
           );

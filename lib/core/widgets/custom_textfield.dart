@@ -13,12 +13,14 @@ class CustomTextField extends StatelessWidget {
     required this.title,
     required this.textInputType,
     this.minLine = 1,
+    this.horizontalPadding = 30,
     this.isPassword = false,
+    this.isBorder = false,
     this.validatorMessage = '',
     this.controller,
     this.imageColor = Colors.grey,
     required this.backgroundColor,
-     this.isEnable = true,
+    this.isEnable = true,
   }) : super(key: key);
   final String image;
   final Color imageColor;
@@ -26,57 +28,72 @@ class CustomTextField extends StatelessWidget {
   final String title;
   final String validatorMessage;
   final int minLine;
+  final double? horizontalPadding;
+
   final bool isPassword;
   final bool? isEnable;
+  final bool? isBorder;
   final TextInputType textInputType;
   final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: textInputType,
-        obscureText: isPassword,
-        enabled: isEnable,
-        decoration: InputDecoration(
-          hintStyle: TextStyle(
-            color: AppColors.textBackground,
-            fontWeight: FontWeight.bold,
+      padding:
+          EdgeInsets.symmetric(vertical: 4, horizontal: horizontalPadding!),
+      child: Container(
+        decoration: isBorder!
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(width: 1, color: AppColors.gray),
+              )
+            : null,
+        child: TextFormField(
+          controller: controller,
+          keyboardType: textInputType,
+          obscureText: isPassword,
+          enabled: isEnable,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(
+              fontSize: 22,
+            ),
+            prefixIcon: image != 'null'
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      right: 12,
+                      left: 12,
+                    ),
+                    child: SvgPicture.asset(
+                      image,
+                      color: imageColor,
+                      height: 26,
+                      width: 26,
+                    ),
+                  )
+                : null,
+            prefixIconConstraints: const BoxConstraints(
+              minHeight: 32,
+              minWidth: 32,
+              maxHeight: 50,
+              maxWidth: 50,
+            ),
+            hintText: title,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide.none,
+            ),
+            fillColor: backgroundColor,
+            filled: true,
           ),
-          prefixIcon: image != 'null'
-              ? Padding(
-                  padding: EdgeInsets.only(
-                    right: IsLanguage.isArLanguage(context) ? 0 : 12,
-                    left: IsLanguage.isArLanguage(context) ? 12 : 0,
-                  ),
-                  child: SvgPicture.asset(
-                    image,
-                    color: imageColor,
-                    height: 16,
-                    width: 16,
-                  ),
-                )
-              : null,
-          prefixIconConstraints:
-              const BoxConstraints(minHeight: 32, minWidth: 32),
-          hintText: title,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide.none,
-          ),
-          fillColor: backgroundColor,
-          filled: true,
+          maxLines: isPassword ? 1 : 20,
+          minLines: minLine,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return validatorMessage;
+            }
+            return null;
+          },
         ),
-        maxLines: isPassword ? 1 : 20,
-        minLines: minLine,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return validatorMessage;
-          }
-          return null;
-        },
       ),
     );
   }

@@ -19,9 +19,9 @@ class NavigatorBottomCubit extends Cubit<NavigatorBottomState> {
    // user = await Preferences.instance.getUserModel().whenComplete(() => null);
   }
 
-  changePage(int index,String title) {
+  changePage(int index) {
     page = index;
-    this.title=title;
+    // this.title=title;
     emit(NavigatorBottomChangePage());
   }
 }

@@ -21,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late Timer _timer;
+
   // LoginDataModel loginDataModel = const LoginDataModel();
 
   _goNext() {
@@ -42,32 +43,34 @@ class _SplashScreenState extends State<SplashScreen> {
             type: PageTransitionType.fade,
             alignment: Alignment.center,
             duration: const Duration(milliseconds: 1300),
-            child:  NavigationBottom(loginModel: loginModel,),
+            child: NavigationBottom(
+              loginModel: loginModel,
+            ),
           ),
         );
-
-      }else{
+      } else {
         Navigator.pushReplacement(
           context,
           PageTransition(
             type: PageTransitionType.fade,
             alignment: Alignment.center,
             duration: const Duration(milliseconds: 1300),
-            child:  NavigationBottom(loginModel: LoginModel(),),
+            child: NavigationBottom(
+              loginModel: LoginModel(),
+            ),
           ),
         );
       }
-    }else{
+    } else {
       Navigator.pushReplacement(
         context,
         PageTransition(
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 1300),
-          child:  OnBoardingScreen(),
+          child: OnBoardingScreen(),
         ),
       );
-
     }
   }
 
@@ -75,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Preferences.instance.clearUserData();
-     _startDelay();
+    _startDelay();
   }
 
   @override
@@ -87,11 +90,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: AppColors.white,
       body: Center(
         child:   Lottie.asset(
           ImageAssets.logoJson,
-
         ),
       ),
     );

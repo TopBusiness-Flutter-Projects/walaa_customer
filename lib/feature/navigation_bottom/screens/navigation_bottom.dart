@@ -29,15 +29,17 @@ class _NavigationBottomState extends State<NavigationBottom> {
       NavigatorBottomCubit bottomCubit = context.read<NavigatorBottomCubit>();
       return Scaffold(
           bottomNavigationBar: SizedBox(
-            height: 60,
+            height: 50,
             child: NavigatorBottomWidget(),
           ),
           body: BlocBuilder<NavigatorBottomCubit, NavigatorBottomState>(
             builder: (context, state) {
-              if (bottomCubit.page == 1) {
+              if (bottomCubit.page == 2) {
                 return widget.loginModel.data != null
                     ? ProfileScreen()
                     : NotLoginPage();
+              } else if (bottomCubit.page == 1) {
+                return NotLoginPage();
               } else {
                 return HomePageScreen();
               }

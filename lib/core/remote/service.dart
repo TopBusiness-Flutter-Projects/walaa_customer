@@ -12,8 +12,10 @@ import '../../feature/privacy_terms/models/settings.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
+import '../models/home_model.dart';
 import '../models/login_model.dart';
 import '../models/response_message.dart';
+import '../models/search_product_model.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
@@ -92,17 +94,17 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure, RechargeWalletModel>> chargeWallet(String token, double amount) async {
+
+  Future<Either<Failure, RechargeWalletModel>> chargeWallet(
+      String token, double amount) async {
     try {
-      final response = await dio.get(
-        EndPoints.chargeWalletUrl,
-        options: Options(
-          headers: {
-            'Authorization': token,
-          },
-        ),
-        queryParameters: {'amount':amount}
-      );
+      final response = await dio.get(EndPoints.chargeWalletUrl,
+          options: Options(
+            headers: {
+              'Authorization': token,
+            },
+          ),
+          queryParameters: {'amount': amount});
       return Right(RechargeWalletModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -121,9 +123,9 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, LoginModel>> getprofile(String token) async {
     try {
-
       final response = await dio.get(
         EndPoints.profileUrl,
         options: Options(
@@ -131,7 +133,6 @@ class ServiceApi {
             'Authorization': token,
           },
         ),
-
       );
       return Right(LoginModel.fromJson(response));
     } on ServerException {
@@ -158,8 +159,26 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure,ProductDataModel>> getProduct(int category_id) async {
+  Future<Either<Failure, HomeModel>> getHomeData() async {
+    try {
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      String lan = await Preferences.instance.getSavedLang();
+      final response = await dio.get(
+        EndPoints.homeUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': lan,
+          },
+        ),
+      );
+      return Right(HomeModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
+  Future<Either<Failure, ProductModel>> getProduct(int category_id) async {
     try {
       String lan = await Preferences.instance.getSavedLang();
       // LoginModel loginModel = await Preferences.instance.getUserModel();
@@ -172,11 +191,33 @@ class ServiceApi {
           },
         ),
       );
-      return Right(ProductDataModel.fromJson(response));
+      return Right(ProductModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
 
-
+  Future<Either<Failure, SearchProductModel>> searchProduct(
+      int provider_id, String searchText) async {
+    try {
+      String lan = await Preferences.instance.getSavedLang();
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      final response = await dio.get(
+        EndPoints.searchProductUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': lan,
+          },
+        ),
+        queryParameters: {
+          'search_key': searchText,
+          'provider_id': provider_id,
+        },
+      );
+      return Right(SearchProductModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

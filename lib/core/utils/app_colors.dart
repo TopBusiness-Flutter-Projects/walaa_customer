@@ -5,12 +5,18 @@ import 'hex_color.dart';
 class AppColors {
   static Color primary = HexColor('#B99503');
 
-  static Color scaffoldBackground = HexColor('#FDF5E8');
-  static Color buttonBackground = HexColor('#594339');
+  static Color scaffoldBackground = HexColor('#FFE4B9');
+  static Color buttonBackground = HexColor('#CBA06B');
   static Color textBackground = HexColor('#92603F');
   static Color onBoardingColor = HexColor('#DC8068');
   static Color containerBackgroundColor = HexColor('#F7DFB1');
   static Color iconBackgroundColor = HexColor('#402D26');
+  static Color textFormFieldColor = HexColor('#E8E8E8');
+  static Color navigationBarColor = HexColor('#EFEFEF');
+  static Color navigationBarIconColor = HexColor('#CECBCB');
+  static Color menuTapColor = HexColor('#EEEEEE');
+  static Color dialogBackgroundColor = HexColor('#FCE8CF');
+  static Color blueLineColor = HexColor('#00B3DC');
 
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black12;

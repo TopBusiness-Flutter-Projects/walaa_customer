@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/remote/service.dart';
 import '../../home page/models/providers_model.dart';
+import '../models/product_data_model.dart';
 import '../models/product_model.dart';
 
 part 'menu_state.dart';
@@ -11,10 +12,13 @@ class MenuCubit extends Cubit<MenuState> {
   MenuCubit(this.serviceApi) : super(MenuInitial());
   final ServiceApi serviceApi;
 
-  List<ProductModel> productList = [];
+  List<ProductItemModel> productList = [];
+  List<ProductItemModel> bestProductList = [];
+  List<ProductItemModel> searchProductList = [];
   int productLength = 0;
   int itemCount = 1;
   int itemPrice = 1;
+  int selectItem = 0;
   CategoryModel? categoryModel;
 
   getProduct(int category_id) async {
@@ -22,15 +26,35 @@ class MenuCubit extends Cubit<MenuState> {
     emit(AllProductLoading());
     final response = await serviceApi.getProduct(category_id);
     response.fold((l) => emit(AllProductError()), (r) async {
-      if (r.status.code == 200) {
-        print(r.data);
-        productLength = r.data.length;
-        productList = r.data;
+      if (r.code == 200) {
+        // productLength = r.data!.products!.length;
+        productList = r.data!.products!;
+        bestProductList = r.data!.theBest!;
         emit(AllProductLoaded(productList));
       } else {
-        print(r.status.message);
+        print(r.message);
         emit(AllProductError());
       }
     });
+  }
+
+  searchProduct(int provider_id, String text) async {
+    if (text.length > 0) {
+      searchProductList.clear();
+      emit(AllProductSearchLoading());
+      final response = await serviceApi.searchProduct(provider_id, text);
+      response.fold(
+        (l) => emit(AllProductSearchError()),
+        (r) async {
+          if (r.code == 200) {
+            searchProductList = r.data!;
+            emit(AllProductSearchLoaded());
+          } else {
+            print(r.message);
+            emit(AllProductSearchError());
+          }
+        },
+      );
+    }
   }
 }

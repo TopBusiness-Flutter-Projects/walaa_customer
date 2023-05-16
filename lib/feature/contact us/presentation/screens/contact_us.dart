@@ -21,33 +21,6 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            padding: EdgeInsets.only(right: 16, left: 16),
-            icon: Icon(
-              Icons.arrow_forward_outlined,
-              color: AppColors.textBackground,
-              size: 35,
-            ),
-          ),
-        ],
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-          child: Text(
-            translateText(AppStrings.contactUsText, context),
-            style: TextStyle(
-              color: AppColors.textBackground,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: AppColors.white,
-      ),
       body: BlocBuilder<ContactUsCubit, ContactUsState>(
         builder: (context, state) {
           ContactUsCubit cubit = context.read<ContactUsCubit>();
@@ -78,14 +51,65 @@ class ContactUsScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),),
+                          ),
+                          width: double.infinity,
+                          child: Card(
+                            elevation: 8,
+                            margin: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(25),
+                                  bottomLeft: Radius.circular(25)),
+                            ),
+                            color: AppColors.textBackground,
+                            child: SafeArea(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      ImageAssets.whiteWalaaLogoImage,
+                                      height: 70,
+                                      width: 70,
+                                    ),
+                                    Text(
+                                      translateText(AppStrings.contactUsText, context),
+                                      style: TextStyle(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: ()=>Navigator.pop(context),
+                                      icon: Icon(
+                                        Icons.arrow_forward,
+                                        color: AppColors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(height: 50),
                         Image.asset(
                           ImageAssets.contactUsImage,
-                          width: MediaQuery.of(context).size.width - 150,
+                          width: MediaQuery.of(context).size.width *0.50,
                         ),
+                        SizedBox(height: 25),
                         CustomTextField(
                           controller: cubit.nameController,
-                          image: 'null',
+                          image: ImageAssets.fullNameIcon,
+                          isEnable: false,
+                          isBorder: true,
                           backgroundColor: AppColors.transparent,
                           imageColor: AppColors.textBackground,
                           title: translateText(AppStrings.nameHint, context),
@@ -95,11 +119,12 @@ class ContactUsScreen extends StatelessWidget {
                           ),
                           textInputType: TextInputType.text,
                         ),
-                        const BrownLineWidget(),
                         const SizedBox(height: 12),
                         CustomTextField(
                           controller: cubit.phoneController,
-                          image: 'null',
+                          image: ImageAssets.phoneIcon,
+                          isEnable: false,
+                          isBorder: true,
                           imageColor: AppColors.textBackground,
                           backgroundColor: AppColors.transparent,
                           title: translateText(AppStrings.phoneHint, context),
@@ -107,12 +132,12 @@ class ContactUsScreen extends StatelessWidget {
                               AppStrings.phoneValidatorMessage, context),
                           textInputType: TextInputType.phone,
                         ),
-                        const BrownLineWidget(),
                         const SizedBox(height: 12),
                         CustomTextField(
                           controller: cubit.subjectController,
                           backgroundColor: AppColors.transparent,
-                          image: 'null',
+                          image: ImageAssets.subjectIcon,
+                          isBorder: true,
                           imageColor: AppColors.textBackground,
                           title: translateText(AppStrings.subjectHint, context),
                           validatorMessage: translateText(
@@ -121,12 +146,12 @@ class ContactUsScreen extends StatelessWidget {
                           ),
                           textInputType: TextInputType.text,
                         ),
-                        const BrownLineWidget(),
                         const SizedBox(height: 12),
                         CustomTextField(
                           controller: cubit.messageController,
                           backgroundColor: AppColors.transparent,
-                          image: 'null',
+                          image: ImageAssets.writeCommentIcon,
+                          isBorder: true,
                           minLine: 5,
                           imageColor: AppColors.textBackground,
                           title: translateText(AppStrings.messageHint, context),
@@ -136,7 +161,6 @@ class ContactUsScreen extends StatelessWidget {
                           ),
                           textInputType: TextInputType.text,
                         ),
-                        const BrownLineWidget(),
                         const SizedBox(height: 60),
                         CustomButton(
                           text: translateText(AppStrings.sendBtn, context),

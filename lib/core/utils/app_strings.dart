@@ -2,7 +2,7 @@ class AppStrings {
   static const String appName = 'app_name';
 
   // static const String googleApiKey = '';
-  static const String fontFamily = '';
+  static const String fontFamily = 'Cairo';
   static const String noRouteFound = 'No Route Found';
   static const String ok = 'Ok';
   static const String contentType = 'Content-Type';
@@ -23,6 +23,7 @@ class AppStrings {
   static const String doneBtn = 'done_btn';
   static const String backBtn = 'back_btn';
   static const String signInBtn = 'sign_in_btn';
+  static const String signUpBtn = 'sign_up_btn';
   static const String phoneNumberText = 'phone_number_text';
   static const String phoneValidatorMessage = 'phone_validator_message';
   static const String nameHint = 'name_hint';
@@ -59,6 +60,7 @@ class AppStrings {
   static const String loginText = 'login_text';
   static const String shouldLoginText = 'should_login_text';
   static const String searchCountryText = 'search_country';
+  static const String bestText = 'best';
 
 
 

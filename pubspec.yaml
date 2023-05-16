@@ -61,7 +61,9 @@ dependencies:
   webview_flutter: ^4.0.2
   lottie: ^2.2.0
   intl_phone_number_input: ^0.7.2
-
+  get: ^4.6.5
+  carousel_slider: ^4.2.1
+  flutter_rating_bar: ^4.0.1
     # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
@@ -75,7 +77,8 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/walaa_logo.png"
-  adaptive_icon_foreground: "assets/images/walaa_logo.png"
+  adaptive_icon_background : "#FFE4B9"
+#  adaptive_icon_foreground: "#FFE4B9"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -102,28 +105,29 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+    - assets/fonts/
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: normal
+      fonts:
+        - asset: assets/fonts/font_normal.ttf
+        - asset: assets/fonts/font_bold.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Black.ttf
+        - asset: assets/fonts/Cairo-Bold.ttf
+        - asset: assets/fonts/Cairo-ExtraBold.ttf
+        - asset: assets/fonts/Cairo-ExtraLight.ttf
+        - asset: assets/fonts/Cairo-Light.ttf
+        - asset: assets/fonts/Cairo-Medium.ttf
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-SemiBold.ttf
+    - family: Mada
+      fonts:
+        - asset: assets/fonts/Mada-Black.ttf
+        - asset: assets/fonts/Mada-Bold.ttf
+        - asset: assets/fonts/Mada-ExtraLight.ttf
+        - asset: assets/fonts/Mada-Light.ttf
+        - asset: assets/fonts/Mada-Medium.ttf
+        - asset: assets/fonts/Mada-Regular.ttf
+        - asset: assets/fonts/Mada-SemiBold.ttf

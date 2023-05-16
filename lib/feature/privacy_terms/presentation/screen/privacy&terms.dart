@@ -20,33 +20,6 @@ class PrivacyAndTermsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            padding: EdgeInsets.only(right: 16, left: 16),
-            icon: Icon(
-              Icons.arrow_forward_outlined,
-              color: AppColors.textBackground,
-              size: 35,
-            ),
-          ),
-        ],
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-          child: Text(
-            translateText(title, context),
-            style: TextStyle(
-              color: AppColors.textBackground,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: AppColors.containerBackgroundColor,
-      ),
       body: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
           SettingsCubit cubit = context.read<SettingsCubit>();
@@ -62,25 +35,80 @@ class PrivacyAndTermsScreen extends StatelessWidget {
                     ? text = cubit.privacyEn
                     : text = cubit.privacyAr;
           }
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                title == AppStrings.termsText
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.width - 80,
-                        height: MediaQuery.of(context).size.height / 3 - 80,
-                        child: Image.asset(ImageAssets.walaaLogoImage),
-                      )
-                    : SizedBox(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: HtmlWidget(
-                    text,
-                    textStyle: TextStyle(color: AppColors.textBackground),
+          return Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),),
+                ),
+                width: double.infinity,
+                child: Card(
+                  elevation: 8,
+                  margin: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
                   ),
-                )
-              ],
-            ),
+                  color: AppColors.textBackground,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            ImageAssets.whiteWalaaLogoImage,
+                            height: 70,
+                            width: 70,
+                          ),
+                          Text(
+                            translateText(title, context),
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: ()=>Navigator.pop(context),
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      title == AppStrings.termsText
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width - 80,
+                              height: MediaQuery.of(context).size.height / 3 - 80,
+                              child: Image.asset(ImageAssets.walaaLogoImage),
+                            )
+                          : SizedBox(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: HtmlWidget(
+                          text,
+                          textStyle: TextStyle(color: AppColors.textBackground),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),

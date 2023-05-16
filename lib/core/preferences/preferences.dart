@@ -50,6 +50,6 @@ class Preferences {
 
   Future<String> getSavedLang() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(AppStrings.locale) ?? 'en';
+    return preferences.getString(AppStrings.locale) ?? 'ar';
   }
 }

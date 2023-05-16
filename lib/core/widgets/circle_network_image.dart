@@ -3,22 +3,27 @@ import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
 
-class ManageCircleNetworkImage extends StatelessWidget {
-  const ManageCircleNetworkImage(
-      {Key? key, required this.imageUrl, this.height = 0, this.width = 0})
+class ManageNetworkImage extends StatelessWidget {
+  const ManageNetworkImage(
+      {Key? key,
+        required this.imageUrl,
+        this.height = 0,
+        this.width = 0,
+        this.borderRadius = 12})
       : super(key: key);
 
   final String imageUrl;
   final double height;
   final double width;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-        child: ClipOval(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
       child: CachedNetworkImage(
         imageUrl: imageUrl,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
         height: height != 0 ? height : null,
         width: width != 0 ? width : null,
         placeholder: (context, url) => Center(
@@ -27,6 +32,6 @@ class ManageCircleNetworkImage extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }

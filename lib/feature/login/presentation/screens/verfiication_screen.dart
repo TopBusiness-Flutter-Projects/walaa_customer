@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:walaa_customer/config/routes/app_routes.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
-import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
-import 'package:walaa_customer/feature/register/presentation/cubit/register_cubit.dart';
+import 'package:walaa_customer/feature/register/cubit/register_cubit.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
