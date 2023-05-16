@@ -1,17 +1,8 @@
-import 'dart:convert';
-
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../core/error/failures.dart';
-import '../../../../core/models/response_message.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/translate_text_method.dart';
 import '../../domain/use_cases/change_language_use_case.dart';
 import '../../domain/use_cases/get_saved_language_use_case.dart';
 
@@ -22,18 +13,14 @@ class LocaleCubit extends Cubit<LocaleState> {
   final ChangeLanguageUseCase changeLanguageUseCase;
 
   LocaleCubit({
+    // required this.logoutUseCase,
     required this.getSavedLanguageUseCase,
     required this.changeLanguageUseCase,
-  }) : super(
-    const ChangeLocaleState(
-      locale: Locale(AppStrings.englishCode),
-    ),
-  ) {
-  }
+  }) : super(const ChangeLocaleState(
+          locale: Locale(AppStrings.arabicCode),
+        ));
 
-  String currentLanguageCode = AppStrings.englishCode;
-
-
+  String currentLanguageCode = AppStrings.arabicCode;
 
   Future<void> getSavedLanguage() async {
     final response = await getSavedLanguageUseCase.call(NoParams());
@@ -54,5 +41,4 @@ class LocaleCubit extends Cubit<LocaleState> {
   void toEnglish() => _changeLanguage(AppStrings.englishCode);
 
   void toArabic() => _changeLanguage(AppStrings.arabicCode);
-
 }
