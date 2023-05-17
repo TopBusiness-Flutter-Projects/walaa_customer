@@ -185,6 +185,7 @@ class _ProductListState extends State<ProductList> {
                                             .productList
                                             .elementAt(index),
                                         type: 'products',
+                                        phone: widget.providerModel.phone!,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(

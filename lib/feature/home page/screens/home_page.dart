@@ -55,6 +55,7 @@ class HomePageScreen extends StatelessWidget {
                             context: context,
                             delegate: SearchPage(
                               data: context.read<HomeCubit>().providerModelList,
+                              phone: ''
                             ),
                           );
                         },

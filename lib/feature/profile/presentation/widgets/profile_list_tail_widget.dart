@@ -28,34 +28,32 @@ class ProfileListTailWidget extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 8,
-                child: InkWell(
-                  onTap: onclick,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          image,
-                          color: imageColor,
-                          height: 26,
-                          width: 26,
+              InkWell(
+                onTap: onclick,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        image,
+                        color: imageColor,
+                        height: 26,
+                        width: 26,
+                      ),
+                      SizedBox(width: 22),
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: image == ImageAssets.logoutIcon
+                              ? AppColors.textBackground
+                              : AppColors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(width: 22),
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: image == ImageAssets.logoutIcon
-                                ? AppColors.textBackground
-                                : AppColors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

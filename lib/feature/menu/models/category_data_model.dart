@@ -1,4 +1,4 @@
-import '../../../core/models/response_message.dart';
+import '../../../core/models/status_resspons.dart';
 import '../../home page/models/providers_model.dart';
 
 class CategoryDataModel {

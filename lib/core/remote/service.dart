@@ -15,8 +15,10 @@ import '../error/failures.dart';
 import '../models/cart_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
-import '../models/response_message.dart';
+import '../models/order_data_model.dart';
+import '../models/single_order_detials.dart';
 import '../models/search_product_model.dart';
+import '../models/status_resspons.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
@@ -163,12 +165,16 @@ class ServiceApi {
   Future<Either<Failure, HomeModel>> getHomeData() async {
     try {
       LoginModel loginModel = await Preferences.instance.getUserModel();
+      String? token;
+      if(loginModel.data!=null){
+        token=loginModel.data!.accessToken!;
+      }
       String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
         EndPoints.homeUrl,
         options: Options(
           headers: {
-            'Authorization': loginModel.data!.accessToken,
+            'Authorization': token,
             'Accept-Language': lan,
           },
         ),
@@ -221,8 +227,9 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-  Future<StatusResponse> sendOrder(CartModel model, String token) async {
-    Response response = await dio.post(
+  Future<Either<Failure,SingleOrderDetailsModel>> sendOrder(CartModel model, String token) async {
+    try {
+    final response = await dio.post(
       EndPoints.sendOrderUrl,
       options: Options(
         headers: {
@@ -231,9 +238,28 @@ class ServiceApi {
       ),
       body: CartModel.toJson(model),
     );
-    print('Url : ${EndPoints.sendOrderUrl}');
-    print('Response : \n ${response.data}');
-    return StatusResponse.fromJson(response.data);
-  }
+    //print('Url : ${EndPoints.sendOrderUrl}');
+   // print('Response : \n ${response.data}');
+    return Right(SingleOrderDetailsModel.fromJson(response));
+  } on ServerException {
+  return Left(ServerFailure());
+}  }
+  Future<Either<Failure,OrderDataModel>> getOrders(String token, String lan) async {
+    try {
+    final response = await dio.get(
+      EndPoints.orderUrl,
+      options: Options(
+        headers: {
+          'Authorization': token,
+          'Accept-Language': lan,
+        },
+      ),
+    );
+    print('Url : ${EndPoints.orderUrl}');
+  //  print('Response : \n ${response.data}');
+    return Right(OrderDataModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }  }
 
 }

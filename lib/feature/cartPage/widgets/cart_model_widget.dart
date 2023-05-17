@@ -103,7 +103,7 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                                 Text(
                                   widget.model.name!,
                                   style: TextStyle(
-                                    color: AppColors.black,
+                                    color: AppColors.gray1,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -112,7 +112,7 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                                 Text(
                                   '${totalPrice} SAR',
                                   style: TextStyle(
-                                      color: AppColors.primary, fontSize: 10),
+                                      color: AppColors.seconedprimary, fontSize: 10),
                                 ),
                                 SizedBox(height: 16),
                               ],
@@ -122,7 +122,7 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(color: AppColors.black),
+                                  border: Border.all(color: AppColors.navigationBarIconColor),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: Padding(
@@ -139,14 +139,14 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                                       },
                                       child: Icon(
                                         Icons.add,
-                                        color: AppColors.primary,
+                                        color: AppColors.navigationBarIconColor,
                                       ),
                                     ),
                                     SizedBox(width: 4),
                                     Text(
                                       '${widget.model.quantity}',
                                       style: TextStyle(
-                                          color: AppColors.black, fontSize: 13),
+                                          color: AppColors.gray1, fontSize: 13),
                                     ),
                                     SizedBox(width: 16),
                                     InkWell(
@@ -158,7 +158,7 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                                       },
                                       child: Icon(
                                         Icons.remove,
-                                        color: AppColors.primary,
+                                        color: AppColors.navigationBarIconColor,
                                       ),
                                     ),
                                   ],

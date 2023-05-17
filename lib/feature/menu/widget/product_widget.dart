@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:walaa_customer/feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/widgets/circle_network_image.dart';
@@ -9,10 +10,15 @@ import '../cubit/menu_cubit.dart';
 import '../models/product_data_model.dart';
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({Key? key, required this.model, required this.type})
-      : super(key: key);
+  const ProductWidget({
+    Key? key,
+    required this.model,
+    required this.type,
+    required this.phone,
+  }) : super(key: key);
   final ProductItemModel model;
   final String type;
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,10 @@ class ProductWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(model.name!,style: TextStyle(color: AppColors.textBackground),),
+                Text(
+                  model.name!,
+                  style: TextStyle(color: AppColors.textBackground),
+                ),
                 Row(
                   children: [
                     Stack(
@@ -106,9 +115,8 @@ class ProductWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                          color: type == 'best'
-                              ? AppColors.white
-                              : AppColors.gray,
+                          color:
+                              type == 'best' ? AppColors.white : AppColors.gray,
                           width: 1),
                       color: type == 'best'
                           ? AppColors.textBackground
@@ -117,7 +125,6 @@ class ProductWidget extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         openDialog(model, context);
-
                       },
                       child: Row(
                         children: [
@@ -150,6 +157,7 @@ class ProductWidget extends StatelessWidget {
       ),
     );
   }
+
   openDialog(ProductItemModel model, BuildContext context) {
     MenuCubit cubit = context.read<MenuCubit>();
     cubit.itemPrice = model.priceAfterDiscount == 0
@@ -226,7 +234,10 @@ class ProductWidget extends StatelessWidget {
                                       children: [
                                         InkWell(
                                           onTap: () => cubit.changeItemCount(
-                                              '+', model.priceAfterDiscount==0?model.price!:model.priceAfterDiscount!),
+                                              '+',
+                                              model.priceAfterDiscount == 0
+                                                  ? model.price!
+                                                  : model.priceAfterDiscount!),
                                           child: Icon(
                                             Icons.add,
                                             color: AppColors.white,
@@ -236,13 +247,15 @@ class ProductWidget extends StatelessWidget {
                                         Text(
                                           '${cubit.itemCount}',
                                           style:
-                                          TextStyle(color: AppColors.white),
+                                              TextStyle(color: AppColors.white),
                                         ),
                                         SizedBox(width: 16),
                                         InkWell(
                                           onTap: () => cubit.changeItemCount(
                                             '-',
-                                            model.priceAfterDiscount==0?model.price!:model.priceAfterDiscount!,
+                                            model.priceAfterDiscount == 0
+                                                ? model.price!
+                                                : model.priceAfterDiscount!,
                                           ),
                                           child: Icon(
                                             Icons.remove,
@@ -268,15 +281,14 @@ class ProductWidget extends StatelessWidget {
                           borderColor: AppColors.success,
                           onclick: () {
                             Navigator.pop(context);
-                            Preferences.instance.addItemToCart(
-                              model,
-                              cubit.itemCount,
-                            );
+                            Preferences.instance
+                                .addItemToCart(model, cubit.itemCount, phone,context);
+
                           },
                         ),
                         Spacer(),
                         OutLineButtonWidget(
-                          text:'cancel',
+                          text: 'cancel',
                           borderColor: AppColors.error,
                           onclick: () {
                             Navigator.pop(context);
@@ -294,5 +306,4 @@ class ProductWidget extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -35,6 +35,7 @@ class TheBestProductWidget extends StatelessWidget {
                         child: ProductWidget(
                           model: menuCubit.bestProductList[index],
                           type: 'best',
+                          phone: menuCubit.phone!,
                         ),
                       ),
                     ),

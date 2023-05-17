@@ -71,7 +71,7 @@ class NavigatorBottomWidget extends StatelessWidget {
                           height: 18,
                           child: Center(
                             child: Text(
-                              '5',
+                              bottomCubit.size,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

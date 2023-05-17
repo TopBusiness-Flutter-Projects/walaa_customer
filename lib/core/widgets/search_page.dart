@@ -17,8 +17,9 @@ import 'network_image.dart';
 class SearchPage extends SearchDelegate {
   final List<ProviderModel?>? data;
   final int? provider_id;
+  final String phone;
 
-  SearchPage({this.data, this.provider_id});
+  SearchPage({this.data, this.provider_id,required this.phone});
 
   int choiceIndex = 0;
   List<String?> titleData = ['بحث بالقسم', 'بحث بالمنتج'];
@@ -138,6 +139,7 @@ class SearchPage extends SearchDelegate {
                               child: ProductWidget(
                                 model: cubit.searchProductList[index],
                                 type: 'best',
+                                phone: phone,
                               ),
                             ),
                           ),

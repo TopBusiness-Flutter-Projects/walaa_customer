@@ -20,6 +20,7 @@ class MenuCubit extends Cubit<MenuState> {
   int itemPrice = 1;
   int selectItem = 0;
   CategoryModel? categoryModel;
+  String? phone;
   changeItemCount(String type,int price) {
     if (type == '+') {
       itemCount++;

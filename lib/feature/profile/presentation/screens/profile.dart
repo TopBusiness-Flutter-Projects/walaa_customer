@@ -155,7 +155,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 title: translateText('my_orders', context),
                                 image: ImageAssets.ordersIcon,
                                 imageColor: AppColors.black,
-                                onclick: () {},
+                                onclick: () {
+                                  Navigator.pushNamed(context, Routes.ordersRoute);
+                                },
                               ),
                               ProfileListTailWidget(
                                 title: translateText('update_profile', context),

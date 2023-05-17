@@ -18,6 +18,7 @@ import 'feature/home page/cubit/home_cubit.dart';
 import 'feature/language/presentation/cubit/locale_cubit.dart';
 import 'feature/menu/cubit/menu_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
+import 'feature/orders/cubit/order_cubit.dart';
 import 'feature/privacy_terms/presentation/cubit/settings_cubit.dart';
 import 'feature/profile/presentation/cubit/profile_cubit.dart';
 import 'feature/register/cubit/register_cubit.dart';
@@ -86,6 +87,10 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
         BlocProvider(
           create: (_) =>
               injector.serviceLocator<CartCubit>(),
+        ),     
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<OrderCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

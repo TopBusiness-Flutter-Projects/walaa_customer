@@ -29,6 +29,7 @@ class _MenuScreenState extends State<MenuScreen> {
   void initState() {
     super.initState();
     context.read<MenuCubit>().selectItem = 0;
+    context.read<MenuCubit>().phone=widget.providerModel.phone!;
   }
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                 context: context,
                                 delegate: SearchPage(
                                   provider_id: widget.providerModel.id,
+                                  phone:widget.providerModel.phone!
                                 ),
                               );
                             },

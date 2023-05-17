@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:walaa_customer/feature/login/presentation/screens/login.dart';
+import 'package:walaa_customer/feature/orders/screens/orders_screen.dart';
 import 'package:walaa_customer/feature/payment_screen/payment_page.dart';
 
 import '../../core/utils/app_strings.dart';
@@ -15,6 +16,7 @@ class Routes {
   static const String homePageScreenRoute = '/homePageScreen';
   static const String paymentRoute = '/paymentRoute';
   static const String updateProfileRoute = '/updateProfile';
+  static const String ordersRoute = '/orders';
 
 }
 
@@ -30,6 +32,10 @@ class AppRoutes {
       case Routes.verificationScreenRoute:
         return MaterialPageRoute(
           builder: (context) => const VerificationScreen(),
+        );
+        case Routes.ordersRoute:
+        return MaterialPageRoute(
+          builder: (context) => const OrdersScreen(),
         );
       case Routes.loginRoute:
         return MaterialPageRoute(

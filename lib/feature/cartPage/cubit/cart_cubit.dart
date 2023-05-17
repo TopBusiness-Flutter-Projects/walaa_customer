@@ -11,7 +11,7 @@ import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../core/models/cart_model.dart';
 import '../../../core/models/login_model.dart';
-import '../../../core/models/response_message.dart';
+import '../../../core/models/status_resspons.dart';
 import '../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 
 part 'cart_state.dart';
@@ -25,7 +25,11 @@ class CartCubit extends Cubit<CartState> {
     getUserData();
     getTotalPrice();
   }
-
+  @override
+  Future<void> close() {
+    //subscription.cancel();
+    return super.close();
+  }
   Future<LoginModel?> getUserData() async {
     userModel = await Preferences.instance.getUserModel();
     return userModel;
@@ -38,6 +42,7 @@ class CartCubit extends Cubit<CartState> {
 
   getTotalPrice() async {
     cartModel = await Preferences.instance.getCart();
+
     totalPrice = cartModel!.totalPrice!;
     emit(GetTotalPrice());
   }
@@ -65,16 +70,24 @@ class CartCubit extends Cubit<CartState> {
 model.phone=userModel.data!.user.phone;
 
     try {
-      StatusResponse response =
-          await serviceApi.sendOrder(model, userModel.data!.accessToken!);
-      if (response.code == 200) {
+      final response =
+          await serviceApi.sendOrder(model, userModel.data!.accessToken);
+      print(response);
+      response.fold(
+
+              (l) => {
+                print(l)
+              },
+              (r) async {
+                print(r);
+      if (r.code == 200) {
 
         toastMessage("sucess", AppColors.primary);
-        Preferences.instance.clearCartData();
+        Preferences.instance.clearCartData(context);
 
         //context.read<OrderCubit>().setlang(lang);
         //context.read<OrderCubit>().getorders(userModel);
-        context.read<NavigatorBottomCubit>().changePage(1);
+        context.read<NavigatorBottomCubit>().changePage(0);
         Navigator.pop(context);
 
 
@@ -85,11 +98,11 @@ model.phone=userModel.data!.user.phone;
 
         // emit(AllProductLoaded(productList));
       } else {
-        toastMessage(response.message, AppColors.primary);
-        Navigator.pop(context);
-        // productList[index] = model;
-        //emit(AllCategoryLoaded(categoryList));
-      }
+    toastMessage(r.message, AppColors.primary);
+    Navigator.pop(context);
+    // productList[index] = model;
+    //emit(AllCategoryLoaded(categoryList));
+    }});
     } catch (e) {
       print("Dldldldl${e.toString()}");
       //  Future.delayed(Duration(seconds: 1)).then((value) => emit(OnError(e.toString())));

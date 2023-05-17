@@ -39,6 +39,7 @@ class ImageAssets {
   static const String ordersIcon = '$iconsPath/orders.svg';
   static const String logoutIcon = '$iconsPath/logout.svg';
   static const String updateProfileIcon = '$iconsPath/update_profile.svg';
+  static const String calenderIcon = '$iconsPath/calender.svg';
 
 
   //Lottie
