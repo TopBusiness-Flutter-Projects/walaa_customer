@@ -27,7 +27,7 @@ class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 175,
+      height: 240,
       child: Stack(
         children: [
           Positioned(
@@ -104,6 +104,7 @@ class _OrderItemState extends State<OrderItem> {
                           openRateDialog(widget.orderModel.provider_data.id.toString());
                         },
                         child: Container(
+                          width: 150,
                           padding: EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
@@ -122,7 +123,7 @@ class _OrderItemState extends State<OrderItem> {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                'تقييمى',
+                                translateText("add_rating", context),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.white,
@@ -166,8 +167,9 @@ class _OrderItemState extends State<OrderItem> {
   }
   void openRateDialog(String? provider_id
   ) {
-    MyRate myRate=MyRate();
-    myRate.providerId!=int.parse(provider_id!);
+
+    MyRate myRate=MyRate(providerId: int.parse(provider_id!),value:"0" ,comment: "");
+
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
