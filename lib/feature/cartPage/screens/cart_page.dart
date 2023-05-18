@@ -13,6 +13,7 @@ import '../../../core/utils/translate_text_method.dart';
 import '../../../core/widgets/outline_button_widget.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../../menu/cubit/menu_cubit.dart';
+import '../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import '../cubit/cart_cubit.dart';
 import '../widgets/cart_model_widget.dart';
 
@@ -26,9 +27,9 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   CartModel? cartModel;
 
-  TextEditingController _typeAheadController = TextEditingController();
-
-  TextEditingController _typenameController = TextEditingController();
+  // TextEditingController _typeAheadController = TextEditingController();
+  //
+  // TextEditingController _typenameController = TextEditingController();
 
   @override
   void initState() {
@@ -93,8 +94,8 @@ class _CartPageState extends State<CartPage> {
                               child: Text(
                                 translateText(
                                     AppStrings.cartText, context),
-                            style:
-                                TextStyle(color: AppColors.white, fontSize: 16),
+                            style: TextStyle(
+                                color: AppColors.white, fontSize: 16),
                           ))),
                     ],
                   ),
@@ -121,10 +122,11 @@ class _CartPageState extends State<CartPage> {
                                       return Stack(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(16.0),
+                                            padding:
+                                                const EdgeInsets.all(16.0),
                                             child: CartModelWidget(
-                                              model:
-                                                  cartModel!.productModel![index],
+                                              model: cartModel!
+                                                  .productModel![index],
                                             ),
                                           ),
                                           Positioned(
@@ -133,12 +135,17 @@ class _CartPageState extends State<CartPage> {
                                             child: IconButton(
                                               onPressed: () {
                                                 Preferences.instance
-                                                    .deleteProduct(cartModel!
-                                                        .productModel![index],context);
+                                                    .deleteProduct(
+                                                        cartModel!
+                                                                .productModel![
+                                                            index],
+                                                        context);
                                                 Future.delayed(
-                                                    Duration(milliseconds: 250),
+                                                    Duration(
+                                                        milliseconds: 250),
                                                     () {
-                                                  getAllProductInCart(context);
+                                                  getAllProductInCart(
+                                                      context);
                                                 });
                                               },
                                               icon: Icon(
@@ -154,9 +161,11 @@ class _CartPageState extends State<CartPage> {
                                   SizedBox(height: 20),
                                   BlocBuilder<CartCubit, CartState>(
                                     builder: (context, state) {
-                                      return cartModel!.productModel!.isNotEmpty
+                                      return cartModel!
+                                              .productModel!.isNotEmpty
                                           ? Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -166,7 +175,8 @@ class _CartPageState extends State<CartPage> {
                                                     translateText(
                                                         AppStrings.totalPriceText, context),
                                                     style: TextStyle(
-                                                        color: AppColors.gray1,
+                                                        color:
+                                                            AppColors.gray1,
                                                         fontSize: 16),
                                                   ),
                                                   SizedBox(width: 22),
@@ -182,7 +192,8 @@ class _CartPageState extends State<CartPage> {
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          color: AppColors.gray1,
+                                                          color:
+                                                              AppColors.gray1,
                                                         ),
                                                       ),
                                                     ),
@@ -207,15 +218,18 @@ class _CartPageState extends State<CartPage> {
                                                     .userModel
                                                     .data !=
                                                 null) {
-                                              context.read<CartCubit>().sendorder(
-                                                  this.cartModel!, this.context);
-                                            }
-                                            else{
-                                              Navigator.of(context).pushNamedAndRemoveUntil(Routes.loginRoute,
+                                              context
+                                                  .read<CartCubit>()
+                                                  .sendorder(this.cartModel!,
+                                                      this.context);
+                                            } else {
+                                              Navigator.of(context)
+                                                  .pushNamedAndRemoveUntil(
+                                                Routes.loginRoute,
                                                 ModalRoute.withName(
                                                   Routes.initialRoute,
-                                                ),);
-
+                                                ),
+                                              );
                                             }
                                           },
                                         )

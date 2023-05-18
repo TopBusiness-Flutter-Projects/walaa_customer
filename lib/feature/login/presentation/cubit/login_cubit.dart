@@ -33,23 +33,8 @@ class LoginCubit extends Cubit<LoginState> {
       (failure) => emit(LoginFailure()),
       (loginModel) {
         if (loginModel.code == 411) {
-
           errorGetBar(translateText(AppStrings.noEmailError, context));
-
-          // toastMessage(
-          //   translateText(AppStrings.noEmailError, context),
-          //   context,
-          //   color: AppColors.error,
-          // );
-          // Future.delayed(
-          //   Duration(milliseconds: 900),
-          //   () {
-          //     emit(LoginInitial());
-          //   },
-          // );
-
           emit(LoginLoaded());
-
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();
@@ -67,25 +52,29 @@ class LoginCubit extends Cubit<LoginState> {
 
   // String phoneNumber = '';
   String smsCode = '';
-  String phoneCode = '';
+  String phoneCode = '+966';
 
   final FirebaseAuth _mAuth = FirebaseAuth.instance;
   String? verificationId;
   int? resendToken;
 
-  sendSmsCode() async {
+  sendSmsCode({String? code, String? phoneNum}) async {
+    print('================================================');
+    print(code);
+    print(phoneNum);
+    print('================================================');
     emit(SendCodeLoading());
     _mAuth.setSettings(forceRecaptchaFlow: true);
     _mAuth.verifyPhoneNumber(
       forceResendingToken: resendToken,
-      phoneNumber: phoneCode + phoneController.text,
+      phoneNumber: '${code ?? phoneCode}' + "${phoneNum ?? phoneController.text}",
       // timeout: Duration(seconds: 1),
       verificationCompleted: (PhoneAuthCredential credential) {
         smsCode = credential.smsCode!;
         verificationId = credential.verificationId;
         print("verificationId=>$verificationId");
         emit(OnSmsCodeSent(smsCode));
-        verifySmsCode(smsCode);
+        // verifySmsCode(smsCode);
       },
       verificationFailed: (FirebaseAuthException e) {
         emit(CheckCodeInvalidCode());
@@ -110,7 +99,7 @@ class LoginCubit extends Cubit<LoginState> {
       smsCode: smsCode,
     );
     await _mAuth.signInWithCredential(credential).then((value) {
-      isRegister?null: storeUser(loginModel!);
+      isRegister ? null : storeUser(loginModel!);
       emit(CheckCodeSuccessfully());
     }).catchError((error) {
       print('phone auth =>${error.toString()}');

@@ -171,12 +171,13 @@ class ProductItemModel {
 
   factory ProductItemModel.fromJson(Map<String, dynamic> json) =>
       ProductItemModel(
-          id: json["id"],
-          name: json["name"],
-          price: json["price"]??0,
-          priceAfterDiscount: json["price_after_discount"]??0,
-          image: json["image"],
-          quantity: json['quantity'] ?? 1);
+        id: json["id"],
+        name: json["name"],
+        price: json["price"] ?? 0,
+        priceAfterDiscount: json["price_after_discount"] ?? 0,
+        image: json["image"],
+        quantity: json['quantity'] ?? 1,
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,

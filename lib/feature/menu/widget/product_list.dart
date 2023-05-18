@@ -180,16 +180,15 @@ class _ProductListState extends State<ProductList> {
                                   child: Column(
                                     children: [
                                       ProductWidget(
-                                        model: context
-                                            .read<MenuCubit>()
-                                            .productList
+                                        model: menuCubit.productList
                                             .elementAt(index),
                                         type: 'products',
                                         phone: widget.providerModel.phone!,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 12.0),
+                                          vertical: 12.0,
+                                        ),
                                         child: Visibility(
                                           visible: index !=
                                               menuCubit.productList.length - 1,

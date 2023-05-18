@@ -1,13 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:walaa_customer/config/routes/app_routes.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/remote/service.dart';
+import 'package:walaa_customer/core/utils/dialogs.dart';
+import 'package:walaa_customer/core/utils/translate_text_method.dart';
 
 import '../../../../core/preferences/preferences.dart';
-import '../../../../core/utils/toast_message_method.dart';
+import '../../login/presentation/cubit/login_cubit.dart';
 
 part 'register_state.dart';
 
@@ -21,6 +25,20 @@ class RegisterCubit extends Cubit<RegisterState> {
   LoginModel? loginModel;
   UserData? userData;
   bool isCodeSend = false;
+
+  XFile? imageFile;
+  String imagePath = '';
+  String imageUrl = '';
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  // String phoneNumber = '';
+  String smsCode = '';
+  String phoneCode = '';
+
+  final FirebaseAuth _mAuth = FirebaseAuth.instance;
+  String? verificationId;
+  int? resendToken;
 
   changeStateCubit() {
     Future.delayed(
@@ -40,12 +58,6 @@ class RegisterCubit extends Cubit<RegisterState> {
       }
     }
   }
-
-  XFile? imageFile;
-  String imagePath = '';
-  String imageUrl = '';
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
 
   pickImage({required String type}) async {
     imageFile = await ImagePicker().pickImage(
@@ -145,17 +157,44 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
+  searchPhone(BuildContext context) async {
+    emit(RegisterTestPhoneLoading());
+    final response = await api.searchPhone(phoneController.text);
+    response.fold(
+      (failure) => emit(RegisterTestPhoneError()),
+      (r) {
+        if (r.code == 200) {
+          if (r.data!.isNotEmpty) {
+            errorGetBar(
+              translateText('There_is_no_email_with_this_phone', context),
+            );
+            emit(RegisterTestPhoneLoaded());
+          } else {
+            Future.delayed(
+              Duration(milliseconds: 500),
+              () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.verificationScreenRoute,
+                );
+              },
+            );
+            context.read<LoginCubit>().isRegister = true;
+            context
+                .read<LoginCubit>()
+                .sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
+            emit(RegisterTestPhoneLoaded());
+          }
+          // this.loginModel = loginModel;
+          // sendSmsCode();
+        }
+      },
+    );
+  }
+
   //////////////////send OTP///////////////////
 
-  // String phoneNumber = '';
-  String smsCode = '';
-  String phoneCode = '';
-
-  final FirebaseAuth _mAuth = FirebaseAuth.instance;
-  String? verificationId;
-  int? resendToken;
-
-  sendSmsCode() async {
+  sendSmsCode(context) async {
     emit(RegisterSendCodeLoading());
     _mAuth.setSettings(forceRecaptchaFlow: true);
     _mAuth.verifyPhoneNumber(
@@ -167,7 +206,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         verificationId = credential.verificationId;
         print("verificationId=>$verificationId");
         emit(RegisterSendCodeSent(smsCode));
-        verifySmsCode(smsCode);
+        verifySmsCode(smsCode, context);
       },
       verificationFailed: (FirebaseAuthException e) {
         emit(RegisterCheckCodeInvalidCode());
@@ -185,7 +224,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
-  verifySmsCode(String smsCode) async {
+  verifySmsCode(String smsCode, context) async {
     print(verificationId);
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId!,

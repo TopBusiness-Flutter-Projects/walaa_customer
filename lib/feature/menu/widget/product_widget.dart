@@ -24,7 +24,6 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(phone);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Row(
@@ -102,9 +101,9 @@ class ProductWidget extends StatelessWidget {
             ],
           ),
           Expanded(
+            flex: 3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () {
@@ -122,31 +121,26 @@ class ProductWidget extends StatelessWidget {
                           ? AppColors.textBackground
                           : AppColors.white,
                     ),
-                    child: InkWell(
-                      onTap: () {
-                        openDialog(model, context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_shopping_cart_outlined,
-                            size: 18,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.add_shopping_cart_outlined,
+                          size: 18,
+                          color: type == 'best'
+                              ? AppColors.white
+                              : AppColors.black,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'اضف الى السلة',
+                          style: TextStyle(
+                            fontSize: 12,
                             color: type == 'best'
                                 ? AppColors.white
                                 : AppColors.black,
                           ),
-                          SizedBox(width: 8),
-                          Text(
-                            'اضف الى السلة',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: type == 'best'
-                                  ? AppColors.white
-                                  : AppColors.black,
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -215,8 +209,8 @@ class ProductWidget extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                '${cubit.itemPrice} '+translateText(
-                                    AppStrings.SARText, context),
+                                '${cubit.itemPrice} ' +
+                                    translateText(AppStrings.SARText, context),
                                 style: TextStyle(color: AppColors.primary),
                               ),
                               SizedBox(height: 16),
@@ -280,20 +274,17 @@ class ProductWidget extends StatelessWidget {
                       children: [
                         Spacer(),
                         OutLineButtonWidget(
-                          text: translateText(
-                              AppStrings.confirmBtn, context),
+                          text: translateText(AppStrings.confirmBtn, context),
                           borderColor: AppColors.success,
                           onclick: () {
                             Navigator.pop(context);
-                            Preferences.instance
-                                .addItemToCart(model, cubit.itemCount, phone,context);
-
+                            Preferences.instance.addItemToCart(
+                                model, cubit.itemCount, phone, context);
                           },
                         ),
                         Spacer(),
                         OutLineButtonWidget(
-                          text: translateText(
-                              AppStrings.cancelBtn, context),
+                          text: translateText(AppStrings.cancelBtn, context),
                           borderColor: AppColors.error,
                           onclick: () {
                             Navigator.pop(context);

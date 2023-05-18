@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
               Future.delayed(
                 Duration(milliseconds: 500),
                 () {
+                  cubit.phoneController.clear();
                   Navigator.pushNamed(
                     context,
                     Routes.verificationScreenRoute,
@@ -116,7 +117,10 @@ class LoginScreen extends StatelessWidget {
                                     cubit.phoneCode = number.dialCode!;
                                   },
                                   autoFocusSearch: true,
-                                  initialValue: PhoneNumber(isoCode: "SA"),
+                                  initialValue: PhoneNumber(
+                                    isoCode:
+                                        cubit.phoneCode == '+966' ? "SA" : 'EG',
+                                  ),
                                   selectorConfig: SelectorConfig(
                                     selectorType:
                                         PhoneInputSelectorType.BOTTOM_SHEET,
@@ -164,6 +168,8 @@ class LoginScreen extends StatelessWidget {
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             // cubit.phoneNumber=AppStrings.phoneCode;
+                            print(cubit.phoneCode);
+                            cubit.isRegister = false;
                             cubit.loginPhone(
                                 cubit.phoneController.text, context);
                           }

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:walaa_customer/core/api/base_api_consumer.dart';
+import 'package:walaa_customer/core/error/exceptions.dart';
 import 'package:walaa_customer/core/preferences/preferences.dart';
 import 'package:walaa_customer/core/models/recharge_wallet_model.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
@@ -16,6 +17,7 @@ import '../models/cart_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
 import '../models/order_data_model.dart';
+import '../models/search_phone_model.dart';
 import '../models/single_order_detials.dart';
 import '../models/search_product_model.dart';
 import '../models/status_resspons.dart';
@@ -54,6 +56,8 @@ class ServiceApi {
   }
 
   Future<Either<Failure, LoginModel>> updateProfile(UserData userData) async {
+    print('++++++++++++++++++++++++++++++++++++++++++++++++');
+    print(await userData.updateToJson());
     try {
       final response = await dio.post(
         formDataIsEnabled: true,
@@ -166,8 +170,8 @@ class ServiceApi {
     try {
       LoginModel loginModel = await Preferences.instance.getUserModel();
       String? token;
-      if(loginModel.data!=null){
-        token=loginModel.data!.accessToken!;
+      if (loginModel.data != null) {
+        token = loginModel.data!.accessToken!;
       }
       String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
@@ -227,23 +231,48 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure,SingleOrderDetailsModel>> sendOrder(CartModel model, String token) async {
+
+  Future<Either<Failure, SingleOrderDetailsModel>> sendOrder(
+      CartModel model, String token) async {
     try {
-    final response = await dio.post(
-      EndPoints.sendOrderUrl,
-      options: Options(
-        headers: {
-          'Authorization': token,
-        },
-      ),
-      body: CartModel.toJson(model),
-    );
-    //print('Url : ${EndPoints.sendOrderUrl}');
-   // print('Response : \n ${response.data}');
-    return Right(SingleOrderDetailsModel.fromJson(response));
-  } on ServerException {
-  return Left(ServerFailure());
-}  }
+      final response = await dio.post(
+        EndPoints.sendOrderUrl,
+        options: Options(
+          headers: {
+            'Authorization': token,
+          },
+        ),
+        body: CartModel.toJson(model),
+      );
+      //print('Url : ${EndPoints.sendOrderUrl}');
+      // print('Response : \n ${response.data}');
+      return Right(SingleOrderDetailsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+//
+//   Future<Either<Failure, OrderDataModel>> getOrders(
+//       String token, String lan) async {
+//     try{
+//     final response = await dio.post(
+//       EndPoints.sendOrderUrl,
+//       options: Options(
+//         headers: {
+//           'Authorization': token,
+//         },
+//       ),
+//       body: CartModel.toJson(model),
+//     );
+//     //print('Url : ${EndPoints.sendOrderUrl}');
+//    // print('Response : \n ${response.data}');
+//     return Right(SingleOrderDetailsModel.fromJson(response));
+//   } on ServerException {
+//   return Left(ServerFailure());
+// }  }
+//
+
   Future<Either<Failure,StatusResponse>> rateProvider(String rate,String text,String provider_id) async {
      LoginModel loginModel = await Preferences.instance.getUserModel();
 
@@ -267,22 +296,47 @@ class ServiceApi {
   } on ServerException {
   return Left(ServerFailure());
 }  }
+
   Future<Either<Failure,OrderDataModel>> getOrders(String token, String lan) async {
     try {
-    final response = await dio.get(
-      EndPoints.orderUrl,
-      options: Options(
-        headers: {
-          'Authorization': token,
-          'Accept-Language': lan,
-        },
-      ),
-    );
-    print('Url : ${EndPoints.orderUrl}');
-  //  print('Response : \n ${response.data}');
-    return Right(OrderDataModel.fromJson(response));
+      final response = await dio.get(
+        EndPoints.orderUrl,
+        options: Options(
+          headers: {
+            'Authorization': token,
+            'Accept-Language': lan,
+          },
+        ),
+      );
+      print('Url : ${EndPoints.orderUrl}');
+      //  print('Response : \n ${response.data}');
+      return Right(OrderDataModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
-    }  }
+    }
+  }
 
+
+  Future<Either<Failure, SearchPhoneModel>> searchPhone(
+      String phone) async {
+    try {
+      String lan = await Preferences.instance.getSavedLang();
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      final response = await dio.get(
+        EndPoints.searchPhoneUrl,
+        options: Options(
+          headers: {
+            // 'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': lan,
+          },
+        ),
+        queryParameters: {
+          'search_key': phone,
+        },
+      );
+      return Right(SearchPhoneModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

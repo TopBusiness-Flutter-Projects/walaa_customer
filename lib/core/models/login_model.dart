@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:walaa_customer/core/utils/app_strings.dart';
 
 LoginModel loginModelFromJson(String str) =>
     LoginModel.fromJson(json.decode(str));
@@ -107,16 +106,8 @@ class UserData {
       };
 
   Future<Map<String, dynamic>> updateToJson() async => {
-        if (name != null) ...{
-          "name": name,
-        },
         "role_id": 2,
-        "phone_code": AppStrings.phoneCode,
-        if (phone != null) ...{
-          "phone": phone,
-        },
-        if (image != null) ...{
-          "image": await MultipartFile.fromFile(image!),
-        }
+        if (name != null) ...{"name": name},
+        if (image != null) ...{"image": await MultipartFile.fromFile(image!)}
       };
 }

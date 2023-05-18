@@ -17,6 +17,7 @@ class Routes {
   static const String paymentRoute = '/paymentRoute';
   static const String updateProfileRoute = '/updateProfile';
   static const String ordersRoute = '/orders';
+  static const String otpRoute = '/otp';
 
 }
 

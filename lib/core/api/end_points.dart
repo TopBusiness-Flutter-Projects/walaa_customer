@@ -17,6 +17,7 @@ class EndPoints {
   static const String productUrl = '${baseUrl}client/products/list';
   static const String categoryUrl = '${baseUrl}provider/categories/list';
   static const String searchProductUrl = '${baseUrl}client/search';
+  static const String searchPhoneUrl = '${baseUrl}search';
 
 
 

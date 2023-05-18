@@ -26,26 +26,34 @@ class _NavigationBottomState extends State<NavigationBottom> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigatorBottomCubit, NavigatorBottomState>(
-        builder: (context, state) {
-      NavigatorBottomCubit bottomCubit = context.read<NavigatorBottomCubit>();
-      return Scaffold(
-          bottomNavigationBar: SizedBox(
-            height: 50,
-            child: NavigatorBottomWidget(),
+      builder: (context, state) {
+        NavigatorBottomCubit bottomCubit = context.read<NavigatorBottomCubit>();
+        return WillPopScope(
+          onWillPop: () async {
+            bottomCubit.changePage(0);
+            return true;
+          },
+          child: Scaffold(
+            bottomNavigationBar: SizedBox(
+              height: 50,
+              child: NavigatorBottomWidget(),
+            ),
+            body: BlocBuilder<NavigatorBottomCubit, NavigatorBottomState>(
+              builder: (context, state) {
+                if (bottomCubit.page == 2) {
+                  return widget.loginModel.data != null
+                      ? ProfileScreen()
+                      : NotLoginPage();
+                } else if (bottomCubit.page == 1) {
+                  return CartPage();
+                } else {
+                  return HomePageScreen();
+                }
+              },
+            ),
           ),
-          body: BlocBuilder<NavigatorBottomCubit, NavigatorBottomState>(
-            builder: (context, state) {
-              if (bottomCubit.page == 2) {
-                return widget.loginModel.data != null
-                    ? ProfileScreen()
-                    : NotLoginPage();
-              } else if (bottomCubit.page == 1) {
-                return CartPage();
-              } else {
-                return HomePageScreen();
-              }
-            },
-          ));
-    });
+        );
+      },
+    );
   }
 }

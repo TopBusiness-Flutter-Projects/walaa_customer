@@ -24,7 +24,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.animateTo(context.read<OrderCubit>().currentIndex);
   }
 
@@ -37,32 +37,61 @@ class _OrdersScreenState extends State<OrdersScreen>
           AppStrings.previousOrderText, context),
     ];
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.seconedprimary,
-        flexibleSpace: Align(
-          alignment: Alignment.centerLeft,
-          child: Image.asset(
-            ImageAssets.whiteWalaaLogoImage,
-            height: 70,
-            width: 70,
-          ),
-        ),
-        title: Center(
-            child: Text(
-              translateText(
-                  AppStrings.myorderText, context),
-          style: TextStyle(
-              color: AppColors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
-        )),
-      ),
       body: BlocBuilder<OrderCubit, OrderState>(
         builder: (context, state) {
           OrderCubit cubit = context.read<OrderCubit>();
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),),
+                ),
+                width: double.infinity,
+                child: Card(
+                  elevation: 8,
+                  margin: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
+                  ),
+                  color: AppColors.textBackground,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            ImageAssets.whiteWalaaLogoImage,
+                            height: 70,
+                            width: 70,
+                          ),
+                          Text(
+                            translateText(AppStrings.myorderText, context),
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: ()=>Navigator.pop(context),
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 50),
               SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
