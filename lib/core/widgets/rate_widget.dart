@@ -44,73 +44,77 @@ class _RateWidgetState extends State<RateWidget> {
           key: formKey,
           child: Container(
             color: AppColors.dialogBackgroundColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.close,
-                        color: AppColors.error,
-                        size: 28,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(
+                          Icons.close,
+                          color: AppColors.error,
+                          size: 28,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6),
-                RatingBar.builder(
-                  initialRating: cubit.rating,
-                  minRating: 0,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: AppColors.buttonBackground,
+                    ],
                   ),
-                  glowColor: AppColors.dialogBackgroundColor,
-                  unratedColor: AppColors.white,
-                  onRatingUpdate: (rating) {
-                    cubit.rating = rating;
-                    print(rating);
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                ),
-                CustomTextField(
-                  image: ImageAssets.writeCommentIcon,
-                  title: translateText('add_rating', context),
-                  textInputType: TextInputType.text,
-                  backgroundColor: AppColors.white,
-                  minLine: 5,
-                  horizontalPadding: 1,
-                  controller: cubit.rateController,
-                  validatorMessage: translateText('rate_validation', context),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                CustomButton(
-                  text: translateText('add', context),
-                  color: AppColors.buttonBackground,
-                  onClick: () {
-                    if (formKey.currentState!.validate()) {
-                      print('gghghhgghghghgh');
-                      print(cubit.rateController.text);
-                      print(cubit.rating);
-                    }
-                  },
-                  paddingHorizontal: MediaQuery.of(context).size.width * 0.15,
-                  borderRadius: 10,
-                ),
-              ],
+                  SizedBox(height: 6),
+                  RatingBar.builder(
+                    initialRating: cubit.rating,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: AppColors.buttonBackground,
+                    ),
+                    glowColor: AppColors.dialogBackgroundColor,
+                    unratedColor: AppColors.white,
+                    onRatingUpdate: (rating) {
+                      cubit.rating = rating;
+                      print(rating);
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.90,
+                  ),
+                  CustomTextField(
+                    image: ImageAssets.writeCommentIcon,
+
+                    title: translateText('add_rating', context),
+                    textInputType: TextInputType.text,
+                    backgroundColor: AppColors.white,
+                    minLine: 5,
+                    horizontalPadding: 1,
+                    controller: cubit.rateController,
+                    validatorMessage: translateText('rate_validation', context),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  CustomButton(
+                    text: translateText('add', context),
+                    color: AppColors.buttonBackground,
+                    onClick: () {
+                      if (formKey.currentState!.validate()) {
+                        print('gghghhgghghghgh');
+                        print(cubit.rateController.text);
+                        print(cubit.rating);
+                        cubit.rateProvider(context,cubit.rateController.text,cubit.rating,widget.myRate!.providerId.toString());
+                      }
+                    },
+                    paddingHorizontal: MediaQuery.of(context).size.width * 0.15,
+                    borderRadius: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         );

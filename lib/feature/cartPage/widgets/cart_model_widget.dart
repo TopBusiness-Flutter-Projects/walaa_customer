@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_strings.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../menu/models/product_data_model.dart';
 import '../cubit/cart_cubit.dart';
 
@@ -110,7 +112,8 @@ class _CartModelWidgetState extends State<CartModelWidget> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  '${totalPrice} SAR',
+                                  '${totalPrice} '+   translateText(
+                                      AppStrings.SARText, context),
                                   style: TextStyle(
                                       color: AppColors.seconedprimary, fontSize: 10),
                                 ),

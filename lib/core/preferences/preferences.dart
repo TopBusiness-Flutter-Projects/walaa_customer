@@ -11,7 +11,9 @@ import '../models/cart_model.dart';
 import '../models/login_model.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_strings.dart';
+import '../utils/dialogs.dart';
 import '../utils/toast_message_method.dart';
+import '../utils/translate_text_method.dart';
 
 class Preferences {
 
@@ -94,6 +96,11 @@ class Preferences {
       setCart(cartModel,context);
 
     }
+      else{
+        errorGetBar( translateText(
+            AppStrings.addcartErrorText, context),);
+
+      }
 }
   }
 

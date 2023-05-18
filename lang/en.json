@@ -51,9 +51,12 @@
   "categories": "Categories",
   "drinks": "Drinks",
   "confirm": "Confirm",
-  "lang": "Language"
-
-
-
+  "lang": "Language",
+  "total_price_text": "Total Price ",
+  "cart": "Cart",
+  "previous_order_text": "Previous Orders",
+  "current_order_text": "Current Orders",
+  "myorder_text": "My Orders",
+  "addcart_error_text": "You cannot add from more than one cafe. Please complete the cart requests first"
 
 }

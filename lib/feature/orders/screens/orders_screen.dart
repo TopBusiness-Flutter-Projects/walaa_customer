@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/feature/orders/screens/order_page.dart';
 
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../cubit/order_cubit.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -15,21 +17,25 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen>
     with TickerProviderStateMixin {
-  List<String> titles = [
-    'Current Orders',
-    'Previous Order',
-  ];
+  List<String> titles = [];
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: 3, vsync: this);
     _tabController.animateTo(context.read<OrderCubit>().currentIndex);
   }
 
   @override
   Widget build(BuildContext context) {
+    titles=[
+      translateText(
+          AppStrings.currentOrderText,context ),
+      translateText(
+          AppStrings.previousOrderText, context),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.seconedprimary,
@@ -43,7 +49,8 @@ class _OrdersScreenState extends State<OrdersScreen>
         ),
         title: Center(
             child: Text(
-          'My Orders',
+              translateText(
+                  AppStrings.myorderText, context),
           style: TextStyle(
               color: AppColors.white,
               fontSize: 16,

@@ -65,40 +65,6 @@ class CoffeeListWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          print(coffeeModel[index].toJson());
-                          openRateDialog(coffeeModel[index].myRate);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.buttonBackground,
-                          ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                ImageAssets.rateIcon,
-                                color: AppColors.white,
-                                width: 22,
-                                height: 22,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'تقييمى',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.white,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),

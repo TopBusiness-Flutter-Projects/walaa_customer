@@ -38,6 +38,11 @@ class AppStrings {
   static const String profileText = 'profile_text';
   static const String termsText = 'terms_text';
   static const String privacyText = 'privacy_text';
+  static const String totalPriceText = 'total_price_text';
+  static const String myorderText = 'myorder_text';
+  static const String addcartErrorText = 'addcart_error_text';
+  static const String currentOrderText = 'current_order_text';
+  static const String previousOrderText = 'previous_order_text';
   static const String deleteAccountText = 'delete_account_text';
   static const String logoutText = 'logout_text';
   static const String welcomeText = 'welcome_text';
@@ -56,6 +61,7 @@ class AppStrings {
   static const String addBalanceText = 'add_balance_text';
   static const String balanceText = 'balance_text';
   static const String SARText = 'SAR';
+  static const String cartText = 'cart';
   static const String noEmailError = 'There_is_no_email_with_this_phone';
   static const String loginText = 'login_text';
   static const String shouldLoginText = 'should_login_text';

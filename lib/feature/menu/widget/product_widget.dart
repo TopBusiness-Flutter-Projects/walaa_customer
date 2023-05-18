@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_strings.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../../core/widgets/circle_network_image.dart';
 import '../../../core/widgets/outline_button_widget.dart';
 import '../cubit/menu_cubit.dart';
@@ -22,6 +24,7 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(phone);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Row(
@@ -42,69 +45,66 @@ class ProductWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: 16),
-          Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  model.name!,
-                  style: TextStyle(color: AppColors.textBackground),
-                ),
-                Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Text(
-                          '${model.price!}  ريال ',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: model.priceAfterDiscount != null
-                                ? AppColors.error
-                                : AppColors.textBackground,
-                          ),
-                        ),
-                        Visibility(
-                          visible: model.priceAfterDiscount != null,
-                          child: Positioned(
-                            top: 0,
-                            left: 0,
-                            bottom: 0,
-                            right: 0,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 42,
-                                  height: 1,
-                                  color: AppColors.error,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(width: 12),
-                    Visibility(
-                      visible: model.priceAfterDiscount != null,
-                      child: Text(
-                        '${model.priceAfterDiscount ?? 0}  ريال ',
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                model.name!,
+                style: TextStyle(color: AppColors.textBackground),
+              ),
+              Row(
+                children: [
+                  Stack(
+                    children: [
+                      Text(
+                        '${model.price!}  ريال ',
                         style: TextStyle(
                           fontSize: 14,
-                          color: AppColors.textBackground,
+                          color: model.priceAfterDiscount != null
+                              ? AppColors.error
+                              : AppColors.textBackground,
                         ),
                       ),
+                      Visibility(
+                        visible: model.priceAfterDiscount != null,
+                        child: Positioned(
+                          top: 0,
+                          left: 0,
+                          bottom: 0,
+                          right: 0,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 42,
+                                height: 1,
+                                color: AppColors.error,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 12),
+                  Visibility(
+                    visible: model.priceAfterDiscount != null,
+                    child: Text(
+                      '${model.priceAfterDiscount ?? 0}  ريال ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textBackground,
+                      ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
           Expanded(
-            flex: 3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () {
@@ -159,6 +159,8 @@ class ProductWidget extends StatelessWidget {
   }
 
   openDialog(ProductItemModel model, BuildContext context) {
+    print(phone);
+
     MenuCubit cubit = context.read<MenuCubit>();
     cubit.itemPrice = model.priceAfterDiscount == 0
         ? model.price! as int
@@ -213,7 +215,8 @@ class ProductWidget extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                '${cubit.itemPrice} SAR',
+                                '${cubit.itemPrice} '+translateText(
+                                    AppStrings.SARText, context),
                                 style: TextStyle(color: AppColors.primary),
                               ),
                               SizedBox(height: 16),
@@ -277,7 +280,8 @@ class ProductWidget extends StatelessWidget {
                       children: [
                         Spacer(),
                         OutLineButtonWidget(
-                          text: 'confirm',
+                          text: translateText(
+                              AppStrings.confirmBtn, context),
                           borderColor: AppColors.success,
                           onclick: () {
                             Navigator.pop(context);
@@ -288,7 +292,8 @@ class ProductWidget extends StatelessWidget {
                         ),
                         Spacer(),
                         OutLineButtonWidget(
-                          text: 'cancel',
+                          text: translateText(
+                              AppStrings.cancelBtn, context),
                           borderColor: AppColors.error,
                           onclick: () {
                             Navigator.pop(context);

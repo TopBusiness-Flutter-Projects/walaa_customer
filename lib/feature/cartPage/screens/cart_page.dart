@@ -7,7 +7,9 @@ import '../../../config/routes/app_routes.dart';
 import '../../../core/models/cart_model.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../../core/widgets/outline_button_widget.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../../menu/cubit/menu_cubit.dart';
@@ -39,7 +41,9 @@ class _CartPageState extends State<CartPage> {
   getAllProductInCart(context) async {
     cartModel = await Preferences.instance.getCart();
     Future.delayed(Duration(milliseconds: 1000), () {});
-    setState(() {});
+    setState(() {
+      cartModel;
+    });
   }
 
   @override
@@ -87,7 +91,8 @@ class _CartPageState extends State<CartPage> {
                           left: 0,
                           child: Center(
                               child: Text(
-                            'Cart',
+                                translateText(
+                                    AppStrings.cartText, context),
                             style:
                                 TextStyle(color: AppColors.white, fontSize: 16),
                           ))),
@@ -158,7 +163,8 @@ class _CartPageState extends State<CartPage> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'total_price',
+                                                    translateText(
+                                                        AppStrings.totalPriceText, context),
                                                     style: TextStyle(
                                                         color: AppColors.gray1,
                                                         fontSize: 16),
@@ -170,7 +176,8 @@ class _CartPageState extends State<CartPage> {
                                                     child: Center(
                                                       child: Text(
                                                         '${context.read<CartCubit>().totalPrice}' +
-                                                            "sar",
+                                                            translateText(
+                                                                AppStrings.SARText, context),
                                                         style: TextStyle(
                                                           fontSize: 15,
                                                           fontWeight:
@@ -191,7 +198,9 @@ class _CartPageState extends State<CartPage> {
                                       ? CustomButton(
                                           color: AppColors.seconedprimary,
                                           paddingHorizontal: 70,
-                                          text: 'confirm',
+                                          text:  translateText(
+                                              AppStrings.confirmBtn, context),
+
                                           onClick: () {
                                             if (context
                                                     .read<CartCubit>()

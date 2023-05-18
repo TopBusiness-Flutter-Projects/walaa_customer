@@ -14,7 +14,7 @@ errorGetBar(String? message) {
   Get.showSnackbar(
     GetSnackBar(
       messageText: Text(
-        message!,
+        message!.tr,
         style: Get.textTheme.titleSmall!.copyWith(
           color: Colors.white,
           height: 1.3,
@@ -119,15 +119,3 @@ loadingDialog() {
 /*------------------------------  Bottom Sheet  ----------------------------*/
 /*----------------------------------------------------------------------------*/
 
-void openRateDialog(MyRate? myRate) {
-  Get.dialog(
-    AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16)
-      ),
-      content: RateWidget(myRate),
-      backgroundColor: AppColors.dialogBackgroundColor,
-    ),
-
-  );
-}

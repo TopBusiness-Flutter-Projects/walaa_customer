@@ -76,13 +76,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       //   elevation: 0,
       //   backgroundColor: AppColors.white,
       // ),
-      body: BlocBuilder<ProfileCubit, ProfileState>(
+      body: BlocListener<ProfileCubit, ProfileState>(
+  listener: (context, state) {
+    if (state is OnUrlPayLoaded) {
+      //  state.model.token=cubit.userModel!.data.token;
+      Navigator.pushNamed(context, Routes.paymentRoute,
+          arguments: state.data.data!.payment_url)
+          .then((value) =>
+      {
+        _textFieldController.text="",
+        context.read<ProfileCubit>().onGetProfileData()});
+    }  // TODO: implement listener
+  },
+  child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           ProfileCubit profileCubit = context.read<ProfileCubit>();
           if (state is ProfileDeleteAccountLoading ||
               state is ProfileDeleteAccountLoaded) {
             return ShowLoadingIndicator();
           }
+       
           return profileCubit.loginDataModel == null
               ? ShowLoadingIndicator()
               : SingleChildScrollView(
@@ -247,6 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
         },
       ),
+),
     );
   }
 

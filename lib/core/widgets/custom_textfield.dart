@@ -53,10 +53,14 @@ class CustomTextField extends StatelessWidget {
           keyboardType: textInputType,
           obscureText: isPassword,
           enabled: isEnable,
+          textAlign: TextAlign.start,
+
+          textAlignVertical: TextAlignVertical.top,
           decoration: InputDecoration(
             labelStyle: TextStyle(
               fontSize: 22,
             ),
+
             prefixIcon: image != 'null'
                 ? Padding(
                     padding: EdgeInsets.only(
@@ -64,6 +68,7 @@ class CustomTextField extends StatelessWidget {
                       left: 12,
                     ),
                     child: SvgPicture.asset(
+
                       image,
                       color: imageColor,
                       height: 26,

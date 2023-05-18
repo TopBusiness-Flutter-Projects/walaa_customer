@@ -55,6 +55,13 @@
   "logout": "تسجيل خروج",
   "share_app": "شارك التطبيق",
   "update_profile": "تعديل الملف الشخصى",
-  "my_orders": "طلباتى"
+  "my_orders": "طلباتى",
+  "total_price_text": "السعر الاجمالى",
+  "previous_order_text": "الطلبات السابقه",
+  "current_order_text": "الطلبات الحاليه",
+  "myorder_text": "طلباتى",
+  "cart": "السله",
+  "addcart_error_text": "لا يمكنك الاضافه من اكتر من مقهى من فضلك انهى طلبات السلة اولا"
+
 
 }

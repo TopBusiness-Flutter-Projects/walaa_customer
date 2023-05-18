@@ -38,7 +38,7 @@ class ProviderModel {
   final String? image;
   final List<CategoryModel>? categories;
   final String? description;
-  final int? rate;
+  final dynamic? rate;
   final MyRate? myRate;
 
   ProviderModel({

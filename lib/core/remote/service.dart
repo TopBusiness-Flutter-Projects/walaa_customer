@@ -244,6 +244,29 @@ class ServiceApi {
   } on ServerException {
   return Left(ServerFailure());
 }  }
+  Future<Either<Failure,StatusResponse>> rateProvider(String rate,String text,String provider_id) async {
+     LoginModel loginModel = await Preferences.instance.getUserModel();
+
+    try {
+    final response = await dio.post(
+      EndPoints.rateProviderUrl,
+      options: Options(
+        headers: {
+          'Authorization': loginModel.data!.accessToken,
+        },
+      ),
+      body: {
+        'provider_id':provider_id,
+        'value':rate,
+        'comment':text
+      },
+    );
+    //print('Url : ${EndPoints.sendOrderUrl}');
+   // print('Response : \n ${response.data}');
+    return Right(StatusResponse.fromJson(response));
+  } on ServerException {
+  return Left(ServerFailure());
+}  }
   Future<Either<Failure,OrderDataModel>> getOrders(String token, String lan) async {
     try {
     final response = await dio.get(

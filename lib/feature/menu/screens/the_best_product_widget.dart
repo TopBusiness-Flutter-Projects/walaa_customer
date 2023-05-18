@@ -25,7 +25,7 @@ class TheBestProductWidget extends StatelessWidget {
                   (index) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.89,
+                      width: MediaQuery.of(context).size.width -30,
                       height: MediaQuery.of(context).size.height * 0.14,
                       child: Card(
                         elevation: 8,

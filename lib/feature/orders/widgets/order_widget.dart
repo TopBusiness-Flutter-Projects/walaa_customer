@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../core/models/order_model.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../../core/widgets/outline_button_widget.dart';
+import '../../../core/widgets/rate_widget.dart';
+import '../../home page/models/providers_model.dart';
 
 class OrderItem extends StatefulWidget {
   final OrderModel orderModel;
@@ -80,7 +86,8 @@ class _OrderItemState extends State<OrderItem> {
                         child: SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "${widget.orderModel.totalPrice}" + "sar",
+                            "${widget.orderModel.totalPrice}" +  translateText(
+                                AppStrings.SARText, context),
                             style: TextStyle(
                                 color: AppColors.seconedprimary,
                                 fontSize: 16,
@@ -91,6 +98,41 @@ class _OrderItemState extends State<OrderItem> {
                       SizedBox(
                         height: 20,
                       ),
+                      InkWell(
+                        onTap: () {
+                        //  print(coffeeModel[index].toJson());
+                          openRateDialog(widget.orderModel.provider_data.id.toString());
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.buttonBackground,
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                ImageAssets.rateIcon,
+                                color: AppColors.white,
+                                width: 22,
+                                height: 22,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'تقييمى',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.white,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+
                     ],
                   ),
                 ),
@@ -122,4 +164,20 @@ class _OrderItemState extends State<OrderItem> {
       ),
     );
   }
+  void openRateDialog(String? provider_id
+  ) {
+    MyRate myRate=MyRate();
+    myRate.providerId!=int.parse(provider_id!);
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16)
+        ),
+        content: RateWidget(myRate),
+        backgroundColor: AppColors.dialogBackgroundColor,
+      ),
+
+    );
+  }
+
 }

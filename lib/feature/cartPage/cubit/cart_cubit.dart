@@ -67,7 +67,7 @@ class CartCubit extends Cubit<CartState> {
   sendorder(CartModel model, BuildContext context) async {
 
     AppWidget.createProgressDialog(context, 'wait');
-model.phone=userModel.data!.user.phone;
+//model.phone=userModel.data!.user.phone;
 
     try {
       final response =
