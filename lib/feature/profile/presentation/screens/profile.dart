@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
@@ -224,7 +228,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 title: translateText('share_app', context),
                                 image: ImageAssets.shareAppIcon,
                                 imageColor: AppColors.black,
-                                onclick: () {},
+                                onclick: () {
+                                  shareApp();
+                                },
                               ),
                               ProfileListTailWidget(
                                 title: translateText('logout', context),
@@ -290,5 +296,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           );
         });
+  }
+  void shareApp() async {
+    PackageInfo packageInfo=   await PackageInfo.fromPlatform();
+
+    String url = '';
+    String packgename=packageInfo!.packageName;
+
+    if (Platform.isAndroid) {
+
+      //  print("Dldlldld${packageInfo.packageName}");
+      url = "https://play.google.com/store/apps/details?id=${packgename}";
+    } else if (Platform.isIOS) {
+      url = 'https://apps.apple.com/us/app/${packgename}';
+    }
+    await FlutterShare.share(title: "walaa", linkUrl: url);
   }
 }
