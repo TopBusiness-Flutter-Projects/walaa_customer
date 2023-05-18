@@ -17,7 +17,6 @@ import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
-import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../contact us/presentation/screens/contact_us.dart';
@@ -161,18 +160,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .getSavedLang();
                                     if (lan == 'ar') {
                                       print(lan);
-                                      context.read<LocaleCubit>().toEnglish();
+                                      context.read<LocaleCubit>().toEnglish(context);
                                       print(lan);
-                                      Future.delayed(Duration(milliseconds: 800),(){
-                                        HotRestartController.performHotRestart(context);
-                                      });
                                     } else {
                                       print(lan);
-                                      context.read<LocaleCubit>().toArabic();
+                                      context.read<LocaleCubit>().toArabic(context);
                                       print(lan);
-                                      Future.delayed(Duration(milliseconds: 800),(){
-                                        HotRestartController.performHotRestart(context);
-                                      });
+                                      // Future.delayed(Duration(milliseconds: 800),(){
+                                      //   HotRestartController.performHotRestart(context);
+                                      // });
                                     }
                                   },
                                   widget: Text(IsLanguage.isArLanguage(context)

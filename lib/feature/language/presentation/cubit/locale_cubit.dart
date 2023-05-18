@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:walaa_customer/core/preferences/preferences.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../domain/use_cases/change_language_use_case.dart';
 import '../../domain/use_cases/get_saved_language_use_case.dart';
+import '../../../../core/utils/restart_app_class.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'locale_state.dart';
 
@@ -35,18 +38,31 @@ class LocaleCubit extends Cubit<LocaleState> {
     });
   }
 
-  Future<void> _changeLanguage(String languageCode) async {
+  Future<void> _changeLanguage(String languageCode,BuildContext context) async {
     print('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-');
     print('languageCode : $languageCode');
     print('*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-');
+//    Preferences.instance.la
+  
     final response = await changeLanguageUseCase.call(languageCode);
     response.fold((failure) => debugPrint(AppStrings.cacheFailure), (value) {
       currentLanguageCode = languageCode;
       emit(ChangeLocaleState(locale: Locale(currentLanguageCode)));
+
+
+
+
+      Future.delayed(Duration(milliseconds: 800),() async {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString(
+            AppStrings.locale, languageCode);
+      }).then((value) =>         HotRestartController.performHotRestart(context)
+      );
+
     });
   }
 
-  void toEnglish() => _changeLanguage(AppStrings.englishCode);
+  void toEnglish(BuildContext context) => _changeLanguage(AppStrings.englishCode,context);
 
-  void toArabic() => _changeLanguage(AppStrings.arabicCode);
+  void toArabic(BuildContext context) => _changeLanguage(AppStrings.arabicCode,context);
 }
