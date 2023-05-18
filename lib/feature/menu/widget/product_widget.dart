@@ -60,13 +60,13 @@ class ProductWidget extends StatelessWidget {
                         '${model.price!}  ريال ',
                         style: TextStyle(
                           fontSize: 14,
-                          color: model.priceAfterDiscount != null
+                          color: model.priceAfterDiscount != 0
                               ? AppColors.error
                               : AppColors.textBackground,
                         ),
                       ),
                       Visibility(
-                        visible: model.priceAfterDiscount != null,
+                        visible: model.priceAfterDiscount != 0,
                         child: Positioned(
                           top: 0,
                           left: 0,
@@ -87,7 +87,7 @@ class ProductWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 12),
                   Visibility(
-                    visible: model.priceAfterDiscount != null,
+                    visible: model.priceAfterDiscount != 0,
                     child: Text(
                       '${model.priceAfterDiscount ?? 0}  ريال ',
                       style: TextStyle(
@@ -107,6 +107,7 @@ class ProductWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
+                    openDialog(model, context);
                     print('00000000033333000000000000003333');
                   },
                   child: Container(
