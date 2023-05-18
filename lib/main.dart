@@ -7,6 +7,7 @@ import 'dart:async';
 
 
 import 'app_bloc_observer.dart';
+import 'core/utils/restart_app_class.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -16,5 +17,5 @@ Future<void> main() async {
   );
   await injector.setup();
   Bloc.observer =AppBlocObserver();
-  runApp(WalaaCustomer());
+  runApp(HotRestartController(child:  WalaaCustomer()));
 }

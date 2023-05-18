@@ -11,11 +11,13 @@ import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../../../config/locale/app_localizations.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
+import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../contact us/presentation/screens/contact_us.dart';
@@ -81,192 +83,204 @@ class _ProfileScreenState extends State<ProfileScreen> {
       //   backgroundColor: AppColors.white,
       // ),
       body: BlocListener<ProfileCubit, ProfileState>(
-  listener: (context, state) {
-    if (state is OnUrlPayLoaded) {
-      //  state.model.token=cubit.userModel!.data.token;
-      Navigator.pushNamed(context, Routes.paymentRoute,
-          arguments: state.data.data!.payment_url)
-          .then((value) =>
-      {
-        _textFieldController.text="",
-        context.read<ProfileCubit>().onGetProfileData()});
-    }  // TODO: implement listener
-  },
-  child: BlocBuilder<ProfileCubit, ProfileState>(
-        builder: (context, state) {
-          ProfileCubit profileCubit = context.read<ProfileCubit>();
-          if (state is ProfileDeleteAccountLoading ||
-              state is ProfileDeleteAccountLoaded) {
-            return ShowLoadingIndicator();
-          }
-       
-          return profileCubit.loginDataModel == null
-              ? ShowLoadingIndicator()
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ProfileTopWidget(),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: 1,
-                              color: AppColors.gray,
+        listener: (context, state) {
+          if (state is OnUrlPayLoaded) {
+            //  state.model.token=cubit.userModel!.data.token;
+            Navigator.pushNamed(context, Routes.paymentRoute,
+                    arguments: state.data.data!.payment_url)
+                .then((value) => {
+                      _textFieldController.text = "",
+                      context.read<ProfileCubit>().onGetProfileData()
+                    });
+          } // TODO: implement listener
+        },
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            ProfileCubit profileCubit = context.read<ProfileCubit>();
+            if (state is ProfileDeleteAccountLoading ||
+                state is ProfileDeleteAccountLoaded) {
+              return ShowLoadingIndicator();
+            }
+
+            return profileCubit.loginDataModel == null
+                ? ShowLoadingIndicator()
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ProfileTopWidget(),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(4.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                width: 1,
+                                color: AppColors.gray,
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              ProfileListTailWidget(
-                                title: translateText(
-                                        AppStrings.balanceText, context) +
-                                    " , " +
-                                    '${profileCubit.loginDataModel!.data!.user.balance ?? 0}' +
-                                    ' ' +
-                                    translateText(AppStrings.SARText, context),
-                                image: ImageAssets.walletIcon,
-                                imageColor: AppColors.black,
-                                onclick: () async {
-                                  _textFieldController.clear();
-                                  var resultLabel =
-                                      await _showTextInputDialog(context);
-                                  if (resultLabel != null) {
-                                    profileCubit.onRechargeWallet(
-                                        double.parse(resultLabel), context);
-                                  }
-                                },
-                                widget: InkWell(
-                                  onTap: () {
-                                    context
-                                        .read<ProfileCubit>()
-                                        .onGetProfileData();
+                            child: Column(
+                              children: [
+                                ProfileListTailWidget(
+                                  title: translateText(
+                                          AppStrings.balanceText, context) +
+                                      " , " +
+                                      '${profileCubit.loginDataModel!.data!.user.balance ?? 0}' +
+                                      ' ' +
+                                      translateText(
+                                          AppStrings.SARText, context),
+                                  image: ImageAssets.walletIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () async {
+                                    _textFieldController.clear();
+                                    var resultLabel =
+                                        await _showTextInputDialog(context);
+                                    if (resultLabel != null) {
+                                      profileCubit.onRechargeWallet(
+                                          double.parse(resultLabel), context);
+                                    }
                                   },
-                                  child: Icon(
-                                    Icons.refresh,
-                                    color: AppColors.black,
-                                  ),
-                                ),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText('lang', context),
-                                image: ImageAssets.languageIcon,
-                                imageColor: AppColors.black,
-                                onclick: () {
-                                  if (IsLanguage.isArLanguage(context)) {
-                                    context.read<LocaleCubit>().toEnglish();
-                                    // Locale('en');
-                                    print('en');
-                                  } else {
-                                    print('ar');
-                                    // Locale('en');
-                                    context.read<LocaleCubit>().toArabic();
-                                  }
-                                },
-                                widget: Text(IsLanguage.isArLanguage(context)
-                                    ? 'ع'
-                                    : 'En'),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText('my_orders', context),
-                                image: ImageAssets.ordersIcon,
-                                imageColor: AppColors.black,
-                                onclick: () {
-                                  Navigator.pushNamed(context, Routes.ordersRoute);
-                                },
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText('update_profile', context),
-                                image: ImageAssets.updateProfileIcon,
-                                imageColor: AppColors.black,
-                                onclick: () => Navigator.pushNamed(
-                                  context,
-                                  Routes.updateProfileRoute,
-                                ),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText(
-                                    AppStrings.contactUsText, context),
-                                image: ImageAssets.contact_usIcon,
-                                imageColor: AppColors.black,
-                                onclick: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ContactUsScreen(),
-                                  ),
-                                ),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText(
-                                    AppStrings.termsText, context),
-                                image: ImageAssets.termsIcon,
-                                imageColor: AppColors.black,
-                                onclick: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PrivacyAndTermsScreen(
-                                        title: AppStrings.termsText),
-                                  ),
-                                ),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText(
-                                    AppStrings.privacyText, context),
-                                image: ImageAssets.privacyIcon,
-                                imageColor: AppColors.black,
-                                onclick: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PrivacyAndTermsScreen(
-                                      title: AppStrings.privacyText,
+                                  widget: InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<ProfileCubit>()
+                                          .onGetProfileData();
+                                    },
+                                    child: Icon(
+                                      Icons.refresh,
+                                      color: AppColors.black,
                                     ),
                                   ),
                                 ),
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText('share_app', context),
-                                image: ImageAssets.shareAppIcon,
-                                imageColor: AppColors.black,
-                                onclick: () {
-                                  shareApp();
-                                },
-                              ),
-                              ProfileListTailWidget(
-                                title: translateText('logout', context),
-                                image: ImageAssets.logoutIcon,
-                                imageColor: AppColors.textBackground,
-                                onclick: () async {
-                                  context.read<NavigatorBottomCubit>().page = 0;
-                                  bool result = await Preferences.instance
-                                      .clearUserData();
-                                  result
-                                      ? Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 1300),
-                                            child: SplashScreen(),
-                                          ),
-                                          ModalRoute.withName(
-                                            Routes.loginRoute,
-                                          ),
-                                        )
-                                      : null;
-                                },
-                              ),
-                            ],
+                                ProfileListTailWidget(
+                                  title: translateText('lang', context),
+                                  image: ImageAssets.languageIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () async {
+                                    String lan = await Preferences.instance
+                                        .getSavedLang();
+                                    if (lan == 'ar') {
+                                      print(lan);
+                                      context.read<LocaleCubit>().toEnglish();
+                                      print(lan);
+                                      Future.delayed(Duration(milliseconds: 800),(){
+                                        HotRestartController.performHotRestart(context);
+                                      });
+                                    } else {
+                                      print(lan);
+                                      context.read<LocaleCubit>().toArabic();
+                                      print(lan);
+                                      Future.delayed(Duration(milliseconds: 800),(){
+                                        HotRestartController.performHotRestart(context);
+                                      });
+                                    }
+                                  },
+                                  widget: Text(IsLanguage.isArLanguage(context)
+                                      ? 'ع'
+                                      : 'En'),
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText('my_orders', context),
+                                  image: ImageAssets.ordersIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () {
+                                    Navigator.pushNamed(
+                                        context, Routes.ordersRoute);
+                                  },
+                                ),
+                                ProfileListTailWidget(
+                                  title:
+                                      translateText('update_profile', context),
+                                  image: ImageAssets.updateProfileIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () => Navigator.pushNamed(
+                                    context,
+                                    Routes.updateProfileRoute,
+                                  ),
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText(
+                                      AppStrings.contactUsText, context),
+                                  image: ImageAssets.contact_usIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ContactUsScreen(),
+                                    ),
+                                  ),
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText(
+                                      AppStrings.termsText, context),
+                                  image: ImageAssets.termsIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyAndTermsScreen(
+                                              title: AppStrings.termsText),
+                                    ),
+                                  ),
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText(
+                                      AppStrings.privacyText, context),
+                                  image: ImageAssets.privacyIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyAndTermsScreen(
+                                        title: AppStrings.privacyText,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText('share_app', context),
+                                  image: ImageAssets.shareAppIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () {},
+                                ),
+                                ProfileListTailWidget(
+                                  title: translateText('logout', context),
+                                  image: ImageAssets.logoutIcon,
+                                  imageColor: AppColors.textBackground,
+                                  onclick: () async {
+                                    context.read<NavigatorBottomCubit>().page =
+                                        0;
+                                    bool result = await Preferences.instance
+                                        .clearUserData();
+                                    result
+                                        ? Navigator.pushAndRemoveUntil(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 1300),
+                                              child: SplashScreen(),
+                                            ),
+                                            ModalRoute.withName(
+                                              Routes.loginRoute,
+                                            ),
+                                          )
+                                        : null;
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-        },
+                      ],
+                    ),
+                  );
+          },
+        ),
       ),
-),
     );
   }
 
