@@ -49,7 +49,7 @@
   "add": "اضف",
   "rate_validation": "من فضلك اضف تعليقك ...",
   "categories": "الاصناف",
-  "drinks": "المشروبات",
+  "drinks": "القائمة",
   "confirm": "تاكيد",
   "lang": "اللغه",
   "logout": "تسجيل خروج",
@@ -61,7 +61,12 @@
   "current_order_text": "الطلبات الحاليه",
   "myorder_text": "طلباتى",
   "cart": "السله",
-  "addcart_error_text": "لا يمكنك الاضافه من اكتر من مقهى من فضلك انهى طلبات السلة اولا"
+  "addcart_error_text": "لا يمكنك الاضافه من اكتر من مقهى من فضلك انهى طلبات السلة اولا",
+  "request": "طلب",
+  "choose_payment_package": "اختر باقة الشحن المناسبة",
+  "cart_empty": "السلة فارغة",
+  "advantages": "المميزات ...",
+  "advantages_desc": "مميزات اليوم"
 
 
 }

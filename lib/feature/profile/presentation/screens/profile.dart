@@ -3,22 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../../../../config/locale/app_localizations.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
+import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/translate_text_method.dart';
-import '../../../../core/widgets/network_image.dart';
+import '../../../../core/widgets/dash_line_widget.dart';
 import '../../../contact us/presentation/screens/contact_us.dart';
 import '../../../language/presentation/cubit/locale_cubit.dart';
 import '../../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
@@ -27,6 +24,7 @@ import '../../../splash/presentation/screens/splash_screen.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_list_tail_widget.dart';
 import '../widgets/profile_top_widget.dart';
+import '../screens/payment_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -42,45 +40,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      // appBar: AppBar(
-      //   centerTitle: false,
-      //   automaticallyImplyLeading: false,
-      //   title: Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         Text(
-      //           translateText(AppStrings.profileText, context),
-      //           style: TextStyle(
-      //             color: AppColors.textBackground,
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //         ),
-      //         GestureDetector(
-      //           onTap: () {
-      //             context.read<NavigatorBottomCubit>().changePage(0);
-      //           },
-      //           child: Container(
-      //             width: 40,
-      //             height: 40,
-      //             decoration: BoxDecoration(
-      //               color: AppColors.containerBackgroundColor,
-      //               borderRadius: BorderRadius.circular(22),
-      //             ),
-      //             child: Icon(
-      //               Icons.close,
-      //               color: AppColors.textBackground,
-      //               size: 25,
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      //   elevation: 0,
-      //   backgroundColor: AppColors.white,
-      // ),
       body: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is OnUrlPayLoaded) {
@@ -131,13 +90,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   image: ImageAssets.walletIcon,
                                   imageColor: AppColors.black,
                                   onclick: () async {
-                                    _textFieldController.clear();
-                                    var resultLabel =
-                                        await _showTextInputDialog(context);
-                                    if (resultLabel != null) {
-                                      profileCubit.onRechargeWallet(
-                                          double.parse(resultLabel), context);
-                                    }
+                                    profileCubit.getPaymentPackages(context);
+                                    // _textFieldController.clear();
+                                    // var resultLabel =
+                                    //     await _showTextInputDialog(context);
+                                    // if (resultLabel != null) {
+                                    //   profileCubit.onRechargeWallet(
+                                    //       double.parse(resultLabel), context);
+                                    // }
                                   },
                                   widget: InkWell(
                                     onTap: () {
@@ -151,30 +111,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-                                ProfileListTailWidget(
-                                  title: translateText('lang', context),
-                                  image: ImageAssets.languageIcon,
-                                  imageColor: AppColors.black,
-                                  onclick: () async {
-                                    String lan = await Preferences.instance
-                                        .getSavedLang();
-                                    if (lan == 'ar') {
-                                      print(lan);
-                                      context.read<LocaleCubit>().toEnglish(context);
-                                      print(lan);
-                                    } else {
-                                      print(lan);
-                                      context.read<LocaleCubit>().toArabic(context);
-                                      print(lan);
-                                      // Future.delayed(Duration(milliseconds: 800),(){
-                                      //   HotRestartController.performHotRestart(context);
-                                      // });
-                                    }
-                                  },
-                                  widget: Text(IsLanguage.isArLanguage(context)
-                                      ? 'ع'
-                                      : 'En'),
-                                ),
+                                MySeparator(),
+                                // ProfileListTailWidget(
+                                //   title: translateText('lang', context),
+                                //   image: ImageAssets.languageIcon,
+                                //   imageColor: AppColors.black,
+                                //   onclick: () async {
+                                //     String lan = await Preferences.instance
+                                //         .getSavedLang();
+                                //     if (lan == 'ar') {
+                                //       print(lan);
+                                //       context.read<LocaleCubit>().toEnglish(context);
+                                //       print(lan);
+                                //       Future.delayed(
+                                //           Duration(milliseconds: 800), () {
+                                //         HotRestartController.performHotRestart(
+                                //             context);
+                                //       });
+                                //     } else {
+                                //       print(lan);
+                                //       context.read<LocaleCubit>().toArabic(context);
+                                //       print(lan);
+                                //       Future.delayed(
+                                //           Duration(milliseconds: 800), () {
+                                //         HotRestartController.performHotRestart(
+                                //             context);
+                                //       });
+                                //     }
+                                //   },
+                                //   widget: Text(IsLanguage.isArLanguage(context)
+                                //       ? 'ع'
+                                //       : 'En'),
+                                // ),
                                 ProfileListTailWidget(
                                   title: translateText('my_orders', context),
                                   image: ImageAssets.ordersIcon,
@@ -184,6 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         context, Routes.ordersRoute);
                                   },
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title:
                                       translateText('update_profile', context),
@@ -194,6 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Routes.updateProfileRoute,
                                   ),
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText(
                                       AppStrings.contactUsText, context),
@@ -206,6 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText(
                                       AppStrings.termsText, context),
@@ -220,6 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText(
                                       AppStrings.privacyText, context),
@@ -235,12 +207,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText('share_app', context),
                                   image: ImageAssets.shareAppIcon,
                                   imageColor: AppColors.black,
                                   onclick: () {},
                                 ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText('logout', context),
                                   image: ImageAssets.logoutIcon,
@@ -282,43 +256,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<String?> _showTextInputDialog(BuildContext context1) async {
     return showDialog(
-        context: context1,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              translateText(AppStrings.addBalanceText, context),
-            ),
-            content: TextField(
-              keyboardType: TextInputType.number,
-              controller: _textFieldController,
-              decoration: InputDecoration(
-                hintText: translateText(AppStrings.addBalanceText, context),
-              ),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                child: Text(
-                  translateText(AppStrings.addBalanceText, context),
-                ),
-                onPressed: () =>
-                    Navigator.pop(context, _textFieldController.text),
-              ),
-            ],
-          );
-        });
+      context: context1,
+      builder: (context) {
+        return AlertDialog(
+          actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          contentPadding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          backgroundColor: AppColors.dialogBackgroundColor,
+          content: PaymentPackage(),
+        );
+      },
+    );
   }
+
   void shareApp() async {
-    PackageInfo packageInfo=   await PackageInfo.fromPlatform();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     String url = '';
-    String packgename=packageInfo!.packageName;
+    String packageName = packageInfo.packageName;
 
     if (Platform.isAndroid) {
-
-      //  print("Dldlldld${packageInfo.packageName}");
-      url = "https://play.google.com/store/apps/details?id=${packgename}";
+      url = "https://play.google.com/store/apps/details?id=${packageName}";
     } else if (Platform.isIOS) {
-      url = 'https://apps.apple.com/us/app/${packgename}';
+      url = 'https://apps.apple.com/us/app/${packageName}';
     }
     await FlutterShare.share(title: "walaa", linkUrl: url);
   }

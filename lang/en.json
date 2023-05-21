@@ -57,6 +57,11 @@
   "previous_order_text": "Previous Orders",
   "current_order_text": "Current Orders",
   "myorder_text": "My Orders",
-  "addcart_error_text": "You cannot add from more than one cafe. Please complete the cart requests first"
+  "addcart_error_text": "You cannot add from more than one cafe. Please complete the cart requests first",
+  "request": "Request",
+  "choose_payment_package": "Choose Payment package to Recharge",
+  "cart_empty": "Cart Is Empty",
+  "advantages": "Advantages ...",
+  "advantages_desc": "Advantages In This Day"
 
 }

@@ -20,6 +20,7 @@ class AppColors {
   static Color blueLineColor = HexColor('#00B3DC');
   static Color gray1 = HexColor('#494949');
   static Color gray2= HexColor('#EEEEEE');
+  static Color paymentDialog= HexColor('#FFF4E6');
 
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black12;

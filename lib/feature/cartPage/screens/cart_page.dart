@@ -92,10 +92,9 @@ class _CartPageState extends State<CartPage> {
                           left: 0,
                           child: Center(
                               child: Text(
-                                translateText(
-                                    AppStrings.cartText, context),
-                            style: TextStyle(
-                                color: AppColors.white, fontSize: 16),
+                            translateText(AppStrings.cartText, context),
+                            style:
+                                TextStyle(color: AppColors.white, fontSize: 16),
                           ))),
                     ],
                   ),
@@ -122,8 +121,7 @@ class _CartPageState extends State<CartPage> {
                                       return Stack(
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.all(16.0),
+                                            padding: const EdgeInsets.all(16.0),
                                             child: CartModelWidget(
                                               model: cartModel!
                                                   .productModel![index],
@@ -141,11 +139,9 @@ class _CartPageState extends State<CartPage> {
                                                             index],
                                                         context);
                                                 Future.delayed(
-                                                    Duration(
-                                                        milliseconds: 250),
+                                                    Duration(milliseconds: 250),
                                                     () {
-                                                  getAllProductInCart(
-                                                      context);
+                                                  getAllProductInCart(context);
                                                 });
                                               },
                                               icon: Icon(
@@ -161,8 +157,7 @@ class _CartPageState extends State<CartPage> {
                                   SizedBox(height: 20),
                                   BlocBuilder<CartCubit, CartState>(
                                     builder: (context, state) {
-                                      return cartModel!
-                                              .productModel!.isNotEmpty
+                                      return cartModel!.productModel!.isNotEmpty
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -173,10 +168,11 @@ class _CartPageState extends State<CartPage> {
                                                 children: [
                                                   Text(
                                                     translateText(
-                                                        AppStrings.totalPriceText, context),
+                                                        AppStrings
+                                                            .totalPriceText,
+                                                        context),
                                                     style: TextStyle(
-                                                        color:
-                                                            AppColors.gray1,
+                                                        color: AppColors.gray1,
                                                         fontSize: 16),
                                                   ),
                                                   SizedBox(width: 22),
@@ -187,7 +183,9 @@ class _CartPageState extends State<CartPage> {
                                                       child: Text(
                                                         '${context.read<CartCubit>().totalPrice}' +
                                                             translateText(
-                                                                AppStrings.SARText, context),
+                                                                AppStrings
+                                                                    .SARText,
+                                                                context),
                                                         style: TextStyle(
                                                           fontSize: 15,
                                                           fontWeight:
@@ -209,9 +207,8 @@ class _CartPageState extends State<CartPage> {
                                       ? CustomButton(
                                           color: AppColors.seconedprimary,
                                           paddingHorizontal: 70,
-                                          text:  translateText(
+                                          text: translateText(
                                               AppStrings.confirmBtn, context),
-
                                           onClick: () {
                                             if (context
                                                     .read<CartCubit>()
@@ -239,7 +236,11 @@ class _CartPageState extends State<CartPage> {
                               )
                             ],
                           )
-                        : Center(child: Text('no_data_found')),
+                        : Center(
+                            child: Text(
+                              translateText('cart_empty', context),
+                            ),
+                          ),
                   ),
           ),
         ],

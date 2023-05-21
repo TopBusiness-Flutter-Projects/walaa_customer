@@ -14,3 +14,7 @@ class OnUrlPayLoaded extends ProfileState {
   final RechargeWalletModel data;
   OnUrlPayLoaded(this.data);
 }
+
+class ProfilePackageLoading extends ProfileState {}
+class ProfilePackageLoaded extends ProfileState {}
+class ProfilePackageError extends ProfileState {}

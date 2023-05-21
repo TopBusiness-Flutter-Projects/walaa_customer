@@ -17,6 +17,7 @@ import '../models/cart_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
 import '../models/order_data_model.dart';
+import '../models/payment_package_model.dart';
 import '../models/search_phone_model.dart';
 import '../models/single_order_detials.dart';
 import '../models/search_product_model.dart';
@@ -103,7 +104,7 @@ class ServiceApi {
   }
 
   Future<Either<Failure, RechargeWalletModel>> chargeWallet(
-      String token, double amount) async {
+      String token, int amount) async {
     try {
       final response = await dio.get(EndPoints.chargeWalletUrl,
           options: Options(
@@ -227,6 +228,26 @@ class ServiceApi {
         },
       );
       return Right(SearchProductModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
+  Future<Either<Failure, PaymentPackageModel>> paymentPackages() async {
+    try {
+      String lan = await Preferences.instance.getSavedLang();
+      LoginModel loginModel = await Preferences.instance.getUserModel();
+      final response = await dio.get(
+        EndPoints.packagesUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.accessToken,
+            'Accept-Language': lan,
+          },
+        ),
+      );
+      return Right(PaymentPackageModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

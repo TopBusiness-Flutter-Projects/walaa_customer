@@ -37,8 +37,9 @@ class ProviderModel {
   final String? email;
   final String? image;
   final List<CategoryModel>? categories;
+  final List<String>? advantages;
   final String? description;
-  final dynamic? rate;
+  final dynamic rate;
   final MyRate? myRate;
 
   ProviderModel({
@@ -48,6 +49,7 @@ class ProviderModel {
     this.email,
     this.image,
     this.categories,
+    this.advantages,
     this.description,
     this.rate,
     this.myRate,
@@ -64,6 +66,7 @@ class ProviderModel {
     email: json["email"],
     image: json["image"],
     categories: json["categories"] == null ? [] : List<CategoryModel>.from(json["categories"]!.map((x) => CategoryModel.fromJson(x))),
+    advantages: json["advantages"] == null ? [] : List<String>.from(json["advantages"]!.map((x) => x)),
     description: json["description"],
     rate: json["rate"],
     myRate: json["my_rate"] == null ? null : MyRate.fromJson(json["my_rate"]),
@@ -76,6 +79,7 @@ class ProviderModel {
     "email": email,
     "image": image,
     "categories": categories == null ? [] : List<dynamic>.from(categories!.map((x) => x.toJson())),
+    "advantages": advantages == null ? [] : List<dynamic>.from(advantages!.map((x) => x)),
     "description": description,
     "rate": rate,
     "my_rate": myRate?.toJson(),

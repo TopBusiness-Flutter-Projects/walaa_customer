@@ -60,19 +60,19 @@ class CoffeeListWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                SizedBox(width: 8),
-                                Text(coffeeModel[index].rate.toString()),
-                                SizedBox(width: 12),
-                              ],
-                            ),
-                            // SizedBox(height: 30),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: [
+                            //     Icon(
+                            //       Icons.star,
+                            //       color: Colors.yellow,
+                            //     ),
+                            //     SizedBox(width: 8),
+                            //     Text(coffeeModel[index].rate.toString()),
+                            //     SizedBox(width: 12),
+                            //   ],
+                            // ),
+                            SizedBox(height: 30),
                             Text(coffeeModel[index].name!),
                           ],
                         ),

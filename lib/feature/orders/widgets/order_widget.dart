@@ -17,7 +17,8 @@ class OrderItem extends StatefulWidget {
   final OrderModel orderModel;
   final int index;
 
-  const OrderItem({Key? key, required this.orderModel, required this.index}) : super(key: key);
+  const OrderItem({Key? key, required this.orderModel, required this.index})
+      : super(key: key);
 
   @override
   State<OrderItem> createState() => _OrderItemState();
@@ -86,8 +87,8 @@ class _OrderItemState extends State<OrderItem> {
                         child: SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "${widget.orderModel.totalPrice}" +  translateText(
-                                AppStrings.SARText, context),
+                            "${widget.orderModel.totalPrice}" +
+                                translateText(AppStrings.SARText, context),
                             style: TextStyle(
                                 color: AppColors.seconedprimary,
                                 fontSize: 16,
@@ -100,8 +101,9 @@ class _OrderItemState extends State<OrderItem> {
                       ),
                       InkWell(
                         onTap: () {
-                        //  print(coffeeModel[index].toJson());
-                          openRateDialog(widget.orderModel.provider_data.id.toString());
+                          //  print(coffeeModel[index].toJson());
+                          openRateDialog(
+                              widget.orderModel.provider_data.id.toString());
                         },
                         child: Container(
                           width: 150,
@@ -133,7 +135,6 @@ class _OrderItemState extends State<OrderItem> {
                           ),
                         ),
                       )
-
                     ],
                   ),
                 ),
@@ -146,14 +147,14 @@ class _OrderItemState extends State<OrderItem> {
               child: Container(
                 width: 35,
                 height: 35,
-                margin: EdgeInsets.only(left: 10,top: 10),
+                margin: EdgeInsets.only(left: 10, top: 10),
                 decoration: BoxDecoration(
                   color: AppColors.scaffoldBackground,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
                   child: Text(
-                    (widget.index+1).toString(),
+                    (widget.index + 1).toString(),
                     style: TextStyle(
                         color: AppColors.black,
                         fontWeight: FontWeight.bold,
@@ -165,21 +166,17 @@ class _OrderItemState extends State<OrderItem> {
       ),
     );
   }
-  void openRateDialog(String? provider_id
-  ) {
 
-    MyRate myRate=MyRate(providerId: int.parse(provider_id!),value:"0" ,comment: "");
+  void openRateDialog(String? provider_id) {
+    MyRate myRate =
+        MyRate(providerId: int.parse(provider_id!), value: "0", comment: "");
 
     Get.dialog(
       AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: RateWidget(myRate),
         backgroundColor: AppColors.dialogBackgroundColor,
       ),
-
     );
   }
-
 }

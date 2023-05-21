@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,11 +14,14 @@ import 'package:walaa_customer/core/remote/service.dart';
 import 'package:walaa_customer/core/utils/app_colors.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/appwidget.dart';
+import 'package:walaa_customer/core/utils/dialogs.dart';
 import 'package:walaa_customer/core/utils/toast_message_method.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
 
 import '../../../../config/routes/app_routes.dart';
+import '../../../../core/models/payment_package_model.dart';
 import '../../../splash/presentation/screens/splash_screen.dart';
+import '../screens/payment_screen.dart';
 
 part 'profile_state.dart';
 
@@ -27,6 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   final ServiceApi api;
+  List<PackageModel> packages = [];
 
   LoginModel? loginDataModel;
 
@@ -48,7 +53,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       (l) {
         Future.delayed(Duration(milliseconds: 300), () {
           toastMessage(
-           translateText(AppStrings.errorOccurredText, context) ,
+            translateText(AppStrings.errorOccurredText, context),
             context,
             color: AppColors.error,
           );
@@ -60,7 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           Preferences.instance.clearUserData();
           Future.delayed(Duration(milliseconds: 300), () {
             toastMessage(
-              translateText(AppStrings.deleteSuccessFullyText, context) ,
+              translateText(AppStrings.deleteSuccessFullyText, context),
               context,
               color: AppColors.success,
             );
@@ -84,7 +89,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         } else {
           Future.delayed(Duration(milliseconds: 300), () {
             toastMessage(
-              translateText(AppStrings.errorOccurredText, context) ,
+              translateText(AppStrings.errorOccurredText, context),
               context,
               color: AppColors.error,
             );
@@ -94,20 +99,17 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
   }
+
   onGetProfileData() async {
-    print('000000000000');
-    print('000000000000');
     final response = await api.getprofile(loginDataModel!.data!.accessToken);
     response.fold(
-          (l) {
-      },
-          (r) {
-            if (r.code == 200) {
-              onRechargeDone(r);
-            }
+      (l) {},
+      (r) {
+        if (r.code == 200) {
+          onRechargeDone(r);
+        }
       },
     );
-
   }
 
   onRechargeDone(LoginModel userDataModel) async {
@@ -116,32 +118,56 @@ class ProfileCubit extends Cubit<ProfileState> {
     getStoreUser();
   }
 
-
-  onRechargeWallet(double amount, BuildContext context) async {
-    AppWidget.createProgressDialog(context, 'wait');
-
-    final response = await api.chargeWallet(loginDataModel!.data!.accessToken,amount);
+  onRechargeWallet(int amount, BuildContext context) async {
+    loadingDialog();
+    final response =
+        await api.chargeWallet(loginDataModel!.data!.accessToken, amount);
     response.fold(
-          (l) {
-            Navigator.pop(context);
-
-            Future.delayed(Duration(milliseconds: 300), () {
-          toastMessage(
-            translateText(AppStrings.errorOccurredText, context) ,
-            context,
-            color: AppColors.error,
-          );
-        });
+      (l) {
+        Navigator.pop(context);
+        errorGetBar(translateText(AppStrings.errorOccurredText, context));
       },
-          (r) {
-            if (r.code == 200) {
-              Navigator.pop(context);
-              emit(OnUrlPayLoaded(r));
-            }
-            else {
-              Navigator.pop(context);
-              toastMessage(r.message, context);
-            }
+      (r) {
+        if (r.code == 200) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          emit(OnUrlPayLoaded(r));
+        } else {
+          Navigator.pop(context);
+          toastMessage(r.message, context);
+        }
+      },
+    );
+  }
+
+  getPaymentPackages(context) async {
+    loadingDialog();
+    final response = await api.paymentPackages();
+    response.fold(
+      (l) {
+        Navigator.pop(context);
+        errorGetBar(translateText(AppStrings.errorOccurredText, context));
+      },
+      (r) {
+        packages = r.data!.packages!;
+        // Get.back;
+        if (r.code == 200) {
+          // Get.back;
+          Navigator.pop(context);
+          Get.dialog(
+            AlertDialog(
+              actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              backgroundColor: AppColors.dialogBackgroundColor,
+              content: PaymentPackage(),
+            ),
+          );
+          emit(ProfilePackageLoaded());
+        } else {
+          errorGetBar(r.message);
+        }
       },
     );
   }
