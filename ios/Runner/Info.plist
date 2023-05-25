@@ -4,6 +4,17 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+		<key>UIBackgroundModes</key>
+    	<array>
+    		<string>remote-notification</string>
+    	</array>
+    	<key>NSCameraUsageDescription</key>
+        	<string>The Camera will be used if you would like to update profile picture and share photos.</string>
+        	<key>NSMicrophoneUsageDescription</key>
+        	<string>flutter pub run flutter_launcher_icons
+        To capture audio for pick image plugin</string>
+        	<key>NSPhotoLibraryUsageDescription</key>
+        	<string>The Photo Gallery will be used if you would like to update profile picture and share photos.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
