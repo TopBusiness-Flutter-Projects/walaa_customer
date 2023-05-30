@@ -90,7 +90,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   image: ImageAssets.walletIcon,
                                   imageColor: AppColors.black,
                                   onclick: () async {
-                                    profileCubit.getPaymentPackages(context);
+                                    context.read<ProfileCubit>().getPaymentPackages(context);
+
                                     // _textFieldController.clear();
                                     // var resultLabel =
                                     //     await _showTextInputDialog(context);

@@ -26,7 +26,12 @@ class HomeCubit extends Cubit<HomeState> {
   TextEditingController rateController = TextEditingController();
   double rating = 0.0;
 
+  int currentIndex = 0;
 
+  selectTap(int index) {
+    currentIndex = index;
+    emit(ChangeCurrentIndexTap());
+  }
   // getAllProviders() async {
   //   emit(HomeProvidersLoading());
   //   final response = await api.getAllProviders();

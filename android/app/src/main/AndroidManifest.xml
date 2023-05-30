@@ -2,7 +2,7 @@
     package="com.walaaCustomer.walaa_customer">
    <application
         android:usesCleartextTraffic="true"
-        android:label="Walaa Customer"
+        android:label="Taste"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
        <activity

@@ -46,7 +46,8 @@ class CoffeeListWidget extends StatelessWidget {
                         height: 90,
                         child: CircleAvatar(
                           backgroundColor: AppColors.white,
-                          child: ManageNetworkImage(
+                          child:
+                          ManageNetworkImage(
                             imageUrl: coffeeModel[index].image!,
                             width: 90,
                             height: 90,
@@ -60,19 +61,19 @@ class CoffeeListWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     Icon(
-                            //       Icons.star,
-                            //       color: Colors.yellow,
-                            //     ),
-                            //     SizedBox(width: 8),
-                            //     Text(coffeeModel[index].rate.toString()),
-                            //     SizedBox(width: 12),
-                            //   ],
-                            // ),
-                            SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                ),
+                                SizedBox(width: 8),
+                                Text(coffeeModel[index].rate.toString()),
+                                SizedBox(width: 12),
+                              ],
+                            ),
+                            SizedBox(height: 10),
                             Text(coffeeModel[index].name!),
                           ],
                         ),

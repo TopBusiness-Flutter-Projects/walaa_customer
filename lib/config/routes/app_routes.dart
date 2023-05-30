@@ -4,8 +4,10 @@ import 'package:walaa_customer/feature/orders/screens/orders_screen.dart';
 import 'package:walaa_customer/feature/payment_screen/payment_page.dart';
 
 import '../../core/utils/app_strings.dart';
-import '../../feature/home page/screens/home_page.dart';
+import '../../feature/home page/screens/cafe_page.dart';
+import '../../feature/home page/screens/mainScreen.dart';
 import '../../feature/login/presentation/screens/verfiication_screen.dart';
+import '../../feature/profile/presentation/screens/payment_screen.dart';
 import '../../feature/register/screen/edit_profile_screen.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 
@@ -18,6 +20,7 @@ class Routes {
   static const String updateProfileRoute = '/updateProfile';
   static const String ordersRoute = '/orders';
   static const String otpRoute = '/otp';
+  static const String packageRoute = '/package';
 
 }
 
@@ -44,7 +47,11 @@ class AppRoutes {
         );
       case Routes.homePageScreenRoute:
         return MaterialPageRoute(
-          builder: (context) =>  HomePageScreen(),
+          builder: (context) =>  MainScreen(),
+        );
+        case Routes.packageRoute:
+        return MaterialPageRoute(
+          builder: (context) =>  PaymentPackage(),
         );
       case Routes.updateProfileRoute:
         return MaterialPageRoute(

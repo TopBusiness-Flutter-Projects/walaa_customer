@@ -48,6 +48,7 @@ dependencies:
   firebase_core: ^2.5.0
   flutter_local_notifications: ^13.0.0
   internet_connection_checker: ^1.0.0+1
+  chewie: ^1.5.0
   flutter_localizations:
     sdk: flutter
 

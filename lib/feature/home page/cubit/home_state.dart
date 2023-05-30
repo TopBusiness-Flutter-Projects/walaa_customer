@@ -8,4 +8,5 @@ class HomeInitial extends HomeState {}
 class HomeProvidersLoading extends HomeState {}
 class HomeProvidersLoaded extends HomeState {}
 class HomeProvidersError extends HomeState {}
+class ChangeCurrentIndexTap extends HomeState {}
 

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/core/widgets/no_login_page.dart';
 import 'package:walaa_customer/feature/cartPage/screens/cart_page.dart';
 import '../../../core/models/login_model.dart';
-import '../../home page/screens/home_page.dart';
+import '../../home page/screens/cafe_page.dart';
+import '../../home page/screens/mainScreen.dart';
 import '../../profile/presentation/screens/profile.dart';
 import '../cubit/navigator_bottom_cubit.dart';
 import '../widget/navigator_bottom_widget.dart';
@@ -47,7 +48,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 } else if (bottomCubit.page == 1) {
                   return CartPage();
                 } else {
-                  return HomePageScreen();
+                  return MainScreen();
                 }
               },
             ),

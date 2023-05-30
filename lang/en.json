@@ -1,5 +1,5 @@
 {
-  "app_name": "Walaa",
+  "app_name": "تاست",
   "verification_title_text": "Please enter your verification code",
   "verification_desc_text": "you have sent a verification code to your registered phone number",
   "verification_validator_message": "Please fill up all the cells properly",
@@ -36,6 +36,7 @@
   "menu": "Menu",
   "no_item": "No Items To Show",
   "choose_coffee": "Choose Your Coffee",
+  "choose_food": "Choose Your Food",
   "perfect_day": "Perfect day to Start Your Day",
   "add_balance_text": "Add Balance",
   "balance_text": "Balance",
@@ -57,11 +58,12 @@
   "previous_order_text": "Previous Orders",
   "current_order_text": "Current Orders",
   "myorder_text": "My Orders",
+  "packge_text": "Packges",
   "addcart_error_text": "You cannot add from more than one cafe. Please complete the cart requests first",
   "request": "Request",
   "choose_payment_package": "Choose Payment package to Recharge",
   "cart_empty": "Cart Is Empty",
-  "advantages": "Advantages ...",
+  "advantages": "Events ...",
   "advantages_desc": "Advantages In This Day"
 
 }

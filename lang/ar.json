@@ -36,6 +36,7 @@
   "menu": "القائمه",
   "no_item": "لا يوجد عناصر للعرض",
   "choose_coffee": "اختر قهوتك",
+  "choose_food": "اختر طعامك",
   "perfect_day": "أفضل اختيار لبدأ يومك",
   "add_balance_text": "اضافه رصيد",
   "balance_text": "رصيد",
@@ -60,12 +61,13 @@
   "previous_order_text": "الطلبات السابقه",
   "current_order_text": "الطلبات الحاليه",
   "myorder_text": "طلباتى",
+  "packge_text": "الباقات",
   "cart": "السله",
   "addcart_error_text": "لا يمكنك الاضافه من اكتر من مقهى من فضلك انهى طلبات السلة اولا",
   "request": "طلب",
   "choose_payment_package": "اختر باقة الشحن المناسبة",
   "cart_empty": "السلة فارغة",
-  "advantages": "المميزات ...",
+  "advantages": "الفاعليات ...",
   "advantages_desc": "مميزات اليوم"
 
 

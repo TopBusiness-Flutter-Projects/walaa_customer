@@ -75,12 +75,14 @@ class PackageModel {
   final int? price;
   final String? title;
   final String? description;
+  final String? image;
 
   PackageModel({
     this.id,
     this.price,
     this.title,
     this.description,
+    this.image,
   });
 
   PackageModel copyWith({
@@ -88,12 +90,14 @@ class PackageModel {
     int? price,
     String? title,
     String? description,
+    String? image,
   }) =>
       PackageModel(
         id: id ?? this.id,
         price: price ?? this.price,
         title: title ?? this.title,
         description: description ?? this.description,
+        image: image ?? this.image,
       );
 
   factory PackageModel.fromRawJson(String str) => PackageModel.fromJson(json.decode(str));
@@ -105,6 +109,7 @@ class PackageModel {
     price: json["price"],
     title: json["title"],
     description: json["description"],
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -112,5 +117,6 @@ class PackageModel {
     "price": price,
     "title": title,
     "description": description,
+    "image": image,
   };
 }

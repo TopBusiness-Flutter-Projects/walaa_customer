@@ -154,16 +154,18 @@ class ProfileCubit extends Cubit<ProfileState> {
         if (r.code == 200) {
           // Get.back;
           Navigator.pop(context);
-          Get.dialog(
-            AlertDialog(
-              actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              backgroundColor: AppColors.dialogBackgroundColor,
-              content: PaymentPackage(),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.packageRoute);
+
+          // Get.dialog(
+          //   AlertDialog(
+          //     actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          //     contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(16)),
+          //     backgroundColor: AppColors.dialogBackgroundColor,
+          //     content: PaymentPackage(),
+          //   ),
+          // );
           emit(ProfilePackageLoaded());
         } else {
           errorGetBar(r.message);

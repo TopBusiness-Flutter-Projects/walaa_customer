@@ -11,8 +11,8 @@ import '../cubit/home_cubit.dart';
 import '../widget/coffee_list_widget.dart';
 import '../widget/the_best_widget.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({Key? key}) : super(key: key);
+class RestaurantPageScreen extends StatelessWidget {
+  const RestaurantPageScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,56 +20,7 @@ class HomePageScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: null,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(12),
-                  bottomLeft: Radius.circular(12)),
-            ),
-            width: double.infinity,
-            child: Card(
-              elevation: 8,
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25)),
-              ),
-              color: AppColors.textBackground,
-              child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        ImageAssets.whiteWalaaLogoImage,
-                        height: 70,
-                        width: 70,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          showSearch(
-                            context: context,
-                            delegate: SearchPage(
-                              data: context.read<HomeCubit>().providerModelList,
-                              phone: ''
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.search,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+
           Expanded(
             child: BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {

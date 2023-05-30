@@ -40,6 +40,7 @@ class AppStrings {
   static const String privacyText = 'privacy_text';
   static const String totalPriceText = 'total_price_text';
   static const String myorderText = 'myorder_text';
+  static const String packgeText = 'packge_text';
   static const String addcartErrorText = 'addcart_error_text';
   static const String currentOrderText = 'current_order_text';
   static const String previousOrderText = 'previous_order_text';
@@ -57,6 +58,7 @@ class AppStrings {
   static const String menuText = 'menu';
   static const String noItem = 'no_item';
   static const String chooseCoffeeText = 'choose_coffee';
+  static const String chooseFoodText = 'choose_food';
   static const String perfectDayText = 'perfect_day';
   static const String addBalanceText = 'add_balance_text';
   static const String balanceText = 'balance_text';
