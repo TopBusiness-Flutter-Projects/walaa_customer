@@ -14,8 +14,10 @@ import '../models/providers_model.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
+  int provider_type=2;
+
   HomeCubit(this.api) : super(HomeInitial()) {
-    getHomeData();
+    getHomeData(provider_type);
   }
 
   final ServiceApi api;
@@ -30,7 +32,16 @@ class HomeCubit extends Cubit<HomeState> {
 
   selectTap(int index) {
     currentIndex = index;
+
     emit(ChangeCurrentIndexTap());
+    if(currentIndex==0){
+  provider_type=2;
+     getHomeData(2);
+    }
+    else{
+    provider_type=1;
+     getHomeData(1);
+    }
   }
   // getAllProviders() async {
   //   emit(HomeProvidersLoading());
@@ -42,9 +53,9 @@ class HomeCubit extends Cubit<HomeState> {
   //   });
   // }
 
-  getHomeData() async {
+  getHomeData(int provider_type) async {
     emit(HomeProvidersLoading());
-    final response = await api.getHomeData();
+    final response = await api.getHomeData(provider_type);
     response.fold(
       (l) => emit(HomeProvidersError()),
       (r) {
@@ -75,7 +86,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
           (r) {
         if (r.code == 200) {
-          getHomeData();
+       //   getHomeData(provider_type);
           Navigator.pop(context);
          Navigator.pop(context);
         }

@@ -106,6 +106,7 @@ class _MainScreenState extends State<MainScreen>
                           ),
                           child: InkWell(
                             onTap: () {
+
                               cubit.selectTap(index);
                               print(cubit.currentIndex);
                               _tabController.animateTo(index);

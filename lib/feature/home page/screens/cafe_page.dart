@@ -4,6 +4,7 @@ import 'package:walaa_customer/core/utils/app_colors.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/assets_manager.dart';
 import '../../../core/widgets/banner.dart';
+import '../../../core/widgets/no_item_page.dart';
 import '../../../core/widgets/search_page.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../../../core/widgets/title_with_circle_background_widget.dart';
@@ -30,7 +31,9 @@ class CafePageScreen extends StatelessWidget {
                 }
                 if (state is HomeProvidersError) {
                   return RefreshIndicator(
-                    onRefresh: () async => cubit.getHomeData(),
+                    onRefresh: () async =>{
+                        cubit.provider_type=2,
+                        cubit.getHomeData(2)},
                     child: ListView(
                       children: [
                         Center(
@@ -39,7 +42,9 @@ class CafePageScreen extends StatelessWidget {
                               Text('There is An Error !!!'),
                               SizedBox(height: 20),
                               IconButton(
-                                onPressed: () => cubit.getHomeData(),
+                                onPressed: () => {
+                                  cubit.provider_type=2,
+                                  cubit.getHomeData(2)},
                                 icon: Icon(
                                   Icons.refresh,
                                   color: AppColors.buttonBackground,
@@ -54,14 +59,17 @@ class CafePageScreen extends StatelessWidget {
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () async => cubit.getHomeData(),
+                  onRefresh: () async => {
+                    cubit.provider_type=2,
+                    cubit.getHomeData(2)},
                   child: ListView(
                     children: [
                       BannerWidget(sliderData: cubit.sliderList),
                       TitleWithCircleBackgroundWidget(title: 'best_provider'),
+                      cubit.bestProviderModelList.isNotEmpty?
                       TheBestCoffeeWidget(
                         bestModel: cubit.bestProviderModelList,
-                      ),
+                      ):Container(),
                       TitleWithCircleBackgroundWidget(
                         title: AppStrings.chooseCoffeeText,
                       ),

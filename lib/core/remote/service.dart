@@ -148,12 +148,15 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, ProviderListModel>> getAllProviders() async {
+  Future<Either<Failure, ProviderListModel>> getAllProviders(int provider_type) async {
     try {
       // LoginModel loginModel = await Preferences.instance.getUserModel();
       String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
         EndPoints.providersUrl,
+        queryParameters: {
+          "provider_type":provider_type
+        },
         options: Options(
           headers: {
             // 'Authorization': loginModel.data!.accessToken,
@@ -167,7 +170,7 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, HomeModel>> getHomeData() async {
+  Future<Either<Failure, HomeModel>> getHomeData(int provider_type) async {
     try {
       LoginModel loginModel = await Preferences.instance.getUserModel();
       String? token;
@@ -177,6 +180,9 @@ class ServiceApi {
       String lan = await Preferences.instance.getSavedLang();
       final response = await dio.get(
         EndPoints.homeUrl,
+        queryParameters: {
+          "provider_type":provider_type
+        },
         options: Options(
           headers: {
             'Authorization': token,

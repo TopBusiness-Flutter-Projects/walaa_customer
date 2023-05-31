@@ -72,91 +72,92 @@ class PaymentPackage extends StatelessWidget {
                   ),
                 ),
 
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: cubit.packages.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 8.0),
-                      child: Container(
-                        height: (MediaQuery
-                            .of(context)
-                            .size
-                            .height / 2) - 80,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: cubit.packages.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 8.0),
+                        child: Container(
+                          height: (MediaQuery
+                              .of(context)
+                              .size
+                              .height / 2) - 80,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
 
-                        decoration: BoxDecoration(
-                          color: AppColors.paymentDialog,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          children: [
-                            ManageNetworkImage(
-                              imageUrl: "https:\/\/loyalty.topbusiness.io\/storage\/uploads\/categories\/aW1hZ2VfY3JvcHBlcl8xNjc2ODc4OTY2NDU4LnBuZw==_1676878976.png",
+                          decoration: BoxDecoration(
+                            color: AppColors.paymentDialog,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              ManageNetworkImage(
+                                imageUrl:cubit.packages[index].image! ,
 
-                              height: 200,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
-                              borderRadius: 10,
-                            ),
-
-                            RichText(
-                              text: TextSpan(
-                                style: TextStyle(color: AppColors.black),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: replaceToArabicNumber(
-                                      '${cubit.packages[index].price ??
-                                          0}',
-                                    ),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25,
-                                        color: AppColors.black),
-                                  ),
-                                  TextSpan(
-                                    text: '  ريال',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: AppColors.textBackground,
-                                    ),
-                                  ),
-                                ],
+                                height: 200,
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
+                                borderRadius: 10,
                               ),
-                            ),
-                            OutlinedButton(
-                              onPressed: () =>
-                                  context
-                                      .read<ProfileCubit>()
-                                      .onRechargeWallet(
-                                      cubit.packages[index].price!,
-                                      context),
-                              child: Text(
-                                translateText('request', context),
-                                style: TextStyle(
-                                  color: AppColors.white,
+
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(color: AppColors.black),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: replaceToArabicNumber(
+                                        '${cubit.packages[index].price ??
+                                            0}',
+                                      ),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: AppColors.black),
+                                    ),
+                                    TextSpan(
+                                      text: '  ريال',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: AppColors.textBackground,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: AppColors.textBackground,
-                                side: BorderSide(
-                                    color: AppColors.textBackground,
-                                    width: 2),
+                              OutlinedButton(
+                                onPressed: () =>
+                                    context.read<ProfileCubit>()
+                                        .onRechargeWallet(
+                                        cubit.packages[index].price!,
+                                        context),
+                                child: Text(
+                                  translateText('request', context),
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: AppColors.textBackground,
+                                  side: BorderSide(
+                                      color: AppColors.textBackground,
+                                      width: 2),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
 
+                  ),
                 ),
               ],
             ),
