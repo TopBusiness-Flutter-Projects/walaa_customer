@@ -80,7 +80,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                       right: 0,
                       left: 0,
                       child: Text(
-                        'Coffee so good,\nyour taste buds\nwill love it',
+                        'Coffee so good,\nyour Taster buds\nwill love it',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: AppColors.white, fontSize: 25),
                       ),
