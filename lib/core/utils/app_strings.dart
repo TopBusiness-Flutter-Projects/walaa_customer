@@ -1,4 +1,8 @@
+import 'package:walaa_customer/core/preferences/preferences.dart';
+
 class AppStrings {
+  AppStrings(){
+  }
   static const String appName = 'app_name';
 
   // static const String googleApiKey = '';
@@ -70,6 +74,10 @@ class AppStrings {
   static const String shouldLoginText = 'should_login_text';
   static const String searchCountryText = 'search_country';
   static const String bestText = 'best';
+
+
+
+
 
 
 

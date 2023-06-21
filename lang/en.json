@@ -66,6 +66,16 @@
   "advantages": "Events ...",
   "advantages_desc": "Advantages In This Day",
   "balance_enough": "Balance Not Enough",
-  "point": "Points"
+  "point": "Points",
+  "my_orders": "My Orders",
+  "update_profile": "Update Profile",
+  "share_app": "Share App",
+  "logout": "Logout",
+  "cafe": "Cafe",
+  "restuarant": "Restaurant",
+  "addtocart": "Add To Cart",
+  "welcome_you": "Welcome To You ",
+  "get_satrt": "Get Started"
+
 
 }

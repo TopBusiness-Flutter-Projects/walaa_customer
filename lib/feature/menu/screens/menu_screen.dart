@@ -107,7 +107,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   fontFamily: 'Cairo',
                                 ),
                                 children: <TextSpan>[
-                                  TextSpan(text: 'اهلا بك فى  '),
+                                  TextSpan(text:translateText("welcome_you",context) ),
                                   TextSpan(
                                     text: widget.providerModel.name!,
                                     style: TextStyle(

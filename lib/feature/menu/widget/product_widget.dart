@@ -57,7 +57,7 @@ class ProductWidget extends StatelessWidget {
                   Stack(
                     children: [
                       Text(
-                        '${model.price!}  ريال ',
+                        '${model.price!}  '+translateText("SAR",context),
                         style: TextStyle(
                           fontSize: 14,
                           color: model.priceAfterDiscount != 0
@@ -89,7 +89,7 @@ class ProductWidget extends StatelessWidget {
                   Visibility(
                     visible: model.priceAfterDiscount != 0,
                     child: Text(
-                      '${model.priceAfterDiscount ?? 0}  ريال ',
+                      '${model.priceAfterDiscount ?? 0}   '+translateText("SAR",context),
                       style: TextStyle(
                         fontSize: 14,
                         color: AppColors.textBackground,
@@ -133,7 +133,7 @@ class ProductWidget extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          'اضف الى السلة',
+                          translateText("addtocart",context),
                           style: TextStyle(
                             fontSize: 12,
                             color: type == 'best'

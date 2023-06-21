@@ -12,6 +12,7 @@ import '../../../../core/preferences/preferences.dart';
 import '../../../core/models/cart_model.dart';
 import '../../../core/models/login_model.dart';
 import '../../../core/models/status_resspons.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 
 part 'cart_state.dart';
@@ -109,7 +110,7 @@ if(loginModel.data!.user.balance>=model.totalPrice){
       //  Future.delayed(Duration(seconds: 1)).then((value) => emit(OnError(e.toString())));
     }}
 else{
-  toastMessage("balance_enough", AppColors.primary);
+  toastMessage(translateText("balance_enough",context), AppColors.primary);
 
 }
   }

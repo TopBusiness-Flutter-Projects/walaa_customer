@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:walaa_customer/core/preferences/preferences.dart';
 import 'package:walaa_customer/feature/cartPage/cubit/cart_cubit.dart';
 import 'package:walaa_customer/feature/login/presentation/cubit/login_cubit.dart';
 
@@ -25,17 +26,21 @@ import 'feature/register/cubit/register_cubit.dart';
 
 
 class WalaaCustomer extends StatefulWidget {
-  WalaaCustomer({Key? key}) : super(key: key);
+  WalaaCustomer( {Key? key}) : super(key: key);
 
   @override
   State<WalaaCustomer> createState() => _WalaaCustomerState();
 }
 
 class _WalaaCustomerState extends State<WalaaCustomer> {
+  String? lang;
+
 
   @override
   void initState() {
     super.initState();
+
+getlang();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
@@ -45,7 +50,7 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
 
   @override
   Widget build(BuildContext context) {
-
+getlang();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -99,7 +104,7 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: AppStrings.appName,
-            locale: state.locale,
+            locale: Locale(lang!),
            // theme: appTheme(),
             onGenerateRoute: AppRoutes.onGenerateRoute,
             supportedLocales: AppLocalizationsSetup.supportedLocales,
@@ -111,5 +116,14 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
         },
       ),
     );
+  }
+
+  void getlang() {
+    Preferences.instance.getSavedLang().then((value) =>{
+
+    setState(() {
+    lang=value;
+    })
+    });
   }
 }

@@ -8,6 +8,7 @@ import '../../domain/use_cases/change_language_use_case.dart';
 import '../../domain/use_cases/get_saved_language_use_case.dart';
 import '../../../../core/utils/restart_app_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 part 'locale_state.dart';
 
@@ -15,18 +16,34 @@ class LocaleCubit extends Cubit<LocaleState> {
   final GetSavedLanguageUseCase getSavedLanguageUseCase;
   final ChangeLanguageUseCase changeLanguageUseCase;
 
+  static String lang='ar';
+
+
   LocaleCubit({
     // required this.logoutUseCase,
     required this.getSavedLanguageUseCase,
     required this.changeLanguageUseCase,
+
   }) : super(
-          const ChangeLocaleState(
-            locale: Locale(AppStrings.arabicCode),
+
+           ChangeLocaleState (
+           locale:  Locale(lang)
           ),
-        );
+        ){
+    getsavelagugge();
+  }
 
   String currentLanguageCode = AppStrings.arabicCode;
+  getsavelagugge()   {
+    print("llll");
+    Preferences.instance.getSavedLang().then((value) => {
+      lang =value,
+    emit(ChangeLocaleState(locale: Locale(value)))
 
+    });
+
+
+  }
   Future<void> getSavedLanguage() async {
     final response = await getSavedLanguageUseCase.call(NoParams());
     response.fold((failure) => debugPrint(AppStrings.cacheFailure), (value) {
@@ -59,9 +76,9 @@ class LocaleCubit extends Cubit<LocaleState> {
 
           Future.delayed(
               Duration(milliseconds: 10), () {
-            //Restart.restartApp();
-            HotRestartController.performHotRestart(
-                context);
+            Phoenix.rebirth(context);
+            // HotRestartController.performHotRestart(
+            //     context);
           });
         }
         );
@@ -73,4 +90,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   void toEnglish(BuildContext context) => _changeLanguage(AppStrings.englishCode,context);
 
   void toArabic(BuildContext context) => _changeLanguage(AppStrings.arabicCode,context);
+
+
+
 }

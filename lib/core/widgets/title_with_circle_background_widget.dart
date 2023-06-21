@@ -20,7 +20,7 @@ class TitleWithCircleBackgroundWidget extends StatelessWidget {
           children: [
             Positioned(
               bottom: 0,
-              right: 15,
+
               child: Container(
                 width: 40,
                 height: 40,
@@ -43,7 +43,7 @@ class TitleWithCircleBackgroundWidget extends StatelessWidget {
             ),
             Positioned(
               bottom: 8,
-              right: 0,
+             
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(

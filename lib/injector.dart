@@ -34,6 +34,7 @@ Future<void> setup() async {
     () => LocaleCubit(
       changeLanguageUseCase: serviceLocator(),
       getSavedLanguageUseCase: serviceLocator(),
+
     ),
   );
   serviceLocator.registerFactory(

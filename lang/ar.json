@@ -70,8 +70,12 @@
   "advantages": "الفاعليات ...",
   "advantages_desc": "مميزات اليوم",
   "balance_enough": "رصيدك غير كافي",
-  "point": "نقاط"
-
+  "point": "نقاط",
+  "cafe": "كافيه",
+  "restuarant": "مطعم",
+"addtocart": "اضف الي السله",
+  "welcome_you": " اهلا بك فى ",
+  "get_satrt": "هيا نبدا"
 
 
 }

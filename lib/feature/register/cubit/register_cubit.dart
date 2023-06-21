@@ -126,6 +126,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         name: nameController.text,
         image: imagePath.isEmpty ? null : imagePath,
         phone: phoneController.text,
+        phoneCode: phoneCode
       ),
     );
     response.fold(

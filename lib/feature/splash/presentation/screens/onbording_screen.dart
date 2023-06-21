@@ -6,6 +6,7 @@ import 'package:walaa_customer/core/utils/assets_manager.dart';
 
 import '../../../../core/models/login_model.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
@@ -100,7 +101,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                       right: 0,
                       left: 0,
                       child: CustomButton(
-                        text: 'Get Started',
+                        text:translateText("get_satrt",context) ,
                         onClick: () =>setFirstInstall(),
                         color: AppColors.buttonBackground,
                         paddingHorizontal: 130,

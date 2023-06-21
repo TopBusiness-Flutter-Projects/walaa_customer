@@ -5,6 +5,7 @@ import 'package:walaa_customer/feature/home%20page/screens/restuarnt_page.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/utils/translate_text_method.dart';
 import '../../../core/widgets/search_page.dart';
 import '../../../core/widgets/title_with_circle_background_widget.dart';
 import '../cubit/home_cubit.dart';
@@ -19,8 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen>
     with TickerProviderStateMixin {
   List<String> titles = [
-    'كافيه',
-    'مطعم',
+
   ];
   late TabController _tabController;
 
@@ -33,6 +33,8 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    titles=[ translateText("cafe",context),
+      translateText("restuarant",context)];
     return Scaffold(
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
