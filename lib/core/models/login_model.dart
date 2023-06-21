@@ -79,7 +79,7 @@ class UserData {
   final int? status;
   final String? image;
   dynamic userType;
-  final int? balance;
+  final dynamic? balance;
   late bool isLoggedIn = false;
   final String? token;
 
@@ -107,6 +107,8 @@ class UserData {
 
   Future<Map<String, dynamic>> updateToJson() async => {
         "role_id": 2,
+        "phone": phone,
+    "phone_code":phoneCode,
         if (name != null) ...{"name": name},
         if (image != null) ...{"image": await MultipartFile.fromFile(image!)}
       };

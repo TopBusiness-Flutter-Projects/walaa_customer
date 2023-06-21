@@ -63,6 +63,7 @@ class AppStrings {
   static const String addBalanceText = 'add_balance_text';
   static const String balanceText = 'balance_text';
   static const String SARText = 'SAR';
+  static const String PointText = 'point';
   static const String cartText = 'cart';
   static const String noEmailError = 'There_is_no_email_with_this_phone';
   static const String loginText = 'login_text';

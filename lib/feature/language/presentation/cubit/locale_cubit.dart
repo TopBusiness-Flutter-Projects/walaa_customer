@@ -47,17 +47,25 @@ class LocaleCubit extends Cubit<LocaleState> {
     final response = await changeLanguageUseCase.call(languageCode);
     response.fold((failure) => debugPrint(AppStrings.cacheFailure), (value) {
       currentLanguageCode = languageCode;
-      emit(ChangeLocaleState(locale: Locale(currentLanguageCode)));
 
 
 
 
       Future.delayed(Duration(milliseconds: 800),() async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.setString(
-            AppStrings.locale, languageCode);
-      }).then((value) =>         HotRestartController.performHotRestart(context)
-      );
+        //SharedPreferences preferences = await SharedPreferences.getInstance();
+        Preferences.instance.savedLang(
+             languageCode).then((value) {
+          emit(ChangeLocaleState(locale: Locale(languageCode)));
+
+          Future.delayed(
+              Duration(milliseconds: 10), () {
+            //Restart.restartApp();
+            HotRestartController.performHotRestart(
+                context);
+          });
+        }
+        );
+      });
 
     });
   }

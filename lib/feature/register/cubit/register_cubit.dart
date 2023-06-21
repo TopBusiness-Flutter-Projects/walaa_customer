@@ -142,7 +142,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   loginPhone(String phone, context) async {
     emit(RegisterTestPhoneLoading());
-    final response = await api.postLogin(phone);
+    final response = await api.postLogin(phone,phoneCode);
     response.fold(
       (failure) => emit(RegisterTestPhoneError()),
       (loginModel) {
@@ -170,6 +170,11 @@ class RegisterCubit extends Cubit<RegisterState> {
             );
             emit(RegisterTestPhoneLoaded());
           } else {
+            //context.read<LoginCubit>().sendSmsCode(phoneCode,phoneController.text);
+            context.read<LoginCubit>().isRegister = true;
+            context
+                .read<LoginCubit>()
+                .sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
             Future.delayed(
               Duration(milliseconds: 500),
               () {
@@ -179,10 +184,7 @@ class RegisterCubit extends Cubit<RegisterState> {
                 );
               },
             );
-            context.read<LoginCubit>().isRegister = true;
-            context
-                .read<LoginCubit>()
-                .sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
+
             emit(RegisterTestPhoneLoaded());
           }
           // this.loginModel = loginModel;

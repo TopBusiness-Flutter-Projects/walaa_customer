@@ -54,7 +54,7 @@
   "confirm": "Confirm",
   "lang": "Language",
   "total_price_text": "Total Price ",
-  "cart": "Cart",
+  "cart": "Orders",
   "previous_order_text": "Previous Orders",
   "current_order_text": "Current Orders",
   "myorder_text": "My Orders",
@@ -64,6 +64,8 @@
   "choose_payment_package": "Choose Payment package to Recharge",
   "cart_empty": "Cart Is Empty",
   "advantages": "Events ...",
-  "advantages_desc": "Advantages In This Day"
+  "advantages_desc": "Advantages In This Day",
+  "balance_enough": "Balance Not Enough",
+  "point": "Points"
 
 }

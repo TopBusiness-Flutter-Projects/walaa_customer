@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,6 +21,7 @@ import 'package:walaa_customer/core/utils/translate_text_method.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/models/payment_package_model.dart';
+import '../../../language/presentation/cubit/locale_cubit.dart';
 import '../../../splash/presentation/screens/splash_screen.dart';
 import '../screens/payment_screen.dart';
 
@@ -172,5 +174,27 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
       },
     );
+  }
+
+  Future<void> changelanguage(BuildContext context) async {
+    Preferences.instance
+        .getSavedLang().then((lan) => {
+    if (lan == 'ar') {
+        print(lan),
+    context.read<LocaleCubit>().toEnglish(context),
+    print(lan)
+
+  }
+    else {
+    print(lan),
+    context.read<LocaleCubit>().toArabic(context),
+    print(lan)
+
+    }
+    });
+    //  print(lan);
+
+
+
   }
 }

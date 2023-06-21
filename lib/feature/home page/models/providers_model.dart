@@ -37,7 +37,7 @@ class ProviderModel {
   final String? email;
   final String? image;
   final List<CategoryModel>? categories;
-  final List<String>? advantages;
+  final List<dynamic>? advantages;
   final String? description;
   final dynamic rate;
   final MyRate? myRate;
@@ -60,15 +60,15 @@ class ProviderModel {
   String toRawJson() => json.encode(toJson());
 
   factory ProviderModel.fromJson(Map<String, dynamic> json) => ProviderModel(
-    id: json["id"],
-    name: json["name"],
-    phone: json["phone"],
-    email: json["email"],
-    image: json["image"],
+    id: json["id"]??0,
+    name: json["name"]??"",
+    phone: json["phone"]??"",
+    email: json["email"]??"",
+    image: json["image"]??"",
     categories: json["categories"] == null ? [] : List<CategoryModel>.from(json["categories"]!.map((x) => CategoryModel.fromJson(x))),
-    advantages: json["advantages"] == null ? [] : List<String>.from(json["advantages"]!.map((x) => x)),
+    advantages: json["advantages"] == null ? [] : List<dynamic>.from(json["advantages"]!.map((x) => x)),
     description: json["description"],
-    rate: json["rate"],
+    rate: json["rate"]??0,
     myRate: json["my_rate"] == null ? null : MyRate.fromJson(json["my_rate"]),
   );
 

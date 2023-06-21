@@ -95,12 +95,12 @@ class _WalaaCustomerState extends State<WalaaCustomer> {
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         buildWhen: (previous, current) => previous != current,
-        builder: (context, state) {
+        builder: (context1, state) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: AppStrings.appName,
             locale: state.locale,
-            theme: appTheme(),
+           // theme: appTheme(),
             onGenerateRoute: AppRoutes.onGenerateRoute,
             supportedLocales: AppLocalizationsSetup.supportedLocales,
             localeResolutionCallback:

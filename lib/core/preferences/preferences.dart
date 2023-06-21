@@ -58,7 +58,10 @@ class Preferences {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.remove('user');
   }
-
+  Future<void> savedLang(String local) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(AppStrings.locale, local);
+  }
   Future<String> getSavedLang() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(AppStrings.locale) ?? 'ar';

@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
@@ -86,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       '${profileCubit.loginDataModel!.data!.user.balance ?? 0}' +
                                       ' ' +
                                       translateText(
-                                          AppStrings.SARText, context),
+                                          AppStrings.PointText, context),
                                   image: ImageAssets.walletIcon,
                                   imageColor: AppColors.black,
                                   onclick: () async {
@@ -113,37 +114,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 MySeparator(),
-                                // ProfileListTailWidget(
-                                //   title: translateText('lang', context),
-                                //   image: ImageAssets.languageIcon,
-                                //   imageColor: AppColors.black,
-                                //   onclick: () async {
-                                //     String lan = await Preferences.instance
-                                //         .getSavedLang();
-                                //     if (lan == 'ar') {
-                                //       print(lan);
-                                //       context.read<LocaleCubit>().toEnglish(context);
-                                //       print(lan);
-                                //       Future.delayed(
-                                //           Duration(milliseconds: 800), () {
-                                //         HotRestartController.performHotRestart(
-                                //             context);
-                                //       });
-                                //     } else {
-                                //       print(lan);
-                                //       context.read<LocaleCubit>().toArabic(context);
-                                //       print(lan);
-                                //       Future.delayed(
-                                //           Duration(milliseconds: 800), () {
-                                //         HotRestartController.performHotRestart(
-                                //             context);
-                                //       });
-                                //     }
-                                //   },
-                                //   widget: Text(IsLanguage.isArLanguage(context)
-                                //       ? 'ع'
-                                //       : 'En'),
-                                // ),
+                                ProfileListTailWidget(
+                                  title: translateText('lang', context),
+                                  image: ImageAssets.languageIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () async {
+
+                                //    print(lan);
+                                    profileCubit.changelanguage(context);
+
+                                  },
+                                  widget: Text(IsLanguage.isArLanguage(context)
+                                      ? 'ع'
+                                      : 'En'),
+                                ),
+                                MySeparator(),
                                 ProfileListTailWidget(
                                   title: translateText('my_orders', context),
                                   image: ImageAssets.ordersIcon,
@@ -213,7 +198,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   title: translateText('share_app', context),
                                   image: ImageAssets.shareAppIcon,
                                   imageColor: AppColors.black,
-                                  onclick: () {},
+                                  onclick: () {
+                                    shareApp();
+                                  },
                                 ),
                                 MySeparator(),
                                 ProfileListTailWidget(

@@ -28,11 +28,11 @@ class LoginCubit extends Cubit<LoginState> {
 
   loginPhone(String phone, context) async {
     emit(LoginLoading());
-    final response = await serviceApi.postLogin(phone);
+    final response = await serviceApi.postLogin(phone,phoneCode);
     response.fold(
       (failure) => emit(LoginFailure()),
       (loginModel) {
-        if (loginModel.code == 411) {
+        if (loginModel.code == 411||loginModel.code == 406) {
           errorGetBar(translateText(AppStrings.noEmailError, context));
           emit(LoginLoaded());
         } else if (loginModel.code == 200) {

@@ -28,13 +28,13 @@ class ServiceApi {
 
   ServiceApi(this.dio);
 
-  Future<Either<Failure, LoginModel>> postLogin(String phone) async {
+  Future<Either<Failure, LoginModel>> postLogin(String phone, String phoneCode) async {
     try {
       final response = await dio.post(
         EndPoints.loginUrl,
         body: {
           'phone': phone,
-          'phone_code': AppStrings.phoneCode,
+          'phone_code': phoneCode,
         },
       );
       return Right(LoginModel.fromJson(response));

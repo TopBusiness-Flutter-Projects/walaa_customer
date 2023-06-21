@@ -63,6 +63,7 @@ dependencies:
   flutter_typeahead: ^4.3.3
   webview_flutter: ^4.0.2
   lottie: ^2.2.0
+  restart_app: ^1.2.1
   intl_phone_number_input: ^0.7.2
   get: ^4.6.5
   carousel_slider: ^4.2.1

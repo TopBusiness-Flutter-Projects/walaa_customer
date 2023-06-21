@@ -62,13 +62,16 @@
   "current_order_text": "الطلبات الحاليه",
   "myorder_text": "طلباتى",
   "packge_text": "الباقات",
-  "cart": "السله",
+  "cart": "الطلبات",
   "addcart_error_text": "لا يمكنك الاضافه من اكتر من مقهى من فضلك انهى طلبات السلة اولا",
   "request": "طلب",
   "choose_payment_package": "اختر باقة الشحن المناسبة",
   "cart_empty": "السلة فارغة",
   "advantages": "الفاعليات ...",
-  "advantages_desc": "مميزات اليوم"
+  "advantages_desc": "مميزات اليوم",
+  "balance_enough": "رصيدك غير كافي",
+  "point": "نقاط"
+
 
 
 }

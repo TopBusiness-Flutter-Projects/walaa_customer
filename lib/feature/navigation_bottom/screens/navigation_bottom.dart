@@ -36,7 +36,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
           },
           child: Scaffold(
             bottomNavigationBar: SizedBox(
-              height: 50,
+              height: 70,
               child: NavigatorBottomWidget(),
             ),
             body: BlocBuilder<NavigatorBottomCubit, NavigatorBottomState>(
