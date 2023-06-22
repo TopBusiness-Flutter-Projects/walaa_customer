@@ -76,19 +76,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
             return Column(
               children: [
                 Expanded(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 80),
-                      HeaderTitleWidget(
-                        title: translateText(
-                            AppStrings.verificationTitle, context),
-                        des:
-                            translateText(AppStrings.verificationDesc, context),
-                      ),
-                      const SizedBox(height: 30),
-                      Form(
-                        key: formKey,
-                        child: Padding(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 80),
+                        HeaderTitleWidget(
+                          title: translateText(
+                              AppStrings.verificationTitle, context),
+                          des:
+                              translateText(AppStrings.verificationDesc, context),
+                        ),
+                        const SizedBox(height: 30),
+                        Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 8.0,
                             horizontal: 30,
@@ -136,69 +136,69 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Text(
-                          hasError
-                              ? translateText(
-                                  AppStrings.verificationValidatorMessage,
-                                  context,
-                                )
-                              : "",
-                          style: TextStyle(
-                              color: AppColors.error,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      CustomButton(
-                        text: translateText(AppStrings.doneBtn, context),
-                        color: AppColors.buttonBackground,
-                        paddingHorizontal: 40,
-                        borderRadius: 30,
-                        onClick: () {
-                          formKey.currentState!.validate();
-                          if (currentText.length != 6) {
-                            errorController!.add(
-                              ErrorAnimationType.shake,
-                            ); // Triggering error shake animation
-                            setState(() => hasError = true);
-                          } else {
-                            setState(
-                              () {
-                                hasError = false;
-                                context
-                                    .read<LoginCubit>()
-                                    .verifySmsCode(currentText);
-                              },
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      Align(
-                        alignment: IsLanguage.isEnLanguage(context)
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width / 8),
-                          child: TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  AppColors.textBackground, // Text Color
-                            ),
-                            child: Text(
-                              translateText(AppStrings.backBtn, context),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          child: Text(
+                            hasError
+                                ? translateText(
+                                    AppStrings.verificationValidatorMessage,
+                                    context,
+                                  )
+                                : "",
+                            style: TextStyle(
+                                color: AppColors.error,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
-                      )
-                    ],
+                        const SizedBox(height: 20),
+                        CustomButton(
+                          text: translateText(AppStrings.doneBtn, context),
+                          color: AppColors.buttonBackground,
+                          paddingHorizontal: 40,
+                          borderRadius: 30,
+                          onClick: () {
+                            formKey.currentState!.validate();
+                            if (currentText.length != 6) {
+                              errorController!.add(
+                                ErrorAnimationType.shake,
+                              ); // Triggering error shake animation
+                              setState(() => hasError = true);
+                            } else {
+                              setState(
+                                () {
+                                  hasError = false;
+                                  context
+                                      .read<LoginCubit>()
+                                      .verifySmsCode(currentText);
+                                },
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        Align(
+                          alignment: IsLanguage.isEnLanguage(context)
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width / 8),
+                            child: TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              style: TextButton.styleFrom(
+                                foregroundColor:
+                                    AppColors.textBackground, // Text Color
+                              ),
+                              child: Text(
+                                translateText(AppStrings.backBtn, context),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Padding(

@@ -33,7 +33,7 @@ class ProfileListTailWidget extends StatelessWidget {
               InkWell(
                 onTap: onclick,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
                       SvgPicture.asset(
@@ -42,7 +42,7 @@ class ProfileListTailWidget extends StatelessWidget {
                         height: 26,
                         width: 26,
                       ),
-                      SizedBox(width: 22),
+                      SizedBox(width: 16),
                       Text(
                         title,
                         style: TextStyle(

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/models/login_model.dart';
 import '../../../../core/remote/service.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -38,6 +39,11 @@ class LoginCubit extends Cubit<LoginState> {
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
           sendSmsCode();
+          phoneController.clear();
+          Navigator.pushNamed(
+            context,
+            Routes.verificationScreenRoute,
+          );
         }
       },
     );

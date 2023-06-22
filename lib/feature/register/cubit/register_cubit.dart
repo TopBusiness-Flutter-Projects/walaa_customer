@@ -63,19 +63,21 @@ class RegisterCubit extends Cubit<RegisterState> {
     imageFile = await ImagePicker().pickImage(
       source: type == 'camera' ? ImageSource.camera : ImageSource.gallery,
     );
-    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
-      sourcePath: imageFile!.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      cropStyle: CropStyle.rectangle,
-      compressFormat: ImageCompressFormat.png,
-      compressQuality: 90,
-    );
-    imagePath = croppedFile!.path;
+    print(imageFile!.path);
+
+    // CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+    //   sourcePath: imageFile!.path,
+    //   aspectRatioPresets: [
+    //     CropAspectRatioPreset.square,
+    //     CropAspectRatioPreset.original,
+    //     CropAspectRatioPreset.ratio7x5,
+    //     CropAspectRatioPreset.ratio16x9
+    //   ],
+    //   cropStyle: CropStyle.rectangle,
+    //   compressFormat: ImageCompressFormat.png,
+    //   compressQuality: 90,
+    // );
+    imagePath = imageFile!.path;
     emit(RegisterPickImageSuccess());
   }
 
@@ -105,6 +107,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         name: nameController.text,
         image: imagePath.isEmpty ? null : imagePath,
         phone: userData!.phone!,
+        phoneCode: userData!.phoneCode,
         token: loginModel!.data!.accessToken,
       ),
     );

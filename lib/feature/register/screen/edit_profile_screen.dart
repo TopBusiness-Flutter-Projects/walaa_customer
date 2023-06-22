@@ -43,14 +43,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             return ShowLoadingIndicator();
           }
           if (state is RegisterUpdateLoaded) {
-            context.read<ProfileCubit>().onGetProfileData();
+            context.read<ProfileCubit>().getStoreUser();
             Future.delayed(
               Duration(milliseconds: 400),
               () {
-                Navigator.pop(context);
+          //      Navigator.pop(context);
               },
             );
-            return ShowLoadingIndicator();
+            //return ShowLoadingIndicator();
           }
 
           return Form(

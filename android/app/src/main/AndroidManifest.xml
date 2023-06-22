@@ -3,6 +3,7 @@
    <application
         android:usesCleartextTraffic="true"
         android:label="Taster"
+       android:requestLegacyExternalStorage="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
        <activity
