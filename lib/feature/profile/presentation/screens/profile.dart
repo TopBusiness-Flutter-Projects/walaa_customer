@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:walaa_customer/core/utils/is_language_methods.dart';
 import 'package:walaa_customer/core/widgets/show_loading_indicator.dart';
 import 'package:restart_app/restart_app.dart';
@@ -200,6 +201,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   imageColor: AppColors.black,
                                   onclick: () {
                                     shareApp();
+                                  },
+                                ),
+                                MySeparator(),
+                                ProfileListTailWidget(
+                                  title: translateText(AppStrings.deleteAccountText, context),
+                                  image: ImageAssets.deleteIcon,
+                                  imageColor: AppColors.black,
+                                  onclick: () {
+                                    Alert(
+                                      context: context,
+                                      type: AlertType.warning,
+                                      title:
+                                      "\n${translateText(AppStrings.deleteAccountText, context)}",
+                                      desc:
+                                      "\n\n${translateText(AppStrings.waringDeleteAccountMessage, context)}\n\n",
+                                      buttons: [
+                                        DialogButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          color: AppColors.containerBackgroundColor,
+                                          child: Text(
+                                            translateText(
+                                                AppStrings.cancelBtn, context),
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20),
+                                          ),
+                                        ),
+                                        DialogButton(
+                                          onPressed: () =>
+                                              profileCubit.deleteAccount(context),
+                                          color: AppColors.error,
+                                          child: Text(
+                                            translateText(
+                                                AppStrings.confirmBtn, context),
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20),
+                                          ),
+                                        )
+                                      ],
+                                    ).show();
                                   },
                                 ),
                                 MySeparator(),
