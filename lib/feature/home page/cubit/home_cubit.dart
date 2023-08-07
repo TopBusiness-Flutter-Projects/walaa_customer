@@ -14,10 +14,10 @@ import '../models/providers_model.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  int provider_type=2;
+ // int provider_type=2;
 
   HomeCubit(this.api) : super(HomeInitial()) {
-    getHomeData(provider_type);
+   // getHomeData(provider_type);
   }
 
   final ServiceApi api;
@@ -35,11 +35,11 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(ChangeCurrentIndexTap());
     if(currentIndex==0){
-  provider_type=2;
+ // provider_type=2;
      getHomeData(2);
     }
     else{
-    provider_type=1;
+   // provider_type=1;
      getHomeData(1);
     }
   }

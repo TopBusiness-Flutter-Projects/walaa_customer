@@ -12,9 +12,20 @@ import '../cubit/home_cubit.dart';
 import '../widget/coffee_list_widget.dart';
 import '../widget/the_best_widget.dart';
 
-class RestaurantPageScreen extends StatelessWidget {
+class RestaurantPageScreen extends StatefulWidget {
   const RestaurantPageScreen({Key? key}) : super(key: key);
 
+  @override
+  State<RestaurantPageScreen> createState() => _RestaurantPageScreenState();
+}
+
+class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<HomeCubit>().getHomeData(1);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +44,7 @@ class RestaurantPageScreen extends StatelessWidget {
                   return RefreshIndicator(
                     onRefresh: () async =>
                     {
-                      cubit.provider_type=1,
+                      //cubit.provider_type=1,
                       cubit.getHomeData(1)
                     },
                     child: ListView(
@@ -45,7 +56,7 @@ class RestaurantPageScreen extends StatelessWidget {
                               SizedBox(height: 20),
                               IconButton(
                                 onPressed: () =>   {
-                                  cubit.provider_type=1,
+                                //  cubit.provider_type=1,
                                   cubit.getHomeData(1)
                                 },
                                 icon: Icon(
@@ -63,7 +74,7 @@ class RestaurantPageScreen extends StatelessWidget {
 
                 return RefreshIndicator(
                   onRefresh: () async =>   {
-                    cubit.provider_type=1,
+                  //  cubit.provider_type=1,
                     cubit.getHomeData(1)
                   },
                   child: ListView(

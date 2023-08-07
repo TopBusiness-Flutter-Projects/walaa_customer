@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
+import 'package:walaa_customer/feature/cartPage/cubit/cart_cubit.dart';
+import 'package:walaa_customer/feature/register/cubit/register_cubit.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/models/login_model.dart';
@@ -14,6 +16,7 @@ import '../../../../core/remote/service.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/dialogs.dart';
 import '../../../../core/utils/toast_message_method.dart';
+import '../../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 
 part 'login_state.dart';
 
@@ -49,9 +52,13 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  storeUser(LoginModel loginModel) async {
+  storeUser(LoginModel loginModel,BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user', jsonEncode(loginModel));
+    await prefs.setString('user', jsonEncode(loginModel)).then((value) => {
+      context.read<NavigatorBottomCubit>().onUserDataSuccess(),
+      context.read<CartCubit>().getUserData()
+
+    });
   }
 
   //////////////////send OTP///////////////////
@@ -98,14 +105,16 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  verifySmsCode(String smsCode) async {
+  verifySmsCode(String smsCode,BuildContext context) async {
     print(verificationId);
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId!,
       smsCode: smsCode,
     );
     await _mAuth.signInWithCredential(credential).then((value) {
-      isRegister ? null : storeUser(loginModel!);
+      
+      isRegister ? context.read<RegisterCubit>().registerUserData(context) :
+      storeUser(loginModel!,context);
       emit(CheckCodeSuccessfully());
     }).catchError((error) {
       print('phone auth =>${error.toString()}');

@@ -275,7 +275,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     color: AppColors.buttonBackground,
                     onClick: () {
                       if (formKey.currentState!.validate()) {
-                        cubit.updateUserData();
+                        cubit.updateUserData(context);
                       }
                     },
                     borderRadius: 10,

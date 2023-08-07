@@ -9,9 +9,12 @@ import 'package:walaa_customer/core/models/login_model.dart';
 import 'package:walaa_customer/core/remote/service.dart';
 import 'package:walaa_customer/core/utils/dialogs.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
+import 'package:walaa_customer/feature/home%20page/cubit/home_cubit.dart';
 
 import '../../../../core/preferences/preferences.dart';
+import '../../cartPage/cubit/cart_cubit.dart';
 import '../../login/presentation/cubit/login_cubit.dart';
+import '../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
 
 part 'register_state.dart';
 
@@ -100,7 +103,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  updateUserData() async {
+  updateUserData(BuildContext context) async {
     emit(RegisterUpdateLoading());
     final response = await api.updateProfile(
       UserData(
@@ -114,6 +117,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     response.fold(
       (l) => emit(RegisterUpdateError()),
       (r) {
+        Preferences.instance.setUser(r).then((value) => {
+          context.read<NavigatorBottomCubit>().onUserDataSuccess(),
+          context.read<CartCubit>().getUserData()
+
+        });
         Future.delayed(Duration(milliseconds: 700), () {
           emit(RegisterInitial());
         });
@@ -122,7 +130,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
-  registerUserData() async {
+  registerUserData(BuildContext context) async {
     emit(RegisterLoading());
     final response = await api.registerUser(
       UserData(
@@ -135,11 +143,16 @@ class RegisterCubit extends Cubit<RegisterState> {
     response.fold(
       (l) => emit(RegisterError()),
       (r) {
-        Preferences.instance.setUser(r);
-        emit(RegisterLoaded(r));
-        Future.delayed(Duration(milliseconds: 500), () {
-          emit(RegisterInitial());
+
+        Preferences.instance.setUser(r).then((value) => {
+          context.read<NavigatorBottomCubit>().onUserDataSuccess(),
+          context.read<CartCubit>().getUserData()
+
         });
+        emit(RegisterLoaded(r));
+        // Future.delayed(Duration(milliseconds: 500), () {
+        //   emit(RegisterInitial());
+        // });
       },
     );
   }
@@ -238,7 +251,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
     await _mAuth.signInWithCredential(credential).then((value) {
       // isRegister?null: storeUser(loginModel!);
-      registerUserData();
+      registerUserData(context);
       emit(RegisterCheckCodeSuccessfully());
     }).catchError((error) {
       print('phone auth =>${error.toString()}');

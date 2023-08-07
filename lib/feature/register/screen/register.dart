@@ -17,6 +17,7 @@ import '../../../../core/utils/translate_text_method.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield.dart';
 import '../../../../core/widgets/network_image.dart';
+import '../../../core/utils/toast_message_method.dart';
 import '../../navigation_bottom/screens/navigation_bottom.dart';
 import '../cubit/register_cubit.dart';
 
@@ -41,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     if (context.read<RegisterCubit>().isCodeSend) {
-      context.read<RegisterCubit>().registerUserData();
+    //  context.read<RegisterCubit>().registerUserData(context);
     }
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -79,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: BlocConsumer<RegisterCubit, RegisterState>(
         listener: (context, state) {
           if (state is RegisterLoaded) {
+            if(state.loginModel.code==200){
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(
@@ -89,6 +91,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               (route) => false,
             );
+          }
+          else{
+            toastMessage(state.loginModel.message,context);
+            }
           }
         },
         builder: (context, state) {
@@ -306,7 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       cubit.phoneCode = number.dialCode!;
                                     },
                                     autoFocusSearch: true,
-                                    initialValue: PhoneNumber(isoCode: "SA"),
+                                    initialValue: PhoneNumber(isoCode:  cubit.phoneCode=='+966'?"SA":"EG"),
                                     selectorConfig: SelectorConfig(
                                       selectorType:
                                           PhoneInputSelectorType.BOTTOM_SHEET,

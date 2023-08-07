@@ -112,6 +112,7 @@ class _MainScreenState extends State<MainScreen>
                               cubit.selectTap(index);
                               print(cubit.currentIndex);
                               _tabController.animateTo(index);
+
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(

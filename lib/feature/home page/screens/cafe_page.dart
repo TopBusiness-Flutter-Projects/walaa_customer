@@ -12,8 +12,20 @@ import '../cubit/home_cubit.dart';
 import '../widget/coffee_list_widget.dart';
 import '../widget/the_best_widget.dart';
 
-class CafePageScreen extends StatelessWidget {
+class CafePageScreen extends StatefulWidget {
   const CafePageScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CafePageScreen> createState() => _CafePageScreenState();
+}
+
+class _CafePageScreenState extends State<CafePageScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<HomeCubit>().getHomeData(2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +44,7 @@ class CafePageScreen extends StatelessWidget {
                 if (state is HomeProvidersError) {
                   return RefreshIndicator(
                     onRefresh: () async =>{
-                        cubit.provider_type=2,
+                       // cubit.provider_type=2,
                         cubit.getHomeData(2)},
                     child: ListView(
                       children: [
@@ -43,7 +55,7 @@ class CafePageScreen extends StatelessWidget {
                               SizedBox(height: 20),
                               IconButton(
                                 onPressed: () => {
-                                  cubit.provider_type=2,
+                         //         cubit.provider_type=2,
                                   cubit.getHomeData(2)},
                                 icon: Icon(
                                   Icons.refresh,
@@ -60,7 +72,7 @@ class CafePageScreen extends StatelessWidget {
 
                 return RefreshIndicator(
                   onRefresh: () async => {
-                    cubit.provider_type=2,
+                    //cubit.provider_type=2,
                     cubit.getHomeData(2)},
                   child: ListView(
                     children: [

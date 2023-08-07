@@ -53,9 +53,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
               Future.delayed(const Duration(milliseconds: 500), () {
                 context.read<RegisterCubit>().isCodeSend = true;
                 context.read<NavigatorBottomCubit>().page=0;
-                cubit.isRegister
-                    ? context.read<RegisterCubit>().registerUserData()
-                    : null;
+                // cubit.isRegister
+                //     ? context.read<RegisterCubit>().registerUserData(context)
+                //     : null;
                 cubit.isRegister
                     ? Navigator.pop(context)
                     : Navigator.pushAndRemoveUntil(
@@ -170,7 +170,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   hasError = false;
                                   context
                                       .read<LoginCubit>()
-                                      .verifySmsCode(currentText);
+                                      .verifySmsCode(currentText,context);
                                 },
                               );
                             }
