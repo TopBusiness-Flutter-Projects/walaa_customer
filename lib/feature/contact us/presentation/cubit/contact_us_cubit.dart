@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/models/login_model.dart';
+import 'package:walaa_customer/core/preferences/preferences.dart';
 import 'package:walaa_customer/core/remote/service.dart';
 
 import '../../models/contact_us_model.dart';
@@ -24,10 +24,8 @@ class ContactUsCubit extends Cubit<ContactUsState> {
   LoginModel? loginModel;
 
   Future<void> _getStoreUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('user') != null) {
-      Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);
-      LoginModel loginModel = LoginModel.fromJson(userMap);
+    LoginModel userModel = await Preferences.instance.getUserModel();
+    if (loginModel!.data != null) {
       this.loginModel = loginModel;
       nameController.text = this.loginModel!.data!.user.name!;
       phoneController.text = this.loginModel!.data!.user.phone!;
@@ -49,7 +47,7 @@ class ContactUsCubit extends Cubit<ContactUsState> {
       (l) => emit(ContactUsError()),
       (r) {
         emit(ContactUsLoaded());
-        Future.delayed(Duration(seconds: 1),(){
+        Future.delayed(Duration(seconds: 1), () {
           emit(ContactUsInitial());
         });
       },

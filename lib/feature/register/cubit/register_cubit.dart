@@ -187,20 +187,21 @@ class RegisterCubit extends Cubit<RegisterState> {
             );
             emit(RegisterTestPhoneLoaded());
           } else {
+            registerUserData(context);
             //context.read<LoginCubit>().sendSmsCode(phoneCode,phoneController.text);
-            context.read<LoginCubit>().isRegister = true;
-            context
-                .read<LoginCubit>()
-                .sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-            Future.delayed(
-              Duration(milliseconds: 500),
-              () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.verificationScreenRoute,
-                );
-              },
-            );
+            // context.read<LoginCubit>().isRegister = true;
+            // context
+            //     .read<LoginCubit>()
+            //     .sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
+            // Future.delayed(
+            //   Duration(milliseconds: 500),
+            //   () {
+            //     Navigator.pushNamed(
+            //       context,
+            //       Routes.verificationScreenRoute,
+            //     );
+            //   },
+            // );
 
             emit(RegisterTestPhoneLoaded());
           }

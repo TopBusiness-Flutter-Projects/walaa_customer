@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walaa_customer/core/utils/app_strings.dart';
 import 'package:walaa_customer/core/utils/translate_text_method.dart';
@@ -17,6 +18,7 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/dialogs.dart';
 import '../../../../core/utils/toast_message_method.dart';
 import '../../../navigation_bottom/cubit/navigator_bottom_cubit.dart';
+import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
 part 'login_state.dart';
 
@@ -30,7 +32,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   bool isRegister = false;
 
-  loginPhone(String phone, context) async {
+  loginPhone(String phone, BuildContext context) async {
     emit(LoginLoading());
     final response = await serviceApi.postLogin(phone,phoneCode);
     response.fold(
@@ -41,12 +43,27 @@ class LoginCubit extends Cubit<LoginState> {
           emit(LoginLoaded());
         } else if (loginModel.code == 200) {
           this.loginModel = loginModel;
-          sendSmsCode();
-          phoneController.clear();
-          Navigator.pushNamed(
+          storeUser(loginModel,context);
+          context.read<NavigatorBottomCubit>().page=0;
+
+          Navigator.pushAndRemoveUntil(
             context,
-            Routes.verificationScreenRoute,
-          );
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              duration: const Duration(milliseconds: 1300),
+              child: NavigationBottom(
+                loginModel: loginModel ,
+              ),
+            ),
+                (route) => false,
+          ).then((value) => null);
+          // sendSmsCode();
+          // phoneController.clear();
+          // Navigator.pushNamed(
+          //   context,
+          //   Routes.verificationScreenRoute,
+          // );
         }
       },
     );

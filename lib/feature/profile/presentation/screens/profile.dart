@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                     // _textFieldController.clear();
                                     // var resultLabel =
-                                    //     await _showTextInputDialog(context);
+                                    //     await _shoريwTextInputDialog(context);
                                     // if (resultLabel != null) {
                                     //   profileCubit.onRechargeWallet(
                                     //       double.parse(resultLabel), context);

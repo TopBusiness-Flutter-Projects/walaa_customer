@@ -129,7 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               height: 140,
                                               borderRadius: 140,
                                             )
-                                          : Image.file(
+                                          :
+                                  Image.file(
                                               File(
                                                 cubit.imagePath,
                                               ),
