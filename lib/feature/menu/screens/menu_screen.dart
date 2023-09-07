@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walaa_customer/feature/menu/cubit/menu_cubit.dart';
 import 'package:walaa_customer/feature/menu/screens/the_best_product_widget.dart';
+import 'package:walaa_customer/feature/navigation_bottom/cubit/navigator_bottom_cubit.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/assets_manager.dart';
@@ -163,6 +164,11 @@ class _MenuScreenState extends State<MenuScreen> {
           },
         ],
       ),
+      floatingActionButton:
+      FloatingActionButton(child:Icon(Icons.shopping_cart,color: AppColors.white,), onPressed: () {
+        context.read<NavigatorBottomCubit>().changePage(1);
+        Navigator.pop(context);
+      },),
     );
   }
 }

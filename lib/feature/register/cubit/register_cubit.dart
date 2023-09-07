@@ -145,6 +145,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       (r) {
 
         Preferences.instance.setUser(r).then((value) => {
+        context.read<NavigatorBottomCubit>().getDeviceToken(),
           context.read<NavigatorBottomCubit>().onUserDataSuccess(),
           context.read<CartCubit>().getUserData()
 

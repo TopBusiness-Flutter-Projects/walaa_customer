@@ -4,6 +4,7 @@ class EndPoints {
   static const String contactUsUrl = '${baseUrl}client/auth/contact-us';
   static const String updateProfileUrl = '${baseUrl}client/auth/update-profile';
   static const String sendOrderUrl = '${baseUrl}client/orders/store';
+  static const String tokenUrl = '${baseUrl}addFirebaseNotification';
   static const String rateProviderUrl = '${baseUrl}client/add-rate';
   static const String orderUrl = '${baseUrl}client/orders/list';
 

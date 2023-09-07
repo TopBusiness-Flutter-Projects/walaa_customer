@@ -60,7 +60,7 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => NavigatorBottomCubit(
-      // serviceLocator(),
+       serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(

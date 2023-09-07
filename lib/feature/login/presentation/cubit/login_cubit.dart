@@ -73,7 +73,8 @@ class LoginCubit extends Cubit<LoginState> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user', jsonEncode(loginModel)).then((value) => {
       context.read<NavigatorBottomCubit>().onUserDataSuccess(),
-      context.read<CartCubit>().getUserData()
+      context.read<CartCubit>().getUserData(),
+      context.read<NavigatorBottomCubit>().getDeviceToken(),
 
     });
   }

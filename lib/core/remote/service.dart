@@ -278,6 +278,30 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, StatusResponse>> addDeviceToken(
+      String devicetoken,String softwareType,) async {
+    LoginModel userModel=await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.tokenUrl,
+        options: Options(
+          headers: {
+            'Authorization': userModel.data!.accessToken,
+          },
+        ),
+        body: {
+         "software_type" :softwareType,
+          "phone_token":devicetoken,
+          "client_id":userModel.data!.user.id
+        },
+      );
+      //print('Url : ${EndPoints.sendOrderUrl}');
+      // print('Response : \n ${response.data}');
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
 //
 //   Future<Either<Failure, OrderDataModel>> getOrders(
