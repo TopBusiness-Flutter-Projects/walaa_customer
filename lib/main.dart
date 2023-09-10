@@ -14,6 +14,28 @@ import 'core/utils/restart_app_class.dart';
 import 'firebase_options.dart';
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
+NotificationDetails notificationDetails = NotificationDetails(
+  android: AndroidNotificationDetails(
+    'channel_id',
+    'channel_name',
+    'channel_description',
+    importance: Importance.high,
+    priority: Priority.high,
+  ),
+  iOS: IOSNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  ),
+);
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  showNotification(message.data['title'], message.data['body']);
+
+}
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await flutterLocalNotificationsPlugin.initialize(
@@ -23,33 +45,7 @@ Future<void> main() async {
     ),
   );
   await requestPermissions();
-  NotificationDetails notificationDetails = NotificationDetails(
-    android: AndroidNotificationDetails(
-      'channel_id',
-      'channel_name',
-      'channel_description',
-      importance: Importance.high,
-      priority: Priority.high,
-    ),
-    iOS: IOSNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    ),
-  );
-  Future<void> showNotification(String title, String body) async {
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      notificationDetails,
-      payload: 'payload',
-    );
-  }
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    showNotification(message.data['title'], message.data['body']);
 
-  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -94,3 +90,12 @@ Future<void> main() async {
       badge: true,
       sound: true,
     );}
+Future<void> showNotification(String title, String body) async {
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    title,
+    body,
+    notificationDetails,
+    payload: 'payload',
+  );
+}
