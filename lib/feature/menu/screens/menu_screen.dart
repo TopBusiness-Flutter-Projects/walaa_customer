@@ -165,7 +165,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ],
       ),
       floatingActionButton:
-      FloatingActionButton(child:Icon(Icons.shopping_cart,color: AppColors.white,), onPressed: () {
+      FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        child:Icon(Icons.shopping_cart,color: AppColors.white,), onPressed: () {
         context.read<NavigatorBottomCubit>().changePage(1);
         Navigator.pop(context);
       },),

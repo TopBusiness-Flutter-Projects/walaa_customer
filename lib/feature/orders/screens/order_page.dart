@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/locale/app_localizations_setup.dart';
+import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/app_colors.dart';
 import '../cubit/order_cubit.dart';
 import '../widgets/order_list.dart';
@@ -15,8 +17,10 @@ final String type;
 class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
+    Preferences.instance.getSavedLang().then((value) =>{
+    context.read<OrderCubit>().setlang(value)
 
-    context.read<OrderCubit>().setlang("ar");
+    });
     return Scaffold(
 
       body: OrderList(type:widget.type),
