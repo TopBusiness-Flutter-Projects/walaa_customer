@@ -210,7 +210,8 @@ class _CartPageState extends State<CartPage> {
                                           text: translateText(
                                               AppStrings.confirmBtn, context),
                                           onClick: () {
-                                            if (context
+                                            print("kkkk")
+;                                            if (context
                                                     .read<CartCubit>()
                                                     .userModel
                                                     .data !=

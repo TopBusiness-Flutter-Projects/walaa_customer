@@ -45,6 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     //  context.read<RegisterCubit>().registerUserData(context);
     }
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: AppBar(
         centerTitle: false,

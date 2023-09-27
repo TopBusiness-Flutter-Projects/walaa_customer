@@ -66,8 +66,8 @@ class CartCubit extends Cubit<CartState> {
 
 
   sendorder(CartModel model, BuildContext context) async {
-    LoginModel loginModel = await Preferences.instance.getUserModel();
-if(loginModel.data!.user.balance>=model.totalPrice){
+    //LoginModel loginModel = await Preferences.instance.getUserModel();
+if(userModel.data!.user.balance>=model.totalPrice){
     AppWidget.createProgressDialog(context, 'wait');
 //model.phone=userModel.data!.user.phone;
 
